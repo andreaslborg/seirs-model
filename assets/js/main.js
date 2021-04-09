@@ -19,7 +19,7 @@ let recForm = document.getElementById("recForm1");
 let recSlider = document.getElementById("recSlider1");
 
 // Initiate x axis
-for(let i = 0; i < 100; i++){
+for(let i = 0; i < 500; i++) {
     xArr[i] = i;
 }
 
@@ -38,15 +38,15 @@ let chartI = [];
 let chartR = [];
 
 for(let i = 0; i < xArr.length; i++) {
-    chartS[i] = Math.floor(Math.random() * 101);
-    chartI[i] = Math.floor(Math.random() * 101);
-    chartR[i] = Math.floor(Math.random() * 101);  
+    //chartS[i] = Math.floor(Math.random() * 101);
+    //chartI[i] = Math.floor(Math.random() * 101);
+    //chartR[i] = Math.floor(Math.random() * 101);  
 }
 
 // Update the current input value (each time you type in it)
 reproForm.oninput = function() {
     reproSlider.value = this.value;
-
+    if (this.value != 0)
     diffFunc(this.value);
 }
 
@@ -111,6 +111,8 @@ function linFunc() {
     updateGraph();
 }
 
+let alpha = 0.000006, beta = 0.02;
+
 /************************************************************************************************/
 function diffFunc(something) { 
     console.log("Kører diffFunc");
@@ -120,11 +122,17 @@ function diffFunc(something) {
             k3 = dx * f(x + dx / 2.0,   +y + k2 / 2.0),
             k4 = dx * f(x + dx,         +y + k3);
     
+        // T4
+        console.log("This is the dx : "+dx);
         return y + (k1 + 2.0 * k2 + 2.0 * k3 + k4) / 6.0;
     }
-
+    
     function f(x, y) {
-        return Math.sin(x)*something;
+        return -alpha * (10000*x) * (5*x);
+
+        //return Math.sin(x)*something+Math.cos(y);
+        
+        //return Math.sin(x)*something;
     }
     /*
     function actual(x) {
@@ -133,9 +141,12 @@ function diffFunc(something) {
     }
     */
     
-    var y = 1.0,
+    var 
+        // y0 and x0
+        y = 1.0,
         x = 0.0,
-        step = 0.1,
+        // h = step
+        h = 0.1,
         steps = 0,
         maxSteps = 101,
         sampleEveryN = 1;
@@ -144,23 +155,22 @@ function diffFunc(something) {
         
     for(let i = 0; i < maxSteps; i++){
         if (steps%sampleEveryN === 0) {
-            //console.log("y(" + x + ") = " + y);
+            console.log("y(" + x + ") = " + y);
             chartS.push(y);
         }
-        y = rk4(y, x, step, f);
+        y = rk4(y, x, h, f);
         
         // using integer math for the step addition
         // to prevent floating point errors as 0.2 + 0.1 != 0.3
-        x = ((x * 10) + (step * 10)) / 10;
+        x = ((x * 10) + (h * 10)) / 10;
         steps += 1;
     }
 
     myChart.data.datasets[2].data = chartS;
     myChart.update();
 }
-// Listening for a click on the button and runs the function.
-// document.getElementById("diffKnap").addEventListener("click", diffFunc);
 /************************************************************************************************/
+
 
 
 // Initialiserer graf
