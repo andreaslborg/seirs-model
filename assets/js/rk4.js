@@ -1,42 +1,51 @@
-/************************************************************************************************/
-function rk4(y, x, dx, f) {
-    var k1 = dx * f(x, y),
-        k2 = dx * f(x + dx / 2.0,   +y + k1 / 2.0),
-        k3 = dx * f(x + dx / 2.0,   +y + k2 / 2.0),
-        k4 = dx * f(x + dx,         +y + k3);
- 
-    return y + (k1 + 2.0 * k2 + 2.0 * k3 + k4) / 6.0;
-}
- 
-function f(x, y) {
-    return x * Math.sqrt(y);
-}
- 
-function actual(x) {
-    return (1/16) * (x*x+4)*(x*x+4);
-}
- 
-var y = 1.0,
-    x = 0.0,
-    step = 0.1,
-    steps = 0,
-    maxSteps = 201,
-    sampleEveryN = 10;
+let beta = 0.025,
+    gamma = 0.0006,
+    S0 = 99000,
+    I0 = 1000,
+    R0 = 0,
+    h = 0.1,
+    steps = 1000;
 
-let chartS = [];
-    
-for(let i = 0; i < maxSteps; i++){
-    if (steps%sampleEveryN === 0) {
-        console.log("y(" + x + ") =  \t" + y);
-        chartS.push(y);
+function rk4sir(){
+    function fS(S, I){
+        return -(beta*I*S)/N;
     }
-    y = rk4(y, x, step, f);
     
-    // using integer math for the step addition
-    // to prevent floating point errors as 0.2 + 0.1 != 0.3
-    x = ((x * 10) + (step * 10)) / 10;
-    steps += 1;
+    function fI(S, I){
+        return beta*I*S/N - gamma*I;
+    }
+    
+    function fR(I){
+        return gamma*I;
+    }
+
+    let N = S0 + I0 + R0,
+        S = [S0],
+        I = [I0],
+        R = [R0];
+
+    for (i = 1; i <= steps; i++){
+        let Sk1 = fS(S[i-1], I[i-1]),
+            Sk2 = fS(S[i-1] + h/2*Sk1, I[i-1] + h/2*Sk1),
+            Sk3 = fS(S[i-1] + h/2*Sk2, I[i-1] + h/2*Sk2),
+            Sk4 = fS(S[i-1] + h*Sk3, I[i-1] + h*Sk3),
+            Ik1 = fI(S[i-1], I[i-1]),
+            Ik2 = fI(S[i-1] + h/2*Ik1, I[i-1] + h/2*Ik1),
+            Ik3 = fI(S[i-1] + h/2*Ik2, I[i-1] + h/2*Ik2),
+            Ik4 = fI(S[i-1] + h*Ik3, I[i-1] + h*Ik3),
+            Rk1 = fR(I[i-1]),
+            Rk2 = fR(I[i-1] + h/2*Rk1),
+            Rk3 = fR(I[i-1] + h/2*Rk2),
+            Rk4 = fR(I[i-1] + h*Rk3),
+            t = i*h;
+
+        S.push(S[i-1] + (Sk1 + 2*(Sk2 + Sk3) + Sk4)/6);
+        I.push(I[i-1] + (Ik1 + 2*(Ik2 + Ik3) + Ik4)/6);
+        R.push(R[i-1] + (Rk1 + 2*(Rk2 + Rk3) + Rk4)/6);
+
+        if (i % 100 === 0)
+            console.log("S(" + t.toFixed(0) + ") = " + S[i].toFixed(3) + ", \t I(" + t.toFixed(1) + ") = " + I[i].toFixed(3) + ", \t R(" + t.toFixed(1) + ") = " + R[i].toFixed(3));
+    }
 }
 
-/************************************************************************************************/
-
+rk4sir();

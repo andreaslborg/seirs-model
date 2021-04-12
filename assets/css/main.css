@@ -40,18 +40,20 @@ h1, h2, h3, h4, h5, h6 {
 .sliders {
     display: inline-block;
     width: 19.85%;
-    height: 190px;
+    height: 220px;
     background: lightgrey;
     border-radius: 3%;
 }
 
 .sliderTitle {
     font-size: 150%;
+    font-size: 1.4vw;
     text-align: left;
 }
 
 .sliderDes {
     font-size: 80%;
+    font-size: 0.8vw;
     text-align: left;
     margin-top: -5%;
     height: 20%;

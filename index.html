@@ -8,9 +8,9 @@
         <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Work+Sans:400,700" rel="stylesheet">
         
         <link rel="icon" href="images/icon.png">
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3"></script> <!--
         <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.7"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.7"></script>-->
         <script src="https://unpkg.com/mathjs@9.3.0/lib/browser/math.js"></script>
     </head>
     <body id ="test">
@@ -26,20 +26,20 @@
                 <canvas id="myChart"></canvas>
             </div>
             <!-- X-axes slider -->
-            <input id="xSlider1" class="slider"      type="range"    min="0"     max="1000"  value="300" step="1">
+            <input id="xSlider1" class="slider"      type="range"    min="0"     max="1000"  value="1000" step="1">
             <!-- Slider and input boxes -->
             <div class="sliderBoxes">
                 <div class="sliders">
-                    <p class="sliderTitle">Reproduction Number</p>
+                    <p class="sliderTitle">Beta</p>
                     <p class="sliderDes">Measure of contagiousness: the number of secondary infections each infected individual produces.</p>
                     <p> <input id="reproForm1"   class="inputForm"   type="number"   min="0.01"  max="10"    maxlength="3"   value="5"></p>
-                        <input id="reproSlider1" class="slider"      type="range"    min="0"     max="100"   maxlength="3"   value="50" step="1">
+                        <input id="reproSlider1" class="slider"      type="range"    min="0.001"     max="0.1"   maxlength="0.1"   value="0.02" step="0.001">
                 </div>
                 <div class="sliders">
-                    <p class="sliderTitle">Population</p>
+                    <p class="sliderTitle">Gamma</p>
                     <p class="sliderDes">Size of population.</p>
                     <p> <input id="popForm1"     class="inputForm"   type="number"   min="10000" max="10000000"  maxlength="10000000"    value="5000000"></p>
-                        <input id="popSlider1"   class="slider"      type="range"    min="10000" max="10000000"  maxlength="10000000"    value="5000000" step="1">
+                        <input id="popSlider1"   class="slider"      type="range"    min="0.00001" max="0.02"  maxlength="10000000"    value="0.0006" step="0.0001">
                 </div>
                 <div class="sliders">
                     <p class="sliderTitle">Transmission Time</p>
@@ -48,10 +48,10 @@
                         <input id="tranSlider1"  class="slider"      type="range"    min="0"    max="24"    maxlength="3"   value="12">
                 </div>
                 <div class="sliders">
-                    <p class="sliderTitle">Recovery Time</p>
-                    <p class="sliderDes">Length of hospital stay. (Days)</p>
-                    <p> <input id="recForm1"     class="inputForm"   type="number"   min="0"     max="100"   maxlength="3"   value="0"></p>
-                        <input id="recSlider1"   class="slider"      type="range"    min="0"     max="100"   maxlength="3"   value="0">
+                    <p class="sliderTitle">Start Infected</p>
+                    <p class="sliderDes">Infected people in the beginning of the pandemic.</p>
+                    <p> <input id="recForm1"     class="inputForm"   type="number"   min="1"     max="1000"   maxlength="3"   value="500"></p>
+                        <input id="recSlider1"   class="slider"      type="range"    min="1"     max="1000"   maxlength="3"   value="500">
                 </div>
             </div>
         </div>
