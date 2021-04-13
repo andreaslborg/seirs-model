@@ -34,6 +34,7 @@ xSlider.oninput = function() {
 
 // Update the current input value (each time you type in it)
 reproForm.oninput = function() {
+    localStorage.setItem("reproValue", this.value);         // Cookie
     reproSlider.value = this.value;
     beta = this.value;
     rk4sir();
@@ -41,31 +42,38 @@ reproForm.oninput = function() {
 
 // Update the current slider value (each time you drag the slider handle)
 reproSlider.oninput = function() {
+    localStorage.setItem("reproValue", this.value);         // Cookie
     reproForm.value = this.value;
     beta = this.value;
     rk4sir();
-    localStorage.setItem("reproValue", this.value);
 }
 
 // Remembers last reproction value using cookie
-reproCookie = localStorage.getItem("reproValue");
+reproCookie = localStorage.getItem("reproValue");          
 reproForm.value = reproCookie;
 reproSlider.value = reproCookie;
-console.log("Reproduction value = " + reproCookie);
 
 // Population
 popForm.oninput = function() {
+    localStorage.setItem("popValue", this.value);           // Cookie
     popSlider.value = this.value;
     gamma = this.value;
     console.log("Gamma form input");
     if(this.value != 0)
         rk4sir();
+
 }
 popSlider.oninput = function() {
+    localStorage.setItem("popValue", this.value);           // Cookie
     popForm.value = this.value;
     gamma = this.value;
     rk4sir();
 }
+
+// Remembers last population value using cookie
+popCookie = localStorage.getItem("popValue");          
+popForm.value = popCookie;
+popSlider.value = popCookie;
 
 // Transmission
 tranForm.oninput = function() {
