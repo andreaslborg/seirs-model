@@ -32,6 +32,7 @@ let totalStepSlider = document.getElementById("totalStepSlider1");
 
 // Information box
 let totalN = document.getElementById("totalPopulation");
+let maxInf = document.getElementById("maxInfected");
 
 // Zoom on x axis with tArr
 xSlider.oninput = function() {
@@ -219,8 +220,6 @@ function rk4sir(){
     console.log("Start: rk4sir");                
     
     N = S0 + I0 + R0;       // Total population
-    totalN.innerHTML = N;
-
     dataS = [S0];
     dataI = [I0];
     dataR = [R0];
@@ -258,6 +257,9 @@ function rk4sir(){
         dataI.push(dataI[i-1] + (Ik1 + 2*(Ik2 + Ik3) + Ik4)*h/6);
         dataR.push(dataR[i-1] + (Rk1 + 2*(Rk2 + Rk3) + Rk4)*h/6);
     }
+
+    totalN.innerHTML = N;
+    maxInf.innerHTML = Math.max(...dataI).toFixed(0);
     
     myChart.data.labels = tArr;
     myChart.data.datasets[0].data = dataS;
