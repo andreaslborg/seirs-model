@@ -12,6 +12,25 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Crimson Text', serif;
 }
 
+.sub { 
+    position: relative; 
+    top: 0.8ex; 
+    font-size: 75%; 
+}
+
+table, th, td {
+    margin-top: 2%;
+    margin-bottom: 10%;
+    margin-right: auto;
+    margin-left: auto;
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 5px;
+    text-align: left;    
+  }
+
 #title1 {
     font-size: 300%;
     text-align: center;
@@ -29,7 +48,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-left: 10%;
     margin-right: 10%;
     margin-bottom: 20px;
-    height: 550px;
+    height: 520px;
     text-align: center;
 }
 
@@ -39,16 +58,18 @@ h1, h2, h3, h4, h5, h6 {
 
 .sliders {
     display: inline-block;
-    width: 19.85%;
+    width: 15.0%;
     height: 220px;
     background: lightgrey;
     border-radius: 3%;
+    margin-top: 0.5%;
 }
 
 .sliderTitle {
     font-size: 150%;
     font-size: 1.4vw;
     text-align: left;
+    height: 25%;
 }
 
 .sliderDes {
@@ -56,7 +77,7 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 0.8vw;
     text-align: left;
     margin-top: -5%;
-    height: 20%;
+    height: 15%;
 }
 
 .sliderValue {
@@ -64,9 +85,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #xSlider1 {
-    margin-left: 10%;
-    margin-right: 10%;
-    width: 80%;
+    margin-left: 12.5%;
+    margin-right: 12.5%;
+    width: 75%;
 }
 
 /* Removes arrows in the input form */

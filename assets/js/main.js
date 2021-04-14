@@ -14,12 +14,24 @@ let popSlider = document.getElementById("popSlider1");
 let tranForm = document.getElementById("tranForm1");
 let tranSlider = document.getElementById("tranSlider1");
 
-// Recovery time
+// Initial infected
+let infForm = document.getElementById("infForm1");
+let infSlider = document.getElementById("infSlider1");
+
+// Initial removed
 let recForm = document.getElementById("recForm1");
 let recSlider = document.getElementById("recSlider1");
 
+// Step size
+let stepForm = document.getElementById("stepForm1");
+let stepSlider = document.getElementById("stepSlider1");
+
+// Total Step size
+let TotalstepForm = document.getElementById("TotalstepForm1");
+let TotalstepSlider = document.getElementById("TotalstepSlider1");
+
 // Initiate x axis
-for(let i = 0; i < 2000; i++) {
+for(let i = 0; i < 5000; i++) {
     xArr[i] = i;
 }
 
@@ -31,7 +43,7 @@ xSlider.oninput = function() {
     }
     updateGraph();
 }
-
+/* Beta */
 // Update the current input value (each time you type in it)
 reproForm.oninput = function() {
     localStorage.setItem("reproValue", this.value);         // Cookie
@@ -53,7 +65,7 @@ reproCookie = localStorage.getItem("reproValue");
 reproForm.value = reproCookie;
 reproSlider.value = reproCookie;
 
-// Population
+/* Gamma */
 popForm.oninput = function() {
     localStorage.setItem("popValue", this.value);           // Cookie
     popSlider.value = this.value;
@@ -61,7 +73,6 @@ popForm.oninput = function() {
     console.log("Gamma form input");
     if(this.value != 0)
         rk4sir();
-
 }
 popSlider.oninput = function() {
     localStorage.setItem("popValue", this.value);           // Cookie
@@ -75,35 +86,95 @@ popCookie = localStorage.getItem("popValue");
 popForm.value = popCookie;
 popSlider.value = popCookie;
 
-// Transmission
+// Initial Susceptible, S0
 tranForm.oninput = function() {
     tranSlider.value = this.value;
-
+    S0 = parseInt(this.value);
+    rk4sir();
 }
 tranSlider.oninput = function() {
     tranForm.value = this.value;
-
+    S0 = parseInt(this.value);
+    rk4sir();
 }
 
-// Start infected
+// Initial infected
+infForm.oninput = function() {
+    infSlider.value = this.value;
+    I0 = parseInt(this.value);          // parseInt converts it from a string to number
+    rk4sir();
+}
+infSlider.oninput = function() {
+    infForm.value = this.value;
+    I0 = parseInt(this.value);
+    rk4sir();
+}
+
+// Initial Removed
 recForm.oninput = function() {
     recSlider.value = this.value;
-    dataI = this.value;
+    R0 = parseInt(this.value);          // parseInt converts it from a string to number
     rk4sir();
 }
 recSlider.oninput = function() {
     recForm.value = this.value;
-    dataI = this.value;
+    R0 = parseInt(this.value);
     rk4sir();
 }
+
+// Step size
+stepForm.oninput = function() {
+    stepSlider.value = this.value;
+    h = parseInt(this.value);          // parseInt converts it from a string to number
+    rk4sir();
+}
+stepSlider.oninput = function() {
+    stepForm.value = this.value;
+    h = parseInt(this.value);
+    rk4sir();
+}
+
+// Total step size
+TotalstepForm.oninput = function() {
+    TotalstepSlider.value = this.value;
+    steps = parseInt(this.value);          // parseInt converts it from a string to number
+    rk4sir();
+}
+TotalstepSlider.oninput = function() {
+    TotalstepForm.value = this.value;
+    steps = parseInt(this.value);
+    rk4sir();
+}
+
+function covid19Algeria() {
+    beta = 0.0561215;
+    gamma = 0.0455331;
+    S0 = 99000;
+    I0 = 1000;
+    R0 = 0;
+    h = 0.1;                 // Stepsize
+    steps = 5001;           // Total steps
+    N = S0 + I0 + R0;
+    dataS = [S0];
+    dataI = [I0];
+    dataR = [R0];
+
+    reproForm.value = beta;
+    reproSlider.value = beta;
+    popForm.value = gamma;
+    popSlider.value = gamma;
+
+    rk4sir();
+}
+
 
 let beta = 0.025,
     gamma = 0.0006,
     S0 = 99000,
     I0 = 1000,
     R0 = 0,
-    h = 0.1,
-    steps = 2001,
+    h = 0.1,                 // Stepsize
+    steps = 5001,           // Total steps
 
     N = S0 + I0 + R0,
     dataS = [S0],
@@ -111,14 +182,11 @@ let beta = 0.025,
     dataR = [R0];
 
 function rk4sir(){
-    S0 = 99000,
-    I0 = 1000,
-    R0 = 0,
-    h = 0.1,
-    steps = 2001,
-    N = S0 + I0 + R0,
-    dataS = [S0],
-    dataI = [I0],
+    console.log("Start: rk4sir");                
+    
+    N = S0 + I0 + R0;       // Total population
+    dataS = [S0];
+    dataI = [I0];
     dataR = [R0];
 
     function fS(S, I){
@@ -156,6 +224,7 @@ function rk4sir(){
     myChart.data.datasets[1].data = dataI;
     myChart.data.datasets[2].data = dataR;
     myChart.update();
+    console.log("End: rk4sir");
 }
 
 // Initialiserer graf
