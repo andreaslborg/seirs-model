@@ -1,4 +1,4 @@
-body, .inputForm {
+body, .inputForm, a {
     font-family: 'Work Sans', sans-serif;
 }
 
@@ -12,10 +12,10 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Crimson Text', serif;
 }
 
-.sub { 
-    position: relative; 
-    top: 0.8ex; 
-    font-size: 75%; 
+.sub {
+    position: relative;
+    top: 0.8ex;
+    font-size: 75%;
 }
 
 table, th, td {
@@ -28,7 +28,7 @@ table, th, td {
 }
 th, td {
     padding: 5px;
-    text-align: left;    
+    text-align: left;
 }
 
 #title1 {
@@ -44,12 +44,25 @@ th, td {
 }
 
 .chart {
-    width: 80%;
-    margin-left: 10%;
-    margin-right: 10%;
+    width: 100%;
     margin-bottom: 20px;
     height: 520px;
     text-align: center;
+}
+
+#resetButton {
+    margin-right: 0%;
+}
+
+#left-container {
+    float: left;
+    border: 2px solid red;
+}
+
+#right-container {
+    float: left;
+    border: 2px solid green;
+    margin-left: 1%;
 }
 
 .sliderBoxes {
@@ -58,7 +71,7 @@ th, td {
 
 .sliders {
     display: inline-block;
-    width: 15.0%;
+    width: 19.0%;
     height: 220px;
     background: lightgrey;
     border-radius: 3%;
@@ -66,14 +79,12 @@ th, td {
 }
 
 .sliderTitle {
-    font-size: 150%;
-    font-size: 1.4vw;
+    font-size: 1.2vw;
     text-align: left;
     height: 25%;
 }
 
 .sliderDes {
-    font-size: 80%;
     font-size: 0.8vw;
     text-align: left;
     margin-top: -5%;
@@ -85,9 +96,9 @@ th, td {
 }
 
 #xSlider1 {
-    margin-left: 12.5%;
-    margin-right: 12.5%;
-    width: 75%;
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
 }
 
 /* Removes arrows in the input form */

@@ -6,99 +6,124 @@
         <link rel="stylesheet" href="assets/css/main.css">
 
         <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Work+Sans:400,700" rel="stylesheet">
-        
+
         <link rel="icon" href="images/icon.png">
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3"></script>
         <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.7"></script>
         <script src="https://unpkg.com/mathjs@9.3.0/lib/browser/math.js"></script>
     </head>
-    <body id ="test">
+    <body>
         <div id="outerDiv">
             <!-- Header and text -->
             <div id="tekst">
                 <h1 id="title1">Epidemiological Modelling</h1>
             </div>
-            
+
             <!-- Inserts chart/graph -->
-            <div class="chart">
-                <canvas id="myChart"></canvas>
+            <div id="left-container">
+                <div class="chart">
+                    <canvas id="myChart"></canvas>
+                </div>
+                <!-- X-axes slider -->
+                <input id="xSlider1" class="slider"      type="range"    min="0"     max="10000"  value="10000" step="1">
+                <!-- Slider and input boxes -->
+                <div class="sliderBoxes">
+                    <div class="sliders">
+                        <p class="sliderTitle">Transmission rate</p>
+                        <p class="sliderDes">β represents the efective transmission rate. </p>
+                        <p> <input id="reproForm1"   class="inputForm"   type="number"   min="0.001"  max="0.1"      value="0.02"></p>
+                            <input id="reproSlider1" class="slider"      type="range"    min="0.001"     max="0.1"     value="0.02" step="0.001">
+                    </div>
+                    <div class="sliders">
+                        <p class="sliderTitle">Removal or deceased rate</p>
+                        <p class="sliderDes">γ represents the removal or the recovery rate.</p>
+                        <p> <input id="popForm1"     class="inputForm"   type="number"   min="0.00001" max="0.02"  maxlength="10000000"    value="0.0006"></p>
+                            <input id="popSlider1"   class="slider"      type="range"    min="0.00001" max="0.02"  maxlength="10000000"    value="0.0006" step="0.0001">
+                    </div>
+                    <div class="sliders">
+                        <p class="sliderTitle">Initial Susceptible (S<span class="sub">0</span>)</p>
+                        <p class="sliderDes">Text</p>
+                        <p> <input id="tranForm1"    class="inputForm"   type="number"   min="1000"    max="10000000"    maxlength="3"   value="99000"></p>
+                            <input id="tranSlider1"  class="slider"      type="range"    min="1000"    max="10000000"    maxlength="3"   value="99000">
+                    </div>
+                    <div class="sliders">
+                        <p class="sliderTitle">Initial Infected (I<span class="sub">0</span>)</p>
+                        <p class="sliderDes">Text</p>
+                        <p> <input id="infForm1"     class="inputForm"   type="number"   min="0"     max="100000"   maxlength="3"   value="1000"></p>
+                            <input id="infSlider1"   class="slider"      type="range"    min="0"     max="100000"   maxlength="3"   value="1000">
+                    </div>
+                    <div class="sliders">
+                        <p class="sliderTitle">Initial Removed (R<span class="sub">0</span>)</p>
+                        <p class="sliderDes">Text</p>
+                        <p> <input id="recForm1"     class="inputForm"   type="number"   min="0"     max="100000"   maxlength="3"   value="0"></p>
+                            <input id="recSlider1"   class="slider"      type="range"    min="0"     max="100000"   maxlength="3"   value="0">
+                    </div>
+                </div>
+                <div class="sliderBoxes">
+                    <div class="sliders">
+                        <p class="sliderTitle">Step size</p>
+                        <p class="sliderDes">Text</p>
+                        <p> <input id="stepForm1"     class="inputForm"   type="number"   min="0.01"     max="10"   maxlength="3"   value="0.1"></p>
+                            <input id="stepSlider1"   class="slider"      type="range"    min="0.01"     max="5"   maxlength="3"   value="0.1" step="0.01">
+                    </div>
+                    <div class="sliders">
+                        <p class="sliderTitle">Total steps</p>
+                        <p class="sliderDes">Text</p>
+                        <p> <input id="totalStepForm1"     class="inputForm"   type="number"   min="1"     max="20000"     value="10000"></p>
+                            <input id="totalStepSlider1"   class="slider"      type="range"    min="1"     max="20000"     value="10000" step="0.1">
+                    </div>
+                </div>
+            
+                <table>
+                    <tr>
+                        <th>Disease</th>
+                        <th>Parameters</th>
+                        <th>Show on graph</th>
+                        <th>Source</th>
+                    </tr>
+                    <tr>
+                        <td>COVID-19 Algeria (2020)</td>
+                        <td>β = 0.0561215, γ = 0.0455331</td>
+                        <td><a onclick="covid19Algeria()" style="cursor: pointer; cursor: hand; color: blue;">Press me</a></td>
+                        <td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7570398/pdf/42269_2020_Article_434.pdf" target="_blank">Link</a></td>
+                    </tr>
+                    <tr>
+                        <td>Tuberculosis</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>Link</td>
+                    </tr>
+                    <tr>
+                        <td>Ebola</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>Link</td>
+                    </tr>
+                </table>
             </div>
-            <!-- X-axes slider -->
-            <input id="xSlider1" class="slider"      type="range"    min="0"     max="2000"  value="2000" step="1">
-            <!-- Slider and input boxes -->
-            <div class="sliderBoxes">
-                <div class="sliders">
-                    <p class="sliderTitle">Transmission rate</p>
-                    <p class="sliderDes">β represents the efective transmission rate. </p>
-                    <p> <input id="reproForm1"   class="inputForm"   type="number"   min="0.001"  max="0.1"      value="0.02"></p>
-                        <input id="reproSlider1" class="slider"      type="range"    min="0.001"     max="0.1"     value="0.02" step="0.001">
-                </div>
-                <div class="sliders">
-                    <p class="sliderTitle">Removal or deceased rate</p>
-                    <p class="sliderDes">γ represents the removal or the recovery rate.</p>
-                    <p> <input id="popForm1"     class="inputForm"   type="number"   min="0.00001" max="0.02"  maxlength="10000000"    value="0.0006"></p>
-                        <input id="popSlider1"   class="slider"      type="range"    min="0.00001" max="0.02"  maxlength="10000000"    value="0.0006" step="0.0001">
-                </div>
-                <div class="sliders">
-                    <p class="sliderTitle">Initial Susceptible (S<span class="sub">0</span>)</p>
-                    <p class="sliderDes">Text</p>
-                    <p> <input id="tranForm1"    class="inputForm"   type="number"   min="1000"    max="10000000"    maxlength="3"   value="99000"></p>
-                        <input id="tranSlider1"  class="slider"      type="range"    min="1000"    max="10000000"    maxlength="3"   value="99000">
-                </div>
-                <div class="sliders">
-                    <p class="sliderTitle">Initial Infected (I<span class="sub">0</span>)</p>
-                    <p class="sliderDes">Text</p>
-                    <p> <input id="infForm1"     class="inputForm"   type="number"   min="1"     max="1000"   maxlength="3"   value="500"></p>
-                        <input id="infSlider1"   class="slider"      type="range"    min="1"     max="1000"   maxlength="3"   value="500">
-                </div>
-                <div class="sliders">
-                    <p class="sliderTitle">Initial Removed (R<span class="sub">0</span>)</p>
-                    <p class="sliderDes">Text</p>
-                    <p> <input id="recForm1"     class="inputForm"   type="number"   min="1"     max="100000"   maxlength="3"   value="500"></p>
-                        <input id="recSlider1"   class="slider"      type="range"    min="1"     max="100000"   maxlength="3"   value="500">
-                </div>
-            </div>
-            <div class="sliderBoxes">
-                <div class="sliders">
-                    <p class="sliderTitle">Step size</p>
-                    <p class="sliderDes">Text</p>
-                    <p> <input id="stepForm1"     class="inputForm"   type="number"   min="0.01"     max="10"   maxlength="3"   value="0.1"></p>
-                        <input id="stepSlider1"   class="slider"      type="range"    min="0.01"     max="10"   maxlength="3"   value="0.1">
-                </div>
-                <div class="sliders">
-                    <p class="sliderTitle">Total steps</p>
-                    <p class="sliderDes">Text</p>
-                    <p> <input id="TotalstepForm1"     class="inputForm"   type="number"   min="100"     max="5000"   maxlength="3"   value="0.1"></p>
-                        <input id="TotalstepSlider1"   class="slider"      type="range"    min="100"     max="5000"   maxlength="3"   value="0.1">
-                </div>
-            </div>
-            <table>
+            <div id="right-container">
+                <a class="sliderTitle">Information</a>
+            <table class="infoTable">
                 <tr>
-                    <th>Disease</th>
-                    <th>Parameters</th>
-                    <th>Show on graph</th>
-                    <th>Source</th>
+                    <th>Population</th>
+                    <td id="totalPopulation">100000</td>
                 </tr>
                 <tr>
-                    <td>COVID-19 Algeria (2020)</td>
-                    <td>β = 0.0561215, γ = 0.0455331</td>
-                    <td><button onclick="covid19Algeria()">Try Me</button></td>
-                    <td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7570398/pdf/42269_2020_Article_434.pdf" target="_blank">Link</a></td>
+                    <th>Peak infected</th>
+                    <td>80000</td>
                 </tr>
                 <tr>
-                    <td>Tuberculosis</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>Link</td>
+                    <td>X</td>
+                    <td>X</td>
                 </tr>
                 <tr>
-                    <td>Ebola</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>Link</td>
+                    <td>X</td>
+                    <td>X</td>
                 </tr>
             </table>
+            <button id="resetButton" onclick="resetGraph()">Reset graph</button>
+        </div>
         </div>
         <script src="assets/js/main.js"></script>
     </body>

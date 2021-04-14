@@ -27,22 +27,26 @@ let stepForm = document.getElementById("stepForm1");
 let stepSlider = document.getElementById("stepSlider1");
 
 // Total Step size
-let TotalstepForm = document.getElementById("TotalstepForm1");
-let TotalstepSlider = document.getElementById("TotalstepSlider1");
+let totalStepForm = document.getElementById("totalStepForm1");
+let totalStepSlider = document.getElementById("totalStepSlider1");
 
-// Initiate x axis
-for(let i = 0; i < 5000; i++) {
-    xArr[i] = i;
-}
+// Information box
+let totalN = document.getElementById("totalPopulation");
 
-// Update x axis
+// Zoom on x axis with tArr
 xSlider.oninput = function() {
-    xArr.length = 0;
-    for(let i = 0; i < this.value; i++){
-        xArr[i] = i;
-    }
+    zoomX();
     updateGraph();
 }
+
+function zoomX() {
+    xArr = [];
+    for(i = 0; i < xSlider.value; i++) {
+        xArr[i] = tArr[i];
+    }
+    myChart.data.labels = xArr;
+}
+
 /* Beta */
 // Update the current input value (each time you type in it)
 reproForm.oninput = function() {
@@ -70,7 +74,6 @@ popForm.oninput = function() {
     localStorage.setItem("popValue", this.value);           // Cookie
     popSlider.value = this.value;
     gamma = this.value;
-    console.log("Gamma form input");
     if(this.value != 0)
         rk4sir();
 }
@@ -89,60 +92,60 @@ popSlider.value = popCookie;
 // Initial Susceptible, S0
 tranForm.oninput = function() {
     tranSlider.value = this.value;
-    S0 = parseInt(this.value);
+    S0 = parseFloat(this.value);
     rk4sir();
 }
 tranSlider.oninput = function() {
     tranForm.value = this.value;
-    S0 = parseInt(this.value);
+    S0 = parseFloat(this.value);
     rk4sir();
 }
 
 // Initial infected
 infForm.oninput = function() {
     infSlider.value = this.value;
-    I0 = parseInt(this.value);          // parseInt converts it from a string to number
+    I0 = parseFloat(this.value);          // parseFloat converts it from a string to number
     rk4sir();
 }
 infSlider.oninput = function() {
     infForm.value = this.value;
-    I0 = parseInt(this.value);
+    I0 = parseFloat(this.value);
     rk4sir();
 }
 
 // Initial Removed
 recForm.oninput = function() {
     recSlider.value = this.value;
-    R0 = parseInt(this.value);          // parseInt converts it from a string to number
+    R0 = parseFloat(this.value);          // parseFloat converts it from a string to number
     rk4sir();
 }
 recSlider.oninput = function() {
     recForm.value = this.value;
-    R0 = parseInt(this.value);
+    R0 = parseFloat(this.value);
     rk4sir();
 }
 
 // Step size
 stepForm.oninput = function() {
     stepSlider.value = this.value;
-    h = parseInt(this.value);          // parseInt converts it from a string to number
+    h = parseFloat(this.value);          // parseFloat converts it from a string to number
     rk4sir();
 }
 stepSlider.oninput = function() {
     stepForm.value = this.value;
-    h = parseInt(this.value);
+    h = parseFloat(this.value);
     rk4sir();
 }
 
 // Total step size
-TotalstepForm.oninput = function() {
+totalStepForm.oninput = function() {
     TotalstepSlider.value = this.value;
-    steps = parseInt(this.value);          // parseInt converts it from a string to number
+    steps = parseFloat(this.value);          // parseFloat converts it from a string to number
     rk4sir();
 }
-TotalstepSlider.oninput = function() {
-    TotalstepForm.value = this.value;
-    steps = parseInt(this.value);
+totalStepSlider.oninput = function() {
+    totalStepForm.value = this.value;
+    steps = parseFloat(this.value);
     rk4sir();
 }
 
@@ -159,14 +162,44 @@ function covid19Algeria() {
     dataI = [I0];
     dataR = [R0];
 
+    resetFormSliders();
+    rk4sir();
+}
+
+function resetFormSliders() {
     reproForm.value = beta;
     reproSlider.value = beta;
     popForm.value = gamma;
     popSlider.value = gamma;
-
-    rk4sir();
+    tranForm.value = S0;
+    tranSlider.value = S0;
+    infForm.value = I0;
+    infSlider.value = I0;
+    recForm.value = R0;
+    recSlider.value = R0;
+    stepForm.value = h;
+    stepSlider.value = h;
+    totalStepForm.value = steps;
+    totalStepSlider.value = steps;
 }
 
+function resetGraph() {
+    beta = 0.025;
+    gamma = 0.0006;
+    S0 = 99000;
+    I0 = 1000;
+    R0 = 0;
+    h = 0.1;
+    steps = 10000;
+    N = S0 + I0 + R0;
+    dataS = [S0];
+    dataI = [I0];
+    dataR = [R0];
+    tArr = [0];
+
+    resetFormSliders();
+    rk4sir();
+}
 
 let beta = 0.025,
     gamma = 0.0006,
@@ -174,21 +207,25 @@ let beta = 0.025,
     I0 = 1000,
     R0 = 0,
     h = 0.1,                 // Stepsize
-    steps = 5001,           // Total steps
+    steps = 10000,           // Total steps
 
     N = S0 + I0 + R0,
     dataS = [S0],
     dataI = [I0],
-    dataR = [R0];
+    dataR = [R0],
+    tArr = [0];
 
 function rk4sir(){
     console.log("Start: rk4sir");                
     
     N = S0 + I0 + R0;       // Total population
+    totalN.innerHTML = N;
+
     dataS = [S0];
     dataI = [I0];
     dataR = [R0];
-
+    tArr = [0];
+    
     function fS(S, I){
         return -(beta*I*S)/N;
     }
@@ -213,13 +250,16 @@ function rk4sir(){
             Rk1 = fR(dataI[i-1]),
             Rk2 = fR(dataI[i-1] + h/2*Rk1),
             Rk3 = fR(dataI[i-1] + h/2*Rk2),
-            Rk4 = fR(dataI[i-1] + h*Rk3),
-            t = i*h;
-
-        dataS.push(dataS[i-1] + (Sk1 + 2*(Sk2 + Sk3) + Sk4)/6);
-        dataI.push(dataI[i-1] + (Ik1 + 2*(Ik2 + Ik3) + Ik4)/6);
-        dataR.push(dataR[i-1] + (Rk1 + 2*(Rk2 + Rk3) + Rk4)/6);
+            Rk4 = fR(dataI[i-1] + h*Rk3);
+            
+        tArr[i] = (i*h).toFixed(1);
+        
+        dataS.push(dataS[i-1] + (Sk1 + 2*(Sk2 + Sk3) + Sk4)*h/6);
+        dataI.push(dataI[i-1] + (Ik1 + 2*(Ik2 + Ik3) + Ik4)*h/6);
+        dataR.push(dataR[i-1] + (Rk1 + 2*(Rk2 + Rk3) + Rk4)*h/6);
     }
+    
+    myChart.data.labels = tArr;
     myChart.data.datasets[0].data = dataS;
     myChart.data.datasets[1].data = dataI;
     myChart.data.datasets[2].data = dataR;
@@ -265,13 +305,13 @@ var myChart = new Chart(ctx, {
             xAxes: [{
                 ticks: {
                     beginAtZero: true,
-                    //stepSize: 1
+                    
                 }
             }]
         },
         maintainAspectRatio: false,
         animation: {
-            duration: 100
+            duration: 10
         },
         elements: {
             line: {
