@@ -1,3 +1,4 @@
+
 let beta = 0.025,
     gamma = 0.0006,
     S0 = 99000,
@@ -47,5 +48,3 @@ function rk4sir(){
             console.log("S(" + t.toFixed(0) + ") = " + S[i].toFixed(3) + ", \t I(" + t.toFixed(1) + ") = " + I[i].toFixed(3) + ", \t R(" + t.toFixed(1) + ") = " + R[i].toFixed(3));
     }
 }
-
-rk4sir();
