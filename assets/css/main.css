@@ -115,9 +115,13 @@ td {
     text-align: center;
 }
 
+.slider {
+    width: 5vw;
+}
+
 .sliders {
     display: inline-block;
-    width: 19.0%;
+    width: 24.0%;
     height: 220px;
     background: lightgrey;
     border-radius: 3%;
@@ -135,6 +139,7 @@ td {
     text-align: left;
     margin-top: -5%;
     height: 15%;
+    /*text-align: justify; */
 }
 
 .sliderValue {

@@ -36,24 +36,18 @@
                 <!-- Slider and input boxes -->
                 <div class="sliderBoxes">
                     <div class="sliders">
-                        <p class="sliderTitle">Transmission rate</p>
-                        <p class="sliderDes">β represents the efective transmission rate. </p>
-                        <p> <input id="transForm1"   class="inputForm"   type="number"   min="0.001"  max="0.1"      value="0.02"></p>
-                            <input id="transSlider1" class="slider"      type="range"    min="0.001"     max="0.1"     value="0.02" step="0.001">
-                    </div>
-                    <div class="sliders">
-                        <p class="sliderTitle">Removal or deceased rate</p>
-                        <p class="sliderDes">γ represents the removal or the recovery rate.</p>
-                        <p> <input id="remForm1"     class="inputForm"   type="number"   min="0.00001" max="0.02"  maxlength="10000000"    value="0.0006"></p>
-                            <input id="remSlider1"   class="slider"      type="range"    min="0.00001" max="0.02"  maxlength="10000000"    value="0.0006" step="0.0001">
-                    </div>
-                    <div class="sliders">
                         <p class="sliderTitle">Initial Susceptible (S<span class="sub">0</span>)</p>
                         <p class="sliderDes">Text <br>
                         <input type="checkbox" id="fixedPopulation" name="fixedPopulation" value="popChecked" onchange="fixedPopulation()">
                         <label for="fixedPopulation">Fixed Population</label></p>
                         <p> <input id="S0Form1"    class="inputForm"   type="number"   min="1000"    max="10000000"    maxlength="3"   value="99000"></p>
                             <input id="S0Slider1"  class="slider"      type="range"    min="1000"    max="10000000"    maxlength="3"   value="99000">
+                    </div>
+                    <div class="sliders">
+                        <p class="sliderTitle">Initial Exposed (E<span class="sub">0</span>)</p>
+                        <p class="sliderDes">Text</p>
+                        <p> <input id="E0Form1"     class="inputForm"   type="number"   min="0"     max="100000"   maxlength="3"   value="0"></p>
+                            <input id="E0Slider1"   class="slider"      type="range"    min="0"     max="100000"   maxlength="3"   value="0">
                     </div>
                     <div class="sliders">
                         <p class="sliderTitle">Initial Infected (I<span class="sub">0</span>)</p>
@@ -66,6 +60,32 @@
                         <p class="sliderDes">Text</p>
                         <p> <input id="R0Form1"     class="inputForm"   type="number"   min="0"     max="100000"   maxlength="3"   value="0"></p>
                             <input id="R0Slider1"   class="slider"      type="range"    min="0"     max="100000"   maxlength="3"   value="0">
+                    </div>
+                </div>
+                <div class="sliderBoxes">
+                    <div class="sliders">
+                        <p class="sliderTitle">Beta</p>
+                        <p class="sliderDes">β represents the efective transmission rate. </p>
+                        <p> <input id="transForm1"   class="inputForm"   type="number"   min="0.001"  max="0.1"      value="0.02"></p>
+                            <input id="transSlider1" class="slider"      type="range"    min="0.001"     max="0.1"     value="0.02" step="0.001">
+                    </div>
+                    <div class="sliders">
+                        <p class="sliderTitle">Gamma</p>
+                        <p class="sliderDes">γ represents the removal or the recovery rate.</p>
+                        <p> <input id="remForm1"     class="inputForm"   type="number"   min="0.00001" max="0.02"  maxlength="10000000"    value="0.0006"></p>
+                            <input id="remSlider1"   class="slider"      type="range"    min="0.00001" max="0.02"  maxlength="10000000"    value="0.0006" step="0.0001">
+                    </div>
+                    <div class="sliders">
+                        <p class="sliderTitle">Epsilon</p>
+                        <p class="sliderDes">The rate of recovered individuals returning to susceptible.</p>
+                        <p> <input id="epsForm1"   class="inputForm"   type="number"   min="0.00001"  max="0.1"      value="0.02"></p>
+                            <input id="epsSlider1" class="slider"      type="range"    min="0.00001"     max="0.1"     value="0.02" step="0.00001">
+                    </div>
+                    <div class="sliders">
+                        <p class="sliderTitle">Sigma</p>
+                        <p class="sliderDes">The incubation rate.</p>
+                        <p> <input id="sigForm1"     class="inputForm"   type="number"   min="0.00001" max="0.02"  maxlength="10000000"    value="0.0006"></p>
+                            <input id="sigSlider1"   class="slider"      type="range"    min="0.00001" max="0.02"  maxlength="10000000"    value="0.0006" step="0.0001">
                     </div>
                 </div>
                 <div class="sliderBoxes">
@@ -137,7 +157,7 @@
                 <button id="resetButton" onclick="resetGraph()">Reset graph</button>
                 
                 <!-- Trigger/Open The Modal -->
-                <button id="myBtn">Start Guide</button>
+                <button id="guideBtn">Start Guide</button>
                 <!-- Infomation table -->
                 <table class="infoTable">
                     <tr>
@@ -150,12 +170,15 @@
                     </tr>
                     <tr>
                         <th>Peak exposed</th>
-                        <td>10000 at day 420</td>
+                        <td id="maxExposed">10000 at day 420</td>
                     </tr>
                 </table>
                 
                 <!-- Saved parameters table -->
                 <button id="savedBtn" onclick="saveParameters()">Save Parameters</button>
+                <button id="cookiesTestBtn" onclick="runSavedParameters()">Cookies test</button>
+                <button onclick="deleteRow()">Delete Row</button>
+                <button id="deleteBtn" onclick="redefineRow()">Redefine Rows</button>
                 <input id="savedName" type="text" placeholder="File name" name="savedName" maxlength="20" value=""><br>
                 <table id="savedParametersTable" class="savedTable">
                     <tr>
@@ -169,7 +192,7 @@
         </div>
 
         <!-- The Modal -->
-        <div id="myModal" class="modal">
+        <div id="guideBox" class="modal">
             <!-- Modal content -->
             <div class="modal-content">
                 <span class="close">&times;</span>

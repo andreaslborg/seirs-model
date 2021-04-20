@@ -1,8 +1,8 @@
 // Get the modal
-let popupGuide = document.getElementById("myModal");
+let popupGuide = document.getElementById("guideBox");
 
 // Get the button that opens the modal
-let btn = document.getElementById("myBtn");
+let btn = document.getElementById("guideBtn");
 
 // Get the <span> element that closes the modal
 let span = document.getElementsByClassName("close")[0];

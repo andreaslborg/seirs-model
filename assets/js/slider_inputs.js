@@ -14,6 +14,10 @@ let remSlider = document.getElementById("remSlider1");
 let S0Form = document.getElementById("S0Form1");
 let S0Slider = document.getElementById("S0Slider1");
 
+// Initial Exposed
+let E0Form = document.getElementById("E0Form1");
+let E0Slider = document.getElementById("E0Slider1");
+
 // Initial infected
 let I0Form = document.getElementById("I0Form1");
 let I0Slider = document.getElementById("I0Slider1");
@@ -33,6 +37,14 @@ let totalStepSlider = document.getElementById("totalStepSlider1");
 // Information box
 let totalN = document.getElementById("totalPopulation");
 let maxInf = document.getElementById("maxInfected");
+
+// Sigma
+let sigmaForm = document.getElementById("sigForm1");
+let sigmaSlider = document.getElementById("sigSlider1");
+
+// Epsilon
+let epsilonForm = document.getElementById("epsForm1");
+let epsilonSlider = document.getElementById("epsSlider1");
 
 /* Zoom on x axis with tArr */
 xSlider.oninput = function() {
@@ -78,6 +90,35 @@ remSlider.oninput = function() {
     rk4sir();
 }
 
+/* Epsilon */
+epsilonForm.oninput = function() {
+    localStorage.setItem("epsilonValue", this.value);           // Cookie
+    epsilonSlider.value = this.value;
+    epsilon = parseFloat(this.value);          // parseFloat converts it from a string to float
+    rk4sir();
+}
+epsilonSlider.oninput = function() {
+    localStorage.setItem("epsilonValue", this.value);           // Cookie
+    epsilonForm.value = this.value;
+    epsilon = parseFloat(this.value);
+    rk4sir();
+}
+
+/* Sigma */
+sigmaForm.oninput = function() {
+    localStorage.setItem("sigmaValue", this.value);           // Cookie
+    sigmaSlider.value = this.value;
+    sigma = parseFloat(this.value);          // parseFloat converts it from a string to float
+    rk4sir();
+}
+sigmaSlider.oninput = function() {
+    localStorage.setItem("sigmaValue", this.value);           // Cookie
+    sigmaForm.value = this.value;
+    sigma = parseFloat(this.value);
+    rk4sir();
+}
+
+
 /* S0: Initial Susceptible */
 S0Form.oninput = function() {
     localStorage.setItem("S0Value", this.value);           // Cookie
@@ -89,6 +130,20 @@ S0Slider.oninput = function() {
     localStorage.setItem("S0Value", this.value);           // Cookie
     S0Form.value = this.value;
     S0 = parseFloat(this.value);
+    rk4sir();
+}
+
+/* E0: Initial Exposed */
+E0Form.oninput = function() {
+    localStorage.setItem("E0Value", this.value);           // Cookie
+    E0Slider.value = this.value;
+    E0 = parseFloat(this.value);          // parseFloat converts it from a string to number
+    rk4sir();
+}
+E0Slider.oninput = function() {
+    localStorage.setItem("E0Value", this.value);           // Cookie
+    E0Form.value = this.value;
+    E0 = parseFloat(this.value);
     rk4sir();
 }
 
