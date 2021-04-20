@@ -8,8 +8,8 @@ let btn = document.getElementById("guideBtn");
 let span = document.getElementsByClassName("close")[0];
 
 // When the user clicks the button, open the modal 
-btn.onclick = function() {
-  popupGuide.style.display = "block";
+function showPopup() {
+    popupGuide.style.display = "block";
 }
 
 /* When the user uses the website for the first time, the modal opens */  
