@@ -11,8 +11,8 @@ function fixedPopulation() {
 
 let beta = transCookie,
     gamma = remCookie,
-    epsilon = 0.0001,
-    sigma = 0.01,
+    epsilon = epsilonCookie,
+    sigma = sigmaCookie,
     S0 = S0Cookie,
     E0 = E0Cookie,
     I0 = I0Cookie,
