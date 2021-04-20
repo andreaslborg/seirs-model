@@ -5,64 +5,8 @@ body, .inputForm, a {
 h1, h2, h3, h4, h5, h6 {
     color: black;
     margin-left: 1%;
-    font-family: 'Crimson Text', serif;
-}
-
-a {
-    color: blue;
-}
-
-p {
-    margin-left: 10%;
-    margin-right: 10%;
-}
-
-ul, li {
-    margin-left: 0%;
-}
-
-
-.sub {
-    position: relative;
-    top: 0.8ex;
-    font-size: 75%;
-}
-
-table, th, td, button {
-    margin-top: -1%;
-    margin-bottom: 1%;
-    margin-left: 1%;
     margin-right: 1%;
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-th {
-    padding: 5px;
-    text-align: left;
-    width: 5%;
-}
-td {
-    padding: 5px;
-    text-align: left;
-    width: 5%;
-}
-
-.diseasesTable {
-    margin-top: 0%;
-}
-
-
-#infoTitle {
-    margin-bottom: -0%;
-}
-
-.infoTable {
-    margin-top: 0%;
-    margin-bottom: 5%;
-}
-
-.savedTable {
-    margin-top: 1%;
+    font-family: 'Crimson Text', serif;
 }
 
 #title1 {
@@ -86,16 +30,71 @@ td {
     color: black;
 }
 
-.chart {
-    width: 100%;
-    margin-bottom: 0.5%;
-    height: 520px;
-    text-align: center;
+a {
+    color: blue;
 }
 
+p {
+    margin-left: 1%;
+    margin-right: 1%;
+}
 
-#resetButton {
-    
+ul, li {
+    margin-left: 0%;
+}
+
+.sub {
+    position: relative;
+    top: 0.8ex;
+    font-size: 75%;
+}
+
+table, th, td, button {
+    margin-top: -1%;
+    margin-bottom: 1%;
+    margin-left: 1%;
+    margin-right: 1%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+button:hover, button:focus {
+    cursor: pointer;
+}
+
+th, td {
+    padding: 5px;
+    text-align: left;
+    width: 5%;
+}
+
+.diseasesTable {
+    margin-top: 0%;
+}
+
+#infoTitle {
+    margin-bottom: -0%;
+}
+
+.infoTable {
+    margin-top: 0%;
+    margin-bottom: 5%;
+}
+
+.savedTable {
+    margin-top: 1%;
+}
+
+#savedName {
+    margin-left: 1%;
+    width: 40%;
+}
+
+.chart {
+    width: 100%;
+    height: 450px;
+    margin-bottom: 1%;
+    text-align: center;
 }
 
 #left-container {
@@ -111,39 +110,61 @@ td {
     width: 30%;
 }
 
+.checkbox {
+    margin-left: 0%;
+}
+
 .sliderBoxes {
-    text-align: center;
+    text-align: left;
+    margin-left: 1%;
 }
 
-.slider {
-    width: 5vw;
-}
-
-.sliders {
+.sliderBox {
     display: inline-block;
-    width: 24.0%;
-    height: 220px;
+    width: 19.6%;
+    height: 30%;
     background: lightgrey;
-    border-radius: 3%;
+    border-radius: 2%; /* Gives the box rounded corners */
     margin-top: 0.5%;
 }
 
 .sliderTitle {
-    font-size: 1.2vw;
+    font-size: 1vw;
     text-align: left;
-    height: 25%;
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 .sliderDes {
-    font-size: 0.8vw;
-    text-align: left;
+    font-size: 0.7vw;
     margin-top: -5%;
-    height: 15%;
-    /*text-align: justify; */
+    margin-left: 5%;
+    margin-right: 5%;
+    height: 2.5vw;
+    hyphens: auto;
 }
 
-.sliderValue {
-    font-size: 120%;
+.slider {
+    margin-top: 0%;
+    margin-bottom: 1%;
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+}
+
+.inputForm {
+    font-size: 1vw;
+    text-align: left;
+    background-color: transparent;
+    border: 0;
+    border-color: transparent;
+    width: 90%;
+    margin-top: -10%;
+    margin-bottom: 3%;
+    margin-left: 5%;
+    margin-right: 5%;
+    box-shadow: none !important;  /* Removes the red outline */
 }
 
 #xSlider1 {
@@ -159,28 +180,9 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-.inputForm {
-    font-size: 120%;
-    text-align: center;
-    width: 100%;
-    background-color: transparent;
-    border: 0;
-}
-
-#myRange1Form {
-    width: 20%
-}
-
-.mathTitle {
-
-    font-weight: bold;
-    font-size: 150%;
-}
-
 .mathFunc {
     text-align: center;
     font-size: 100%;
-
 }
 
 /* The Modal (background) */
@@ -209,9 +211,9 @@ input::-webkit-inner-spin-button {
 
 /* Modal Text */
 .modalText {
-      margin-left: 1%;
-      margin-right: 1%;
-      text-align: justify;
+    margin-left: 1%;
+    margin-right: 1%;
+    text-align: justify;
 }
   
 /* The Close Button */
@@ -223,6 +225,8 @@ input::-webkit-inner-spin-button {
     font-size: 250%;
     font-weight: bold;
 }
+
+/* Change mouse when it hovers the X */
 .close:hover, .close:focus {
     color: #000;
     text-decoration: none;

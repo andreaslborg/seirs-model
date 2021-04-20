@@ -111,8 +111,14 @@ function rk4sir(){
     
     /* Finds the highest number (peak infected) in the dataI array and puts in into the info table */
     let peakInfected = Math.max(...dataI).toFixed(0);
-    let peakInfectedDate = dataI.indexOf(Math.max(...dataI));
+    let peakInfectedDate = dataI.indexOf(Math.max(...dataI)) / 100;
     maxInf.innerHTML = peakInfected + " at day " + peakInfectedDate;
+
+    /* Finds the highest number (peak exposed) in the dataE array and puts in into the info table */
+    let peakExposed = Math.max(...dataE).toFixed(0);
+    let peakExposedDate = dataE.indexOf(Math.max(...dataE)) / 100;
+    maxExp.innerHTML = peakExposed + " at day " + peakExposedDate;
+
 
     myChart.data.labels = tArr;
     myChart.data.datasets[0].data = dataS;

@@ -34,10 +34,6 @@ let stepSlider = document.getElementById("stepSlider1");
 let totalStepForm = document.getElementById("totalStepForm1");
 let totalStepSlider = document.getElementById("totalStepSlider1");
 
-// Information box
-let totalN = document.getElementById("totalPopulation");
-let maxInf = document.getElementById("maxInfected");
-
 // Sigma
 let sigmaForm = document.getElementById("sigForm1");
 let sigmaSlider = document.getElementById("sigSlider1");
@@ -45,6 +41,11 @@ let sigmaSlider = document.getElementById("sigSlider1");
 // Epsilon
 let epsilonForm = document.getElementById("epsForm1");
 let epsilonSlider = document.getElementById("epsSlider1");
+
+// Information box
+let totalN = document.getElementById("totalPopulation");
+let maxInf = document.getElementById("maxInfected");
+let maxExp = document.getElementById("maxExposed");
 
 /* Zoom on x axis with tArr */
 xSlider.oninput = function() {
