@@ -4,9 +4,8 @@
         <title>Epidemiological Modelling</title>
         <meta charset="utf-8">
         <link rel="stylesheet" href="assets/css/main.css">
-
+        <!-- Using google APIs font -->
         <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Work+Sans:400,700" rel="stylesheet">
-
         <!-- Icon in browser tab -->
         <link rel="icon" href="images/aau_icon.png">
         <!-- Chart.js API link -->
@@ -25,15 +24,13 @@
                 <h1 id="title1">Epidemiological Modelling</h1>
                 <h2 id="titledes">SEIRS Compartmental Model</h2>
             </div>
-
             <!-- Inserts chart/graph -->
             <div id="left-container">
                 <div class="chart">
-                    <canvas id="myChart"></canvas>
+                    <canvas id="seirsChart"></canvas>
                 </div>
                 <!-- X-axes slider -->
                 <input id="xSlider1" class="slider" type="range" min="0" max="20000" value="10000" step="1">
-
                 <!-- Slider and input boxes -->
                 <div class="sliderBoxes">
                     <div class="sliderBox">
@@ -65,32 +62,32 @@
                     <div class="sliderBox">
                         <p class="sliderTitle">Step size</p>
                         <p class="sliderDes">Step size used in the RK4 approximation.</p>
-                        <input id="stepForm1"    class="inputForm"   type="number"   min="0.01"     max="10"   maxlength="3"   value="0.1">
-                        <input id="stepSlider1"  class="slider"      type="range"    min="0.01"     max="5"   maxlength="3"   value="0.1" step="0.01">
+                        <input id="stepForm1"    class="inputForm"   type="number"   min="0.01"     max="1"   maxlength="3"   value="0.1">
+                        <input id="stepSlider1"  class="slider"      type="range"    min="0.01"     max="1"   maxlength="3"   value="0.1" step="0.01">
                     </div>
                 </div>
                 <div class="sliderBoxes">
                     <div class="sliderBox">
                         <p class="sliderTitle">Beta</p>
-                        <p class="sliderDes">β determines the rate of spread.</p>
-                        <input id="transForm1"   class="inputForm"   type="number"   min="0.001"  max="3"      value="0.02">
-                        <input id="transSlider1" class="slider"      type="range"    min="0.001"     max="3"     value="0.02" step="0.001">
+                        <p class="sliderDes">\(\beta\) determines the rate of spread.</p>
+                        <input id="betaForm1"   class="inputForm"   type="number"   min="0.001"  max="3"      value="0.02">
+                        <input id="betaSlider1" class="slider"      type="range"    min="0.001"     max="3"     value="0.02" step="0.001">
                     </div>
                     <div class="sliderBox">
                         <p class="sliderTitle">Gamma</p>
-                        <p class="sliderDes">γ determines the rate at which individuals recover.</p>
-                        <input id="remForm1"     class="inputForm"   type="number"   min="0.00001" max="0.5"  maxlength="10000000"    value="0.0006">
-                        <input id="remSlider1"   class="slider"      type="range"    min="0.00001" max="0.5"  maxlength="10000000"    value="0.0006" step="0.0001">
+                        <p class="sliderDes">\(\gamma\) determines the rate at which individuals recover.</p>
+                        <input id="gammaForm1"     class="inputForm"   type="number"   min="0.00001" max="0.5"  maxlength="10000000"    value="0.0006">
+                        <input id="gammaSlider1"   class="slider"      type="range"    min="0.00001" max="0.5"  maxlength="10000000"    value="0.0006" step="0.0001">
                     </div>
                     <div class="sliderBox">
                         <p class="sliderTitle">Epsilon</p>
-                        <p class="sliderDes">ϵ determines the rate of recovered individuals returning to susceptible.</p>
-                        <input id="epsForm1"    class="inputForm"   type="number"   min="0.00001"  max="0.1"      value="0.02">
-                        <input id="epsSlider1"  class="slider"      type="range"    min="0.00001"     max="0.1"     value="0.02" step="0.00001">
+                        <p class="sliderDes">\(\epsilon\) determines the rate of recovered individuals returning to susceptible.</p>
+                        <input id="epsForm1"    class="inputForm"   type="number"   min="0.00001"  max="0.1"     value="0.02">
+                        <input id="epsSlider1"  class="slider"      type="range"    min="0.00001"  max="0.1"     value="0.02" step="0.00001">
                     </div>
                     <div class="sliderBox">
                         <p class="sliderTitle">Sigma</p>
-                        <p class="sliderDes">σ determines the rate of individuals who are exposed becoming infectious.</p>
+                        <p class="sliderDes">\(\sigma\) determines the rate of individuals who are exposed becoming infectious.</p>
                         <input id="sigForm1"     class="inputForm"   type="number"   min="0.00001" max="0.2"  maxlength="10000000"    value="0.0006">
                         <input id="sigSlider1"   class="slider"      type="range"    min="0.00001" max="0.2"  maxlength="10000000"    value="0.0006" step="0.0001">
                     </div>
@@ -111,8 +108,8 @@
                         <th>Source</th>
                     </tr>
                     <tr>
-                        <td>COVID-19 Algeria (2020)</td>
-                        <td>β = 0.0561215, γ = 0.0455331</td>
+                        <td>COVID-19 Algeria (2020) SIR Model</td>
+                        <td>\(\beta\) = 0.0561215, \(\gamma\) = 0.0455331</td>
                         <td><a onclick="covid19Algeria()" style="cursor: pointer; cursor: hand; color: blue;">Press me</a></td>
                         <td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7570398/pdf/42269_2020_Article_434.pdf" target="_blank">Link</a></td>
                     </tr>
@@ -131,11 +128,11 @@
                 </table>
                 <!-- SEIRS Model Explanation -->
                 <h2>SEIRS Model</h2>
-                <p class="modalText">The SEIRS ordinary differential equation is:  </p>
-                <p class="mathFunc">\( {dS \over dt} = -{βSI \over N} + 𝜉R  \)</p>
-                <p class="mathFunc">\( {dE \over dt} = {βIS \over N} - 𝜎E  \)</p>
-                <p class="mathFunc">\( {dI \over dt} = 𝜎E - γI \)</p>
-                <p class="mathFunc">\( {dR \over dt} = γI - 𝜉R \)</p><br>
+                <p class="modalText">The SEIRS models ordinary differential equations are:  </p>
+                <p class="mathFunc">\( {dS \over dt} = -{\beta SI \over N} + \epsilon R  \)</p>
+                <p class="mathFunc">\( {dE \over dt} = {\beta IS \over N} - \sigma E  \)</p>
+                <p class="mathFunc">\( {dI \over dt} = \sigma E - \gamma I \)</p>
+                <p class="mathFunc">\( {dR \over dt} = \gamma I - \epsilon R \)</p><br>
                 <p class="modalText">where</p>
                 <ul>
                     <li class="modalText">S is the number of susceptible individuals </li>
@@ -148,51 +145,56 @@
                 <li class="modalText">β is the infectious rate</li>                   
                 <li class="modalText">𝜎 is the incubation rate</li>
                 <li class="modalText">γ is the recovery rate</li>
-                <li class="modalText">𝜉 is the rate which recovered individuals return to the susceptible statue due to loss of immunity</li> 
+                <li class="modalText">ϵ is the rate which recovered individuals return to the susceptible statue due to loss of immunity</li> 
                 </ul>
             </div>
             <div id="right-container">
-                <h2 id="infoTitle">Information</h2>
+                <h2 id="infoTitle">Information
+                    <div class="tooltip">?
+                        <span class="tooltiptext">Here you can see information about the chart. It updates with the chart itself.</span>
+                    </div></h2>
 
                 <!-- Reset button -->
                 <button id="resetButton" onclick="resetGraph()">Reset graph</button>
-                
+                <!-- Clear Cookies button -->
+                <button id="clearCookiesButton" onclick="clearCookies()">Clear Cookies</button>
                 <!-- Trigger/Open The Modal -->
                 <button id="guideBtn" onclick="showPopup()">Start Guide</button>
                 <!-- Infomation table -->
                 <table class="infoTable">
                     <tr>
-                        <th>Population</th>
+                        <th>Total Population</th>
                         <td id="totalPopulation">100000</td>
                     </tr>
                     <tr>
-                        <th>Peak infected</th>
+                        <th>Peak Infected</th>
                         <td id="maxInfected">80000</td>
                     </tr>
                     <tr>
-                        <th>Peak exposed</th>
+                        <th>Peak Exposed</th>
                         <td id="maxExposed">10000 at day 420</td>
                     </tr>
                 </table>
                 
                 <!-- Saved parameters table -->
+                <h2 id="savedTitle">Saved Parameters
+                <div class="tooltip">?
+                    <span class="tooltiptext">Here you can save your current parameters. These are only available on this device.</span>
+                </div></h2>
+                <input id="savedName" type="text" placeholder="File name" name="savedName" maxlength="20" value="">
                 <button id="savedBtn" onclick="saveParameters()">Save Parameters</button>
-                <button id="cookiesTestBtn" onclick="runSavedParameters()">Cookies test</button>
-                <button onclick="deleteRow()">Delete Row</button>
-                <button id="deleteBtn" onclick="redefineRow()">Redefine Rows</button>
-                <input id="savedName" type="text" placeholder="File name" name="savedName" maxlength="20" value=""><br>
                 <table id="savedParametersTable" class="savedTable">
                     <tr>
                         <th>File Name</th>
                         <th>Saved Date</th>
-                        <th>Try Me</th>
+                        <th>Try</th>
                         <th>Delete</th>
                     </tr>
                 </table>
             </div>
         </div>
 
-        <!-- The Modal -->
+        <!-- The Modal / Popup Welcome Message -->
         <div id="guideBox" class="modal">
             <!-- Modal content -->
             <div class="modal-content">
@@ -202,12 +204,10 @@
                      Additionally, the purpose of the website is to fulfill the curriculum requirements of the current semester.</p>
                 <h1>About the website</h1>
                 <p class="modalText">The modelling of infectious diseases is a tool that can be used to study the mechanisms by which diseases spread, to predict the future course of an outbreak, and to evaluate strategies to control an epidemic.
-                     The world is currently in the midst of the COVID-19 pandemic, which makes it even more crucial to have access to a tool like this.
-                    
-                </p>
+                     The world is currently in the midst of the COVID-19 pandemic, which makes it even more crucial to have access to a tool like this.</p>
                 <h1>Created by</h1>
-                <p class="modalText">Andreas Løvig Borg <br> Elias Davidsen <br> Lasse Ryge Andersen <br> Marius Ihlen Gardshodn <br> Mikkel Hagerup Dolmer</p>
-                <em class="modalText">Last updated on April 16, 2021</em>
+                <p class="modalText">Andreas Løvig Borg <br>Elias Davidsen <br>Lasse Ryge Andersen <br>Marius Ihlen Gardshodn <br>Mikkel Hagerup Dolmer</p>
+                <em class="modalText">Last updated on April 26, 2021</em>
             </div>
         </div>
 

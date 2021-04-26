@@ -1,3 +1,7 @@
+function clearCookies() {
+    localStorage.clear();
+}
+
 function checkVisit() {
     if (localStorage.getItem("firstVisit") === null) {
         console.log("First visit");
@@ -12,8 +16,8 @@ function checkVisit() {
             R0 = 0,
             h = 0.01,
             steps = 10000;
-        localStorage.setItem("transValue", beta);
-        localStorage.setItem("remValue", gamma); 
+        localStorage.setItem("betaValue", beta);
+        localStorage.setItem("gammaValue", gamma);
         localStorage.setItem("epsilonValue", epsilon);
         localStorage.setItem("sigmaValue", sigma);
         localStorage.setItem("S0Value", S0);
@@ -22,6 +26,12 @@ function checkVisit() {
         localStorage.setItem("R0Value", R0);
         localStorage.setItem("stepValue", h);
         localStorage.setItem("totalStepValue", steps);
+
+        let data = JSON.stringify([0]);
+        localStorage.setItem("savedTable.filenameCookie", data);
+        localStorage.setItem("savedTable.dateCookie", data);
+        localStorage.setItem("savedTable.parametersCookie", data);
+        
     } else {
         visitCounter = parseFloat(localStorage.getItem("firstVisit")) + 1;
         localStorage.setItem("firstVisit", visitCounter);
@@ -32,14 +42,24 @@ function checkVisit() {
 /* This function loads all values from last sessions saved as cookies */
 function allCookies() {
     /* Loads Beta */
-    transCookie = parseFloat(localStorage.getItem("transValue"));
-    transForm.value = transCookie;
-    transSlider.value = transCookie;
+    betaCookie = parseFloat(localStorage.getItem("betaValue"));
+    betaForm.value = betaCookie;
+    betaSlider.value = betaCookie;
 
     /* Loads Gamma */
-    remCookie = parseFloat(localStorage.getItem("remValue"));
-    remForm.value = remCookie;
-    remSlider.value = remCookie;
+    gammaCookie = parseFloat(localStorage.getItem("gammaValue"));
+    gammaForm.value = gammaCookie;
+    gammaSlider.value = gammaCookie;
+
+    /* Epsilon */
+    epsilonCookie = parseFloat(localStorage.getItem("epsilonValue"));
+    epsilonForm.value = epsilonCookie;
+    epsilonSlider.value = epsilonCookie;
+    
+    /* Sigma */
+    sigmaCookie = parseFloat(localStorage.getItem("sigmaValue"));
+    sigmaForm.value = sigmaCookie;
+    sigmaSlider.value = sigmaCookie;
 
     /* Loads S0 */
     S0Cookie = parseFloat(localStorage.getItem("S0Value"));
@@ -70,17 +90,5 @@ function allCookies() {
     totalStepCookie = parseFloat(localStorage.getItem("totalStepValue"));
     totalStepForm.value = totalStepCookie;
     totalStepSlider.value = totalStepCookie;
-    
-    /* Epsilon */
-    epsilonCookie = parseFloat(localStorage.getItem("epsilonValue"));
-    epsilonForm.value = epsilonCookie;
-    epsilonSlider.value = epsilonCookie;
-    
-    /* Sigma */
-    sigmaCookie = parseFloat(localStorage.getItem("sigmaValue"));
-    sigmaForm.value = sigmaCookie;
-    sigmaSlider.value = sigmaCookie;
-
-    
 }
 

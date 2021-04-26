@@ -1,8 +1,11 @@
 /* Set the new values to the cookies */
 function setCookieValues() {
-    localStorage.setItem("transValue", beta);
-    localStorage.setItem("remValue", gamma); 
+    localStorage.setItem("betaValue", beta);
+    localStorage.setItem("gammaValue", gamma);
+    localStorage.setItem("sigmaValue", sigma);
+    localStorage.setItem("epsilonValue", epsilon);
     localStorage.setItem("S0Value", S0);
+    localStorage.setItem("E0Value", E0);
     localStorage.setItem("I0Value", I0);
     localStorage.setItem("R0Value", R0);
     localStorage.setItem("stepValue", h);
@@ -11,12 +14,18 @@ function setCookieValues() {
 
 /* Set the new values to the sliders and forms */
 function setFormSliders() {
-    transForm.value = beta;
-    transSlider.value = beta;
-    remForm.value = gamma;
-    remSlider.value = gamma;
+    betaForm.value = beta;
+    betaSlider.value = beta;
+    gammaForm.value = gamma;
+    gammaSlider.value = gamma;
+    epsilonForm.value = epsilon;
+    epsilonSlider.value = epsilon;
+    sigmaForm.value = sigma;
+    sigmaSlider.value = sigma;
     S0Form.value = S0;
     S0Slider.value = S0;
+    E0Form.value = E0;
+    E0Slider.value = E0;
     I0Form.value = I0;
     I0Slider.value = I0;
     R0Form.value = R0;
@@ -25,22 +34,4 @@ function setFormSliders() {
     stepSlider.value = h;
     totalStepForm.value = steps;
     totalStepSlider.value = steps;
-}
-
-function covid19Algeria() {
-    beta = 0.0561215;
-    gamma = 0.0455331;
-    S0 = 99000;
-    I0 = 1000;
-    R0 = 0;
-    h = 0.1;                 // Stepsize
-    steps = 5001;           // Total steps
-    N = S0 + I0 + R0;
-    dataS = [S0];
-    dataI = [I0];
-    dataR = [R0];
-
-    setCookieValues();
-    setFormSliders();
-    rk4sir();
 }

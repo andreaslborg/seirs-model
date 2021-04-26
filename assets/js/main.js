@@ -9,8 +9,8 @@ function fixedPopulation() {
 
 }
 
-let beta = transCookie,
-    gamma = remCookie,
+let beta = betaCookie,
+    gamma = gammaCookie,
     epsilon = epsilonCookie,
     sigma = sigmaCookie,
     S0 = S0Cookie,
@@ -31,8 +31,8 @@ function resetGraph() {
     console.log("Resetting parameters");
     beta = 2.2;
     gamma = 0.33333;
-    epsilon = 0.07142,
-    sigma = 0.1428,
+    epsilon = 0.07142;
+    sigma = 0.1428;
     S0 = 199;
     E0 = 0;
     I0 = 1;
@@ -46,14 +46,16 @@ function resetGraph() {
     dataR = [R0];
     tArr = [0];
 
+    console.log(beta);
+
     setCookieValues();
     setFormSliders();
     rk4sir();
 }
 
 function rk4sir(){
-    console.log("Start: rk4sir");                
-    
+    //console.log("Start: rk4sir");
+
     N = S0 + E0 + I0 + R0;       // Total population
     dataS = [S0];
     dataE = [E0];   
@@ -98,7 +100,7 @@ function rk4sir(){
             Rk3 = fR(dataI[i-1] + h/2*Rk2, dataR[i-1] + h/2*Rk2),
             Rk4 = fR(dataI[i-1] + h*Rk3, dataR[i-1] + h*Rk3);
             
-        tArr[i] = (i*h).toFixed(1);
+        tArr[i] = (i*h).toFixed(2);
         
         dataS.push(dataS[i-1] + (Sk1 + 2*(Sk2 + Sk3) + Sk4)*h/6);
         dataE.push(dataE[i-1] + (Ek1 + 2*(Ek2 + Ek3) + Ek4)*h/6);
@@ -119,19 +121,18 @@ function rk4sir(){
     let peakExposedDate = dataE.indexOf(Math.max(...dataE)) / 100;
     maxExp.innerHTML = peakExposed + " at day " + peakExposedDate;
 
-
-    myChart.data.labels = tArr;
-    myChart.data.datasets[0].data = dataS;
-    myChart.data.datasets[1].data = dataE;
-    myChart.data.datasets[2].data = dataI;
-    myChart.data.datasets[3].data = dataR;
-    myChart.update();
-    console.log("End: rk4sir");
+    zoomX();
+    seirsChart.data.datasets[0].data = dataS;
+    seirsChart.data.datasets[1].data = dataE;
+    seirsChart.data.datasets[2].data = dataI;
+    seirsChart.data.datasets[3].data = dataR;
+    seirsChart.update();
+    //console.log("End: rk4sir");
 }
 
 // Initialiserer graf
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
+var ctx = document.getElementById("seirsChart").getContext('2d');
+var seirsChart = new Chart(ctx, {
     type: 'line',
     data: {
         labels: xArr,
@@ -155,24 +156,27 @@ var myChart = new Chart(ctx, {
             label: "Removed or deceased individuals",
             data: dataR,
             borderColor: "green",
-        }
-    ]
+        }]
     },
     options: {
         responsive: true,
-        title: {
-            display: false,
-            text: "Epidemiological Modelling",
-            position: "top",
-            fontSize: 50,
-            fontColor: "black",
-            lineHeight: 2,
-        },
         scales: {
             xAxes: [{
                 ticks: {
                     beginAtZero: true,
-                    
+                    minRotation: 0,
+                    stepSize: 5,
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: "Days"
+                },
+                autoskip: true
+            }],
+            yAxes: [{
+                    scaleLabel: {
+                    display: true,
+                    labelString: "Individuals"
                 }
             }]
         },
@@ -200,5 +204,5 @@ rk4sir();
 
 function updateGraph() {
     console.log("Updating chart.")
-    myChart.update();
+    seirsChart.update();
 }

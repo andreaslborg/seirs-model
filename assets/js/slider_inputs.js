@@ -3,12 +3,12 @@ let xSlider = document.getElementById("xSlider1");
 let xArr = [];
 
 // Beta: Transmission rate
-let transForm = document.getElementById("transForm1");
-let transSlider = document.getElementById("transSlider1");
+let betaForm = document.getElementById("betaForm1");
+let betaSlider = document.getElementById("betaSlider1");
 
 // Gamma: Removal or deceased rate
-let remForm = document.getElementById("remForm1");
-let remSlider = document.getElementById("remSlider1");
+let gammaForm = document.getElementById("gammaForm1");
+let gammaSlider = document.getElementById("gammaSlider1");
 
 // Initial Susceptible
 let S0Form = document.getElementById("S0Form1");
@@ -55,38 +55,38 @@ xSlider.oninput = function() {
 function zoomX() {
     xArr = [];
     for(i = 0; i < xSlider.value; i++) {
-        xArr[i] = tArr[i];
+        xArr[i] = parseInt(tArr[i]);
     }
-    myChart.data.labels = xArr;
+    seirsChart.data.labels = xArr;
 }
 
 /* Beta: Transmission rate */
 /* Update the current input value (each time you type in it) */
-transForm.oninput = function() {
-    localStorage.setItem("transValue", this.value);         // Cookie
-    transSlider.value = this.value;
+betaForm.oninput = function() {
+    localStorage.setItem("betaValue", this.value);         // Cookie
+    betaSlider.value = this.value;
     beta = this.value;
     rk4sir();
 }
 /* Update the current slider value (each time you drag the slider handle) */
-transSlider.oninput = function() {
-    localStorage.setItem("transValue", this.value);         // Cookie
-    transForm.value = this.value;
+betaSlider.oninput = function() {
+    localStorage.setItem("betaValue", this.value);         // Cookie
+    betaForm.value = this.value;
     beta = this.value;
     rk4sir();
 }
 
 /* Gamma: Removal or deceased rate */
-remForm.oninput = function() {
-    localStorage.setItem("remValue", this.value);           // Cookie
-    remSlider.value = this.value;
+gammaForm.oninput = function() {
+    localStorage.setItem("gammaValue", this.value);           // Cookie
+    gammaSlider.value = this.value;
     gamma = this.value;
     if(this.value != 0)
         rk4sir();
 }
-remSlider.oninput = function() {
-    localStorage.setItem("remValue", this.value);           // Cookie
-    remForm.value = this.value;
+gammaSlider.oninput = function() {
+    localStorage.setItem("gammaValue", this.value);           // Cookie
+    gammaForm.value = this.value;
     gamma = this.value;
     rk4sir();
 }
@@ -132,6 +132,19 @@ S0Slider.oninput = function() {
     S0Form.value = this.value;
     S0 = parseFloat(this.value);
     rk4sir();
+
+    //let pik;
+    //pik = this.value;
+    //console.log("value: " + pik);
+    //pik = value.split('.').join('');
+    ///console.log("value split: " + pik);
+    
+    //if (value.length > 3) {
+    //  value = value.substring(0, value.length - 3) + '.' + value.substring(value.length - 3, value.length);
+    //}
+    
+    //S0Slider.value = value;
+    //S0 = value;
 }
 
 /* E0: Initial Exposed */
@@ -195,11 +208,13 @@ totalStepForm.oninput = function() {
     localStorage.setItem("totalStepValue", this.value);           // Cookie
     totalStepSlider.value = this.value;
     steps = parseFloat(this.value);          // parseFloat converts it from a string to float
+    xSlider.max = this.value;
     rk4sir();
 }
 totalStepSlider.oninput = function() {
     localStorage.setItem("totalStepValue", this.value);           // Cookie
     totalStepForm.value = this.value;
     steps = parseFloat(this.value);
+    xSlider.max = this.value;
     rk4sir();
 }
