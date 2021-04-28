@@ -61,8 +61,6 @@ function resetGraph() {
     dataR = [R0];
     tArr = [0];
 
-    console.log(beta);
-
     setCookieValues();
     setFormSliders();
     rk4seirs();

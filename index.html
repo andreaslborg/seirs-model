@@ -30,12 +30,14 @@
                 <div class="chart">
                     <canvas id="seirsChart"></canvas>
                 </div>
-
                 <!-- X-axes slider 
                 <input id="xSlider1" class="slider" type="range" min="0" max="20000" value="10000" step="1">
                 -->
                 <!-- Slider and input boxes -->
-                <h2 id="parametersTitle">Parameters</h2>
+                <h2>Parameters
+                <div class="tooltip">?
+                    <span class="tooltiptext">Here you can change all the parameters for the model. The model updates on a input.</span>
+                </div></h2>
                 <div class="sliderBoxes">
                     <div class="sliderBox">
                         <p class="sliderTitle" id="S0Title">Initial Susceptible (S<span class="sub">0</span>)</p>
@@ -112,16 +114,10 @@
                         <th>Show on graph</th>
                         <th>Source</th>
                     </tr>
-                    <tr>
-                        <td>COVID-19 Algeria (2020) SIR Model</td>
-                        <td>\(\beta\) = 0.0561215, \(\gamma\) = 0.0455331</td>
-                        <td><a onclick="covid19Algeria()" style="cursor: pointer; cursor: hand; color: blue;">Press me</a></td>
-                        <td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7570398/pdf/42269_2020_Article_434.pdf" target="_blank">Link</a></td>
-                    </tr>
                 </table>
                 
                 <!-- SEIRS Model Explanation -->
-                <h2>SEIRS Model</h2>
+                <h2 class="titles">SEIRS Model</h2>
                 <p class="modalText">The SEIRS models ordinary differential equations are:  </p>
                 <p class="mathFunc">\( {dS \over dt} = -{\beta SI \over N} + \epsilon R  \)</p>
                 <p class="mathFunc">\( {dE \over dt} = {\beta IS \over N} - \sigma E  \)</p>
@@ -158,20 +154,26 @@
                 <table class="infoTable">
                     <tr>
                         <th>Total Population</th>
-                        <td id="totalPopulation">100000</td>
+                        <td id="totalPopulation"></td>
                     </tr>
                     <tr>
                         <th>Peak Infected</th>
-                        <td id="maxInfected">80000</td>
+                        <td id="maxInfected"></td>
                     </tr>
                     <tr>
                         <th>Peak Exposed</th>
-                        <td id="maxExposed">10000 at day 420</td>
+                        <td id="maxExposed"></td>
                     </tr>
                 </table>
+                <!-- Save to CSV file button -->
+                <h2 class="titles">Save Data
+                <div class="tooltip">?
+                    <span class="tooltiptext">Click here to save the current results to a CSV file.</span>
+                </div></h2>
+                <button onclick="saveCSV()">Save data to CSV</button>
                 
                 <!-- Saved parameters table -->
-                <h2 id="savedTitle">Saved Parameters
+                <h2 class="titles">Saved Parameters
                 <div class="tooltip">?
                     <span class="tooltiptext">Here you can save your current parameters. These are only available on this device.</span>
                 </div></h2>
@@ -199,6 +201,8 @@
                 <h1>About the website</h1>
                 <p class="modalText">The modelling of infectious diseases is a tool that can be used to study the mechanisms by which diseases spread, to predict the future course of an outbreak, and to evaluate strategies to control an epidemic.
                      The world is currently in the midst of the COVID-19 pandemic, which makes it even more crucial to have access to a tool like this.</p>
+                <h1>Help</h1>
+                <p class="modalText>"></p>
                 <h1>Created by</h1>
                 <p class="modalText">Andreas Løvig Borg <br>Elias Davidsen <br>Lasse Ryge Andersen <br>Marius Ihlen Gardshodn <br>Mikkel Hagerup Dolmer</p>
                 <em class="modalText">Last updated on April 26, 2021</em>
@@ -210,6 +214,6 @@
         <script src="assets/js/main.js"></script>
         <script src="assets/js/modal.js"></script>
         <script src="assets/js/former_diseases.js"></script>
-        <script src="assets/js/saved_parameters.js"></script>
+        <script src="assets/js/save.js"></script>
     </body>
 </html>
