@@ -95,7 +95,7 @@ function loadParameters(rowNum) {
     sigma = savedTableload[rowNum][8];
     steps = savedTableload[rowNum][9];
 
-    console.log("Loading successful");
+    console.log("Loading successful.");
 
     setCookieValues();
     setFormSliders();
@@ -136,7 +136,7 @@ function redefineRow() {
         table.rows[i].cells[3].innerHTML = `<button onclick="deleteRow(${i})">Delete</button>`;
     }
     
-    console.log("Redefining successful");
+    console.log("Redefining successful.");
 }
 
 /* Loading the saved parameters when the website is opened */
