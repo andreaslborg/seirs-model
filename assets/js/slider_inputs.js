@@ -1,7 +1,3 @@
-// X Axis Slider
-let xSlider = document.getElementById("xSlider1");
-let xArr = [];
-
 // Beta: Transmission rate
 let betaForm = document.getElementById("betaForm1");
 let betaSlider = document.getElementById("betaSlider1");
@@ -47,33 +43,20 @@ let totalN = document.getElementById("totalPopulation");
 let maxInf = document.getElementById("maxInfected");
 let maxExp = document.getElementById("maxExposed");
 
-/* Zoom on x axis with tArr */
-xSlider.oninput = function() {
-    zoomX();
-    updateGraph();
-}
-function zoomX() {
-    xArr = [];
-    for(i = 0; i < xSlider.value; i++) {
-        xArr[i] = parseInt(tArr[i]);
-    }
-    seirsChart.data.labels = xArr;
-}
-
 /* Beta: Transmission rate */
 /* Update the current input value (each time you type in it) */
 betaForm.oninput = function() {
     localStorage.setItem("betaValue", this.value);         // Cookie
     betaSlider.value = this.value;
     beta = this.value;
-    rk4sir();
+    rk4seirs();
 }
 /* Update the current slider value (each time you drag the slider handle) */
 betaSlider.oninput = function() {
     localStorage.setItem("betaValue", this.value);         // Cookie
     betaForm.value = this.value;
     beta = this.value;
-    rk4sir();
+    rk4seirs();
 }
 
 /* Gamma: Removal or deceased rate */
@@ -82,13 +65,13 @@ gammaForm.oninput = function() {
     gammaSlider.value = this.value;
     gamma = this.value;
     if(this.value != 0)
-        rk4sir();
+        rk4seirs();
 }
 gammaSlider.oninput = function() {
     localStorage.setItem("gammaValue", this.value);           // Cookie
     gammaForm.value = this.value;
     gamma = this.value;
-    rk4sir();
+    rk4seirs();
 }
 
 /* Epsilon */
@@ -96,13 +79,13 @@ epsilonForm.oninput = function() {
     localStorage.setItem("epsilonValue", this.value);           // Cookie
     epsilonSlider.value = this.value;
     epsilon = parseFloat(this.value);          // parseFloat converts it from a string to float
-    rk4sir();
+    rk4seirs();
 }
 epsilonSlider.oninput = function() {
     localStorage.setItem("epsilonValue", this.value);           // Cookie
     epsilonForm.value = this.value;
     epsilon = parseFloat(this.value);
-    rk4sir();
+    rk4seirs();
 }
 
 /* Sigma */
@@ -110,41 +93,27 @@ sigmaForm.oninput = function() {
     localStorage.setItem("sigmaValue", this.value);           // Cookie
     sigmaSlider.value = this.value;
     sigma = parseFloat(this.value);          // parseFloat converts it from a string to float
-    rk4sir();
+    rk4seirs();
 }
 sigmaSlider.oninput = function() {
     localStorage.setItem("sigmaValue", this.value);           // Cookie
     sigmaForm.value = this.value;
     sigma = parseFloat(this.value);
-    rk4sir();
+    rk4seirs();
 }
-
 
 /* S0: Initial Susceptible */
 S0Form.oninput = function() {
     localStorage.setItem("S0Value", this.value);           // Cookie
     S0Slider.value = this.value;
     S0 = parseFloat(this.value);
-    rk4sir();
+    rk4seirs();
 }
 S0Slider.oninput = function() {
     localStorage.setItem("S0Value", this.value);           // Cookie
     S0Form.value = this.value;
     S0 = parseFloat(this.value);
-    rk4sir();
-
-    //let pik;
-    //pik = this.value;
-    //console.log("value: " + pik);
-    //pik = value.split('.').join('');
-    ///console.log("value split: " + pik);
-    
-    //if (value.length > 3) {
-    //  value = value.substring(0, value.length - 3) + '.' + value.substring(value.length - 3, value.length);
-    //}
-    
-    //S0Slider.value = value;
-    //S0 = value;
+    rk4seirs();
 }
 
 /* E0: Initial Exposed */
@@ -152,13 +121,13 @@ E0Form.oninput = function() {
     localStorage.setItem("E0Value", this.value);           // Cookie
     E0Slider.value = this.value;
     E0 = parseFloat(this.value);          // parseFloat converts it from a string to number
-    rk4sir();
+    rk4seirs();
 }
 E0Slider.oninput = function() {
     localStorage.setItem("E0Value", this.value);           // Cookie
     E0Form.value = this.value;
     E0 = parseFloat(this.value);
-    rk4sir();
+    rk4seirs();
 }
 
 /* I0: Initial infected */
@@ -166,13 +135,13 @@ I0Form.oninput = function() {
     localStorage.setItem("I0Value", this.value);           // Cookie
     I0Slider.value = this.value;
     I0 = parseFloat(this.value);          // parseFloat converts it from a string to number
-    rk4sir();
+    rk4seirs();
 }
 I0Slider.oninput = function() {
     localStorage.setItem("I0Value", this.value);           // Cookie
     I0Form.value = this.value;
     I0 = parseFloat(this.value);
-    rk4sir();
+    rk4seirs();
 }
 
 /* R0: Initial Removed */
@@ -180,13 +149,13 @@ R0Form.oninput = function() {
     localStorage.setItem("R0Value", this.value);           // Cookie
     R0Slider.value = this.value;
     R0 = parseFloat(this.value);          // parseFloat converts it from a string to float
-    rk4sir();
+    rk4seirs();
 }
 R0Slider.oninput = function() {
     localStorage.setItem("R0Value", this.value);           // Cookie
     R0Form.value = this.value;
     R0 = parseFloat(this.value);
-    rk4sir();
+    rk4seirs();
 }
 
 /* h: Step size */
@@ -194,13 +163,13 @@ stepForm.oninput = function() {
     localStorage.setItem("stepValue", this.value);           // Cookie
     stepSlider.value = this.value;
     h = parseFloat(this.value);             // parseFloat converts it from a string to float
-    rk4sir();
+    rk4seirs();
 }
 stepSlider.oninput = function() {
     localStorage.setItem("stepValue", this.value);           // Cookie
     stepForm.value = this.value;
     h = parseFloat(this.value);
-    rk4sir();
+    rk4seirs();
 }
 
 /* steps: Total step size */
@@ -208,13 +177,11 @@ totalStepForm.oninput = function() {
     localStorage.setItem("totalStepValue", this.value);           // Cookie
     totalStepSlider.value = this.value;
     steps = parseFloat(this.value);          // parseFloat converts it from a string to float
-    xSlider.max = this.value;
-    rk4sir();
+    rk4seirs();
 }
 totalStepSlider.oninput = function() {
     localStorage.setItem("totalStepValue", this.value);           // Cookie
     totalStepForm.value = this.value;
     steps = parseFloat(this.value);
-    xSlider.max = this.value;
-    rk4sir();
+    rk4seirs();
 }

@@ -7,6 +7,20 @@ allCookies();
 function fixedPopulation() {
     console.log("Fixed Population");
 
+    let checkboxFixPop = document.getElementById("fixedPopulation");
+    let S0Title = document.getElementById("S0Title");
+    let S0Des = document.getElementById("S0Des");
+    
+    if (checkboxFixPop.checked == true) {
+        S0Title.innerHTML = `Total Population`;
+        S0Des.innerHTML = `The total population, dependent of the initial E<span class="sub">0</span>, I<span class="sub">0</span>, R<span class="sub">0</span>.`;
+    } else {
+        S0Title.innerHTML = `Initial Susceptible (S<span class="sub">0</span>)`;
+        S0Des.innerHTML = `Amount of people who are susceptible to the disease.`;
+    }
+
+    console.log(checkboxFixPop.checked);
+
 }
 
 let beta = betaCookie,
@@ -29,6 +43,7 @@ let beta = betaCookie,
 /* Executed by the reset button */
 function resetGraph() {
     console.log("Resetting parameters");
+
     beta = 2.2;
     gamma = 0.33333;
     epsilon = 0.07142;
@@ -50,11 +65,11 @@ function resetGraph() {
 
     setCookieValues();
     setFormSliders();
-    rk4sir();
+    rk4seirs();
 }
 
-function rk4sir(){
-    //console.log("Start: rk4sir");
+function rk4seirs(){
+    console.log("Start: rk4seirs");
 
     N = S0 + E0 + I0 + R0;       // Total population
     dataS = [S0];
@@ -121,21 +136,22 @@ function rk4sir(){
     let peakExposedDate = dataE.indexOf(Math.max(...dataE)) / 100;
     maxExp.innerHTML = peakExposed + " at day " + peakExposedDate;
 
-    zoomX();
+    seirsChart.data.labels = tArr;
     seirsChart.data.datasets[0].data = dataS;
     seirsChart.data.datasets[1].data = dataE;
     seirsChart.data.datasets[2].data = dataI;
     seirsChart.data.datasets[3].data = dataR;
     seirsChart.update();
-    //console.log("End: rk4sir");
+
+    console.log("End: rk4seirs");
 }
 
-// Initialiserer graf
+/* Initializes graph */
 var ctx = document.getElementById("seirsChart").getContext('2d');
 var seirsChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: xArr,
+        labels: tArr,
         datasets: [
         {
             label: "Susceptible individuals",
@@ -174,7 +190,7 @@ var seirsChart = new Chart(ctx, {
                 autoskip: true
             }],
             yAxes: [{
-                    scaleLabel: {
+                scaleLabel: {
                     display: true,
                     labelString: "Individuals"
                 }
@@ -200,7 +216,7 @@ var seirsChart = new Chart(ctx, {
     },
 });
 
-rk4sir();
+rk4seirs();
 
 function updateGraph() {
     console.log("Updating chart.")

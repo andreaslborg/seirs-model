@@ -24,20 +24,24 @@
                 <h1 id="title1">Epidemiological Modelling</h1>
                 <h2 id="titledes">SEIRS Compartmental Model</h2>
             </div>
+
             <!-- Inserts chart/graph -->
             <div id="left-container">
                 <div class="chart">
                     <canvas id="seirsChart"></canvas>
                 </div>
-                <!-- X-axes slider -->
+
+                <!-- X-axes slider 
                 <input id="xSlider1" class="slider" type="range" min="0" max="20000" value="10000" step="1">
+                -->
                 <!-- Slider and input boxes -->
+                <h2 id="parametersTitle">Parameters</h2>
                 <div class="sliderBoxes">
                     <div class="sliderBox">
-                        <p class="sliderTitle">Initial Susceptible (S<span class="sub">0</span>)</p>
-                        <p class="sliderDes">Amount of people who are susceptible to the disease.<br>
-                        <input type="checkbox" id="fixedPopulation" class="checkbox" name="fixedPopulation" value="" onchange="fixedPopulation()">
-                        <label for="fixedPopulation">Fixed Population</label> </p>
+                        <p class="sliderTitle" id="S0Title">Initial Susceptible (S<span class="sub">0</span>)</p>
+                        <p class="sliderDes" id="S0Des">Amount of people who are susceptible to the disease.<br> </p>
+                        <p class="sliderDes" id="S0Checkbox"> 
+                        <input type="checkbox" id="fixedPopulation" class="checkbox" name="fixedPopulation" value="" onchange="fixedPopulation()">Fixed Population</p>
                         <input id="S0Form1"      class="inputForm"   type="number"   min="0"    max="10000000"    maxlength="3"   value="99000">
                         <input id="S0Slider1"   class="slider"      type="range"    min="0"    max="10000000"    maxlength="3"   value="99000" step="1">
                     </div>
@@ -98,6 +102,7 @@
                         <input id="totalStepSlider1"   class="slider"      type="range"    min="1"     max="20000"     value="10000" step="0.1">
                     </div>
                 </div>
+                <br>
                 <!-- Former Diseases Table -->
                 <h2>Former Diseases</h2>
                 <table class="diseasesTable">
@@ -113,19 +118,8 @@
                         <td><a onclick="covid19Algeria()" style="cursor: pointer; cursor: hand; color: blue;">Press me</a></td>
                         <td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7570398/pdf/42269_2020_Article_434.pdf" target="_blank">Link</a></td>
                     </tr>
-                    <tr>
-                        <td>Tuberculosis</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>Link</td>
-                    </tr>
-                    <tr>
-                        <td>Ebola</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>Link</td>
-                    </tr>
                 </table>
+                
                 <!-- SEIRS Model Explanation -->
                 <h2>SEIRS Model</h2>
                 <p class="modalText">The SEIRS models ordinary differential equations are:  </p>

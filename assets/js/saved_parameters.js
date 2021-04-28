@@ -18,8 +18,7 @@ function saveParameters() {
     savedTable.filename.push(fileName);
 
 
-    /* CURRENT DATE */
-    /* Date */
+    /* CURRENT DATE AND TIME */
     let dateObj = new Date();
     let year = dateObj.getFullYear();
     let month = dateObj.getMonth() + 1;
@@ -32,7 +31,7 @@ function saveParameters() {
     savedTable.date.push(currentDate);
 
 
-    /* PARAMETERS */
+    /* GETTING CURRENT PARAMETERS */
     let savedArr = [
         localStorage.getItem("S0Value"),
         localStorage.getItem("E0Value"),
@@ -59,7 +58,6 @@ function saveParameters() {
 
 
     /* CREATING THE NEW TABLE ROW */
-    /* Inserts a new row */
     let newRow = table.insertRow();
 
     /* Defines the new cells spot */
@@ -68,16 +66,16 @@ function saveParameters() {
     let row1cell3 = newRow.insertCell(2);
     let row1cell4 = newRow.insertCell(3);
 
+    /* Inputting into the cells */
     row1cell1.innerHTML = fileName;
     row1cell2.innerHTML = currentDate;
-    row1cell3.innerHTML = `<button onclick="loadParameters()">Load</button>`;
-    row1cell4.innerHTML = `<button onclick="deleteRow()">Delete</button>`;
+    row1cell3.innerHTML = "";           // Button is created in redefineRow()
+    row1cell4.innerHTML = "";           // Button is created in redefineRow()
 
     redefineRow();
 }
 
 function loadParameters(rowNum) {
-    tableRows = table.rows.length; // Update the row number.
     let savedTableload = JSON.parse(localStorage.getItem("savedTable.parametersCookie"));
 
     /* Converts cookie string to float */
@@ -100,13 +98,10 @@ function loadParameters(rowNum) {
 
     setCookieValues();
     setFormSliders();
-    rk4sir();
+    rk4seirs();
 }
 
 function deleteRow(rowNum) {
-    /* Update the global row number */
-    tableRows = table.rows.length; 
-
     /* Removing the table row */
     document.getElementById("savedParametersTable").deleteRow(rowNum);
 
@@ -135,13 +130,12 @@ function deleteRow(rowNum) {
 
 /* When deleting a row, the index changes accordingly */
 function redefineRow() {
-    tableRows = table.rows.length; // Update the row number.
-    console.log("Redefining");
- 
-    for(i = 1; i < tableRows; i++) { 
+    for(i = 1; i < savedTable.date.length; i++) { 
         table.rows[i].cells[2].innerHTML = `<button onclick="loadParameters(${i})">Load</button>`;
         table.rows[i].cells[3].innerHTML = `<button onclick="deleteRow(${i})">Delete</button>`;
     }
+    
+    console.log("Redefining successful");
 }
 
 function runSavedParameters() {
