@@ -132,7 +132,7 @@ function deleteRow(rowNum) {
 /* When deleting a row, the index changes accordingly */
 function redefineRow() {
     for(i = 1; i < savedTable.date.length; i++) { 
-        table.rows[i].cells[2].innerHTML = `<button onclick="loadParameters(${i})">Load</button>`;
+        table.rows[i].cells[2].innerHTML = `<button onclick="loadParameters(${i})">Load Parameters</button>`;
         table.rows[i].cells[3].innerHTML = `<button onclick="deleteRow(${i})">Delete</button>`;
     }
     

@@ -12,7 +12,7 @@ function fixedPopulation() {
     let S0Des = document.getElementById("S0Des");
     
     if (checkboxFixPop.checked == true) {
-        S0Title.innerHTML = `Total Population`;
+        S0Title.innerHTML = `Total Population (N)`;
         S0Des.innerHTML = `The total population, dependent of the initial E<span class="sub">0</span>, I<span class="sub">0</span>, R<span class="sub">0</span>.`;
     } else {
         S0Title.innerHTML = `Initial Susceptible (S<span class="sub">0</span>)`;
@@ -20,7 +20,6 @@ function fixedPopulation() {
     }
 
     console.log(checkboxFixPop.checked);
-
 }
 
 let beta = betaCookie,
@@ -76,21 +75,10 @@ function rk4seirs(){
     dataR = [R0];
     tArr = [0];
     
-    function fS(S, I, R){
-        return -(beta*S*I)/N + epsilon*R;
-    }
-
-    function fE(S, E, I){
-        return (beta*S*I)/N - sigma*E;
-    }
-    
-    function fI(E, I){
-        return sigma*E - gamma*I;
-    }
-    
-    function fR(I, R){
-        return gamma*I - epsilon*R;
-    }
+    function fS(S, I, R){ return -(beta*S*I)/N + epsilon*R; }
+    function fE(S, E, I){ return (beta*S*I)/N - sigma*E; }
+    function fI(E, I)   { return sigma*E - gamma*I; }
+    function fR(I, R)   { return gamma*I - epsilon*R; }
 
     for (i = 1; i <= steps; i++){
         let Sk1 = fS(dataS[i-1], dataI[i-1], dataR[i-1]),
@@ -134,6 +122,7 @@ function rk4seirs(){
     let peakExposedDate = dataE.indexOf(Math.max(...dataE)) / 100;
     maxExp.innerHTML = peakExposed + " at day " + peakExposedDate;
 
+    /* Updating the graph its data */
     seirsChart.data.labels = tArr;
     seirsChart.data.datasets[0].data = dataS;
     seirsChart.data.datasets[1].data = dataE;
