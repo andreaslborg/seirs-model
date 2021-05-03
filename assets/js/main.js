@@ -41,7 +41,7 @@ let beta = betaCookie,
 
 /* Executed by the reset button */
 function resetGraph() {
-    console.log("Resetting parameters");
+    console.log("Resetting parameters.");
 
     beta = 2.2;
     gamma = 0.33333;
@@ -66,7 +66,7 @@ function resetGraph() {
 }
 
 function rk4seirs(){
-    console.log("Start: rk4seirs");
+    console.log("Start: rk4seirs.");
 
     N = S0 + E0 + I0 + R0;       // Total population
     dataS = [S0];
@@ -101,7 +101,7 @@ function rk4seirs(){
             Rk3 = fR(dataI[i-1] + h/2*Rk2, dataR[i-1] + h/2*Rk2),
             Rk4 = fR(dataI[i-1] + h*Rk3, dataR[i-1] + h*Rk3);
             
-        tArr[i] = (i*h).toFixed(2);
+        tArr[i] = (i*h);
         
         dataS.push(dataS[i-1] + (Sk1 + 2*(Sk2 + Sk3) + Sk4)*h/6);
         dataE.push(dataE[i-1] + (Ek1 + 2*(Ek2 + Ek3) + Ek4)*h/6);
@@ -122,15 +122,39 @@ function rk4seirs(){
     let peakExposedDate = dataE.indexOf(Math.max(...dataE)) / 100;
     maxExp.innerHTML = peakExposed + " at day " + peakExposedDate;
 
+    
+
+    /* Resizing */
+    resizeArr();
+
     /* Updating the graph its data */
-    seirsChart.data.labels = tArr;
-    seirsChart.data.datasets[0].data = dataS;
-    seirsChart.data.datasets[1].data = dataE;
-    seirsChart.data.datasets[2].data = dataI;
-    seirsChart.data.datasets[3].data = dataR;
     seirsChart.update();
 
-    console.log("End: rk4seirs");
+    console.log("End: rk4seirs.");
+}
+
+function resizeArr() {
+    let newtArr = [];
+    let newdataS = [];
+    let newdataE = [];
+    let newdataI = [];
+    let newdataR = [];
+    
+    for(i = 0; i < dataS.length; i++) {
+        if (i % 100 == 0) {
+            newtArr.push(tArr[i]);
+            newdataS.push(dataS[i]);
+            newdataE.push(dataE[i]);
+            newdataI.push(dataI[i]);
+            newdataR.push(dataR[i]);
+        }
+    }
+    
+    seirsChart.data.labels = newtArr;
+    seirsChart.data.datasets[0].data = newdataS;
+    seirsChart.data.datasets[1].data = newdataE;
+    seirsChart.data.datasets[2].data = newdataI;
+    seirsChart.data.datasets[3].data = newdataR;
 }
 
 /* Initializes graph */
@@ -156,7 +180,7 @@ var seirsChart = new Chart(ctx, {
             borderColor: "red",
         },
         {
-            label: "Removed or deceased individuals",
+            label: "Removed individuals",
             data: dataR,
             borderColor: "green",
         }]
@@ -167,8 +191,8 @@ var seirsChart = new Chart(ctx, {
             xAxes: [{
                 ticks: {
                     beginAtZero: true,
-                    minRotation: 0,
-                    stepSize: 5,
+                    maxRotation: 0,
+                    stepSize: 10,
                 },
                 scaleLabel: {
                     display: true,
@@ -189,14 +213,14 @@ var seirsChart = new Chart(ctx, {
         },
         elements: {
             line: {
-                borderWidth: 5,
+                borderWidth: 3,
                 lineTension: 0,
                 fill: false,
             },
             point: {
                 pointStyle: "circle",
                 rotation: 0,
-                radius: 0,
+                radius: 4,
                 hoverRadius: 7,
             },
         },

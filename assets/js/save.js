@@ -55,7 +55,7 @@ function saveParameters() {
     localStorage.setItem("savedTable.parametersCookie", JSON.stringify(savedTable.parameters));
 
 
-    console.log("Saving successful");
+    console.log("Saving parameters.");
 
 
     /* CREATING THE NEW TABLE ROW */
@@ -95,7 +95,7 @@ function loadParameters(rowNum) {
     sigma = savedTableload[rowNum][8];
     steps = savedTableload[rowNum][9];
 
-    console.log("Loading successful.");
+    console.log("Loading " + rowNum + ".");
 
     setCookieValues();
     setFormSliders();
@@ -126,6 +126,7 @@ function deleteRow(rowNum) {
     localStorage.setItem("savedTable.dateCookie", JSON.stringify(savedTabledate));
     localStorage.setItem("savedTable.parametersCookie", JSON.stringify(savedTableparameters));
 
+    console.log("Deleted row " + rowNum + ".")
     redefineRow();
 }
 
@@ -136,7 +137,7 @@ function redefineRow() {
         table.rows[i].cells[3].innerHTML = `<button onclick="deleteRow(${i})">Delete</button>`;
     }
     
-    console.log("Redefining successful.");
+    console.log("Redefining rows.");
 }
 
 /* Loading the saved parameters when the website is opened */
@@ -162,15 +163,17 @@ function saveCSV() {
 
     let csvContent = [tArr, dataS, dataE, dataI, dataR];
 
-    let csvRows = ["Time,Susceptible,Exposed,Infected,Removed,\r"];
+    let csvRows = ["Time,Susceptible,Exposed,Infected,Removed\r"];
 
-    for(i = 0; i < tArr.length; i++) {
-        for(j = 0; j < csvContent.length; j++) {
-            csvRows.push(csvContent[j][i] + ",");
+    for(let i = 0; i < tArr.length; i++) {
+        for(let j = 0; j < csvContent.length; j++) {
+            if(j == csvContent.length - 1) {csvRows.push(csvContent[j][i]);}
+            else {csvRows.push(csvContent[j][i] + ",");}
         }
         csvRows.push("\r"); // New row
     }
 
+    /* Getting current date */
     let dateObj = new Date();
     let year = dateObj.getFullYear();
     let month = dateObj.getMonth() + 1;     if (month < 10) {month = "0" + month;}

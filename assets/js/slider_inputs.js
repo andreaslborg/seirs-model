@@ -163,12 +163,22 @@ stepForm.oninput = function() {
     localStorage.setItem("stepValue", this.value);           // Cookie
     stepSlider.value = this.value;
     h = parseFloat(this.value);             // parseFloat converts it from a string to float
+    
+    if(this.value > 0.01) {
+        console.log("We recommend keeping the stepsize at 0,01 or lower.");
+    }
+    
     rk4seirs();
 }
 stepSlider.oninput = function() {
     localStorage.setItem("stepValue", this.value);           // Cookie
     stepForm.value = this.value;
     h = parseFloat(this.value);
+
+    if(this.value > 0.01) {
+        console.log("We recommend keeping the stepsize at 0,01 or lower.");
+    }
+    
     rk4seirs();
 }
 

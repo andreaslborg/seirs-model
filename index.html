@@ -68,8 +68,8 @@
                     <div class="sliderBox">
                         <p class="sliderTitle">Step Size</p>
                         <p class="sliderDes">Step size used in the RK4 approximation. Lower step size means more accuracy.</p>
-                        <input id="stepForm1"    class="inputForm"   type="number"   min="0.01"     max="1"   maxlength="3"   value="0.1">
-                        <input id="stepSlider1"  class="slider"      type="range"    min="0.01"     max="1"   maxlength="3"   value="0.1" step="0.01">
+                        <input id="stepForm1"    class="inputForm"   type="number"   min="0.01"     max="0.1"   maxlength="3"   value="0.1">
+                        <input id="stepSlider1"  class="slider"      type="range"    min="0.01"     max="0.1"   maxlength="3"   value="0.1" step="0.001">
                     </div>
                 </div>
                 <div class="sliderBoxes">
@@ -124,7 +124,7 @@
                 <text class="mathFunc">\( {dI \over dt} = \sigma E - \gamma I, \)</text>
                 <text class="mathFunc">\( {dR \over dt} = \gamma I - \epsilon R \)</text>
                 <br><br>
-                <p class="modalText"><em>where</em></p>
+                <p class="mathText"><em>where</em></p><br>
                 <p class="mathText">\(S\) is the number of susceptible individuals.</p>
                 <p class="mathText">\(E\) is the number of exposed individuals.</p>
                 <p class="mathText">\(I\) is the number of infected individuals.</p>
@@ -142,7 +142,7 @@
                 <text class="mathFunc">\(k_1 = f(t_n, y_n), \)</text>
                 <text class="mathFunc">\(k_2 = f(t_n + {\Delta t \over 2}, y_n + + {k_1\Delta t \over 2}), \)</text>
                 <text class="mathFunc">\(k_3 = f(t_n + {\Delta t \over 2}, y_n + + {k_2\Delta t \over 2}), \)</text>
-                <text class="mathFunc">\(k_4 = f(t_n + \Delta t, y_n + k_3 \Delta t \)</text>
+                <text class="mathFunc">\(k_4 = f(t_n + \Delta t, y_n + k_3 \Delta t) \)</text>
                 <p class="mathFunc">\(t_n + 1 = t_n + \Delta t \)</p>
                 <text class="mathFunc">\(n = 0, 1, 2, 3, ...\)</text>
                 <br><br>
@@ -151,7 +151,8 @@
                 <h2 id="infoTitle">Information
                     <div class="tooltip">?
                         <span class="tooltiptext">Here you can see information about the chart. It updates with the chart itself.</span>
-                    </div></h2>
+                    </div>
+                </h2>
 
                 <!-- Reset button -->
                 <button id="resetButton" onclick="resetGraph()">Reset graph</button>
