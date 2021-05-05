@@ -17,7 +17,6 @@ function saveParameters() {
 
     savedTable.filename.push(fileName);
 
-
     /* CURRENT DATE AND TIME */
     let dateObj = new Date();
     let year = dateObj.getFullYear();
@@ -30,7 +29,6 @@ function saveParameters() {
     let currentDate = day + "/" + month + "/" + year + " " + hour + ":" + min + ":" + sec;
 
     savedTable.date.push(currentDate);
-
 
     /* GETTING CURRENT PARAMETERS */
     let savedArr = [

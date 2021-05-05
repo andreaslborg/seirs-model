@@ -15,7 +15,7 @@ function checkVisit() {
             I0 = 1,
             R0 = 0,
             h = 0.01,
-            steps = 10000;
+            steps = 100;
         localStorage.setItem("betaValue", beta);
         localStorage.setItem("gammaValue", gamma);
         localStorage.setItem("epsilonValue", epsilon);
@@ -83,8 +83,8 @@ function allCookies() {
     
     /* Loads Step size */
     stepCookie = parseFloat(localStorage.getItem("stepValue"));
-    stepForm.value = stepCookie;
-    stepSlider.value = stepCookie;
+    //stepForm.value = stepCookie;
+    //stepSlider.value = stepCookie;
     
     /* Loads Total step size */
     totalStepCookie = parseFloat(localStorage.getItem("totalStepValue"));

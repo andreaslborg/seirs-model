@@ -158,7 +158,7 @@ R0Slider.oninput = function() {
     rk4seirs();
 }
 
-/* h: Step size */
+/* h: Step size 
 stepForm.oninput = function() {
     localStorage.setItem("stepValue", this.value);           // Cookie
     stepSlider.value = this.value;
@@ -180,7 +180,7 @@ stepSlider.oninput = function() {
     }
     
     rk4seirs();
-}
+}*/
 
 /* steps: Total step size */
 totalStepForm.oninput = function() {

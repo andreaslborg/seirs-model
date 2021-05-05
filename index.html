@@ -22,89 +22,92 @@
             <!-- Header and text -->
             <div id="tekst">
                 <h1 id="title1">Epidemiological Modelling</h1>
-                <h2 id="titledes">SEIRS Compartmental Model</h2>
+                <h2 id="titledes">SEIRS Compartmental Model
+                </h2>
             </div>
-
-            <!-- Inserts chart/graph -->
+            <!-- Inserts chart/graph with questionmark -->
             <div id="left-container">
                 <div class="chart">
+                    <!-- Questionmark -->
+                    <h2><div class="tooltip" id="graphHelp">?
+                        <span class="tooltiptext" id="graphHelpSpan">Here you can click on the boxes to remove/show  them on the graph.</span>
+                    </div></h2>
+                    <!-- Inserting the chart -->
                     <canvas id="seirsChart"></canvas>
                 </div>
-                <!-- X-axes slider 
-                <input id="xSlider1" class="slider" type="range" min="0" max="20000" value="10000" step="1">
-                -->
                 <!-- Slider and input boxes -->
-                <h2>Parameters
+                <h2 class="titles">Parameters
                 <div class="tooltip">?
                     <span class="tooltiptext">Here you can change all the parameters for the model. The graph updates on a input.</span>
                 </div></h2>
-                <div class="sliderBoxes">
-                    <div class="sliderBox">
-                        <p class="sliderTitle" id="S0Title">Initial Susceptible </p>
-                        <p class="sliderDes" id="S0Des">\(S_0\) Amount of people who are susceptible to the disease.<br> </p>
-                        <p class="sliderDes" id="S0Checkbox"> 
-                        <input type="checkbox" id="fixedPopulation" class="checkbox" name="fixedPopulation" value="" onchange="fixedPopulation()">Fixed Population</p>
-                        <input id="S0Form1"      class="inputForm"   type="number"   min="0"    max="10000000"    maxlength="3"   value="99000">
-                        <input id="S0Slider1"   class="slider"      type="range"    min="0"    max="10000000"    maxlength="3"   value="99000" step="1">
-                    </div>
-                    <div class="sliderBox">
-                        <p class="sliderTitle">Initial Exposed</p>
-                        <p class="sliderDes">\(E_0\) Amount of people who are exposed but not infectious.</p>
-                        <input id="E0Form1"     class="inputForm"   type="number"   min="0"     max="100000"   maxlength="3"   value="0">
-                        <input id="E0Slider1"   class="slider"      type="range"    min="0"     max="100000"   maxlength="3"   value="0">
-                    </div>
-                    <div class="sliderBox">
-                        <p class="sliderTitle">Initial Infected</p>
-                        <p class="sliderDes">\(I_0\) Amount of people who are infected and infectious.</p>
-                        <input id="I0Form1"     class="inputForm"   type="number"   min="0"     max="100000"   maxlength="3"   value="1000">
-                        <input id="I0Slider1"   class="slider"      type="range"    min="0"     max="100000"   maxlength="3"   value="1000">
-                    </div>
-                    <div class="sliderBox">
-                        <p class="sliderTitle">Initial Removed</p>
-                        <p class="sliderDes">\(R_0\) Amount of people who has either recovered from the disease or who are deceased.</p>
-                        <input id="R0Form1"     class="inputForm"   type="number"   min="0"     max="100000"   maxlength="3"   value="0">
-                        <input id="R0Slider1"   class="slider"      type="range"    min="0"     max="100000"   maxlength="3"   value="0">
-                    </div>
-                    <div class="sliderBox">
-                        <p class="sliderTitle">Step Size</p>
-                        <p class="sliderDes">Step size used in the RK4 approximation. Lower step size means more accuracy.</p>
-                        <input id="stepForm1"    class="inputForm"   type="number"   min="0.01"     max="0.1"   maxlength="3"   value="0.1">
-                        <input id="stepSlider1"  class="slider"      type="range"    min="0.01"     max="0.1"   maxlength="3"   value="0.1" step="0.001">
-                    </div>
-                </div>
-                <div class="sliderBoxes">
-                    <div class="sliderBox">
-                        <p class="sliderTitle">Beta</p>
-                        <p class="sliderDes">\(\beta\) determines the rate of spread.</p>
-                        <input id="betaForm1"   class="inputForm"   type="number"   min="0.001"  max="3"      value="0.02">
-                        <input id="betaSlider1" class="slider"      type="range"    min="0.001"     max="3"     value="0.02" step="0.001">
-                    </div>
-                    <div class="sliderBox">
-                        <p class="sliderTitle">Gamma</p>
-                        <p class="sliderDes">\(\gamma\) determines the rate at which individuals recover.</p>
-                        <input id="gammaForm1"     class="inputForm"   type="number"   min="0.00001" max="0.5"  maxlength="10000000"    value="0.0006">
-                        <input id="gammaSlider1"   class="slider"      type="range"    min="0.00001" max="0.5"  maxlength="10000000"    value="0.0006" step="0.0001">
-                    </div>
-                    <div class="sliderBox">
-                        <p class="sliderTitle">Epsilon</p>
-                        <p class="sliderDes">\(\epsilon\) determines the rate of recovered individuals returning to susceptible.</p>
-                        <input id="epsForm1"    class="inputForm"   type="number"   min="0.00001"  max="0.1"     value="0.02">
-                        <input id="epsSlider1"  class="slider"      type="range"    min="0.00001"  max="0.1"     value="0.02" step="0.00001">
-                    </div>
-                    <div class="sliderBox">
-                        <p class="sliderTitle">Sigma</p>
-                        <p class="sliderDes">\(\sigma\) determines the rate of individuals who are exposed becoming infectious.</p>
-                        <input id="sigForm1"     class="inputForm"   type="number"   min="0.00001" max="0.2"  maxlength="10000000"    value="0.0006">
-                        <input id="sigSlider1"   class="slider"      type="range"    min="0.00001" max="0.2"  maxlength="10000000"    value="0.0006" step="0.0001">
-                    </div>
-                    <div class="sliderBox">
-                        <p class="sliderTitle">Total Steps</p>
-                        <p class="sliderDes">Total number of steps used in the RK4 approximation.</p>
-                        <input id="totalStepForm1"     class="inputForm"   type="number"   min="1"     max="20000"     value="10000">
-                        <input id="totalStepSlider1"   class="slider"      type="range"    min="1"     max="20000"     value="10000" step="0.1">
+                <div class="sliderDiv">
+                    <div class="sliderBoxes">
+                        <div class="sliderBox">
+                            <p class="sliderTitle" id="S0Title">Initial Susceptible </p>
+                            <p class="sliderDes" id="S0Des">\(S_0\) Amount of people who are susceptible to the disease.<br> </p>
+                            <p class="sliderDes" id="S0Checkbox"> 
+                            <input type="checkbox" id="fixedPopulation" class="checkbox" name="fixedPopulation" value="" onchange="fixedPopulation()">Fixed Population</p>
+                            <input id="S0Form1"      class="inputForm"   type="number"   min="0"    max="10000000"    maxlength="3"   value="99000">
+                            <input id="S0Slider1"   class="slider"      type="range"    min="0"    max="10000000"    maxlength="3"   value="99000" step="1">
+                        </div>
+                        <div class="sliderBox">
+                            <p class="sliderTitle">Initial Exposed</p>
+                            <p class="sliderDes">\(E_0\) Amount of people who are exposed but not infectious.</p>
+                            <input id="E0Form1"     class="inputForm"   type="number"   min="0"     max="100000"   maxlength="3"   value="0">
+                            <input id="E0Slider1"   class="slider"      type="range"    min="0"     max="100000"   maxlength="3"   value="0">
+                        </div>
+                        <div class="sliderBox">
+                            <p class="sliderTitle">Initial Infected</p>
+                            <p class="sliderDes">\(I_0\) Amount of people who are infected and infectious.</p>
+                            <input id="I0Form1"     class="inputForm"   type="number"   min="0"     max="100000"   maxlength="3"   value="1000">
+                            <input id="I0Slider1"   class="slider"      type="range"    min="0"     max="100000"   maxlength="3"   value="1000">
+                        </div>
+                        <div class="sliderBox">
+                            <p class="sliderTitle">Initial Removed</p>
+                            <p class="sliderDes">\(R_0\) Amount of people who has either recovered from the disease or who are deceased.</p>
+                            <input id="R0Form1"     class="inputForm"   type="number"   min="0"     max="100000"   maxlength="3"   value="0">
+                            <input id="R0Slider1"   class="slider"      type="range"    min="0"     max="100000"   maxlength="3"   value="0">
+                        </div>
+                        <div class="sliderBox">
+                            <p class="sliderTitle">Beta</p>
+                            <p class="sliderDes">\(\beta\) determines the rate of spread.</p>
+                            <input id="betaForm1"   class="inputForm"   type="number"   min="0.001"  max="3"      value="0.02">
+                            <input id="betaSlider1" class="slider"      type="range"    min="0.001"     max="3"     value="0.02" step="0.001">
+                        </div>
+                        <div class="sliderBox">
+                            <p class="sliderTitle">Gamma</p>
+                            <p class="sliderDes">\(\gamma\) determines the rate at which individuals recover.</p>
+                            <input id="gammaForm1"     class="inputForm"   type="number"   min="0.00001" max="0.5"  maxlength="10000000"    value="0.0006">
+                            <input id="gammaSlider1"   class="slider"      type="range"    min="0.00001" max="0.5"  maxlength="10000000"    value="0.0006" step="0.0001">
+                        </div>
+                        <div class="sliderBox">
+                            <p class="sliderTitle">Epsilon</p>
+                            <p class="sliderDes">\(\epsilon\) determines the rate of recovered individuals returning to susceptible.</p>
+                            <input id="epsForm1"    class="inputForm"   type="number"   min="0.00001"  max="0.1"     value="0.02">
+                            <input id="epsSlider1"  class="slider"      type="range"    min="0.00001"  max="0.1"     value="0.02" step="0.00001">
+                        </div>
+                        <div class="sliderBox">
+                            <p class="sliderTitle">Sigma</p>
+                            <p class="sliderDes">\(\sigma\) determines the rate of individuals who are exposed becoming infectious.</p>
+                            <input id="sigForm1"     class="inputForm"   type="number"   min="0.00001" max="0.2"  maxlength="10000000"    value="0.0006">
+                            <input id="sigSlider1"   class="slider"      type="range"    min="0.00001" max="0.2"  maxlength="10000000"    value="0.0006" step="0.0001">
+                        </div>
                     </div>
                 </div>
-                
+                <div class="sliderBoxTall">
+                    <div class="sliderBox" id="daysBox">
+                        <p class="sliderTitle">Days</p>
+                        <p class="sliderDes" id="daysDes">Total number of days. <br><br> 
+                            Runge-kutta 4th order is used to approximate the measurements. <br><br> 
+                            Step size = 0,01 <br>
+                            <text id="totalSteps"></text> <br><br> 
+                            Move the slider or type in the specific number of days below.
+                        </p>
+                        <input id="totalStepForm1" class="inputForm"  type="number" min="1" max="200" value="100">
+                        <input id="totalStepSlider1" class="slider" type="range" min="1" max="200" value="100" step="1">
+                    </div>
+                </div>    
+
                 <!-- Former Diseases Table 
                 <h2>Former Diseases</h2>
                 <table class="diseasesTable">

@@ -30,8 +30,8 @@ function setFormSliders() {
     I0Slider.value = I0;
     R0Form.value = R0;
     R0Slider.value = R0;
-    stepForm.value = h;
-    stepSlider.value = h;
+    //stepForm.value = h;
+    //stepSlider.value = h;
     totalStepForm.value = steps;
     totalStepSlider.value = steps;
 }

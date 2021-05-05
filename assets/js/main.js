@@ -52,7 +52,7 @@ function resetGraph() {
     I0 = 1;
     R0 = 0;
     h = 0.01;
-    steps = 10000;
+    steps = 100;
     N = S0 + E0 + I0 + R0;
     dataS = [S0];
     dataE = [E0];
@@ -74,13 +74,14 @@ function rk4seirs(){
     dataI = [I0];
     dataR = [R0];
     tArr = [0];
+    let totalSteps = steps*100;
     
     function fS(S, I, R){ return -(beta*S*I)/N + epsilon*R; }
     function fE(S, E, I){ return (beta*S*I)/N - sigma*E; }
     function fI(E, I)   { return sigma*E - gamma*I; }
     function fR(I, R)   { return gamma*I - epsilon*R; }
 
-    for (i = 1; i <= steps; i++){
+    for (i = 1; i <= totalSteps; i++){
         let Sk1 = fS(dataS[i-1], dataI[i-1], dataR[i-1]),
             Sk2 = fS(dataS[i-1] + h/2*Sk1, dataI[i-1] + h/2*Sk1, dataR[i-1] + h/2*Sk1),
             Sk3 = fS(dataS[i-1] + h/2*Sk2, dataI[i-1] + h/2*Sk2, dataR[i-1] + h/2*Sk2),
@@ -109,6 +110,8 @@ function rk4seirs(){
         dataR.push(dataR[i-1] + (Rk1 + 2*(Rk2 + Rk3) + Rk4)*h/6);
     }
 
+    document.getElementById("totalSteps").innerText = "Total steps = " + totalSteps;
+
     /* Sets N as the total population in the info table */
     totalN.innerHTML = N;
     
@@ -121,8 +124,6 @@ function rk4seirs(){
     let peakExposed = Math.max(...dataE).toFixed(0);
     let peakExposedDate = dataE.indexOf(Math.max(...dataE)) / 100;
     maxExp.innerHTML = peakExposed + " at day " + peakExposedDate;
-
-    
 
     /* Resizing */
     resizeArr();
@@ -160,7 +161,7 @@ function resizeArr() {
 /* Initializes graph */
 var ctx = document.getElementById("seirsChart").getContext('2d');
 var seirsChart = new Chart(ctx, {
-    type: 'line',
+    type: "line",
     data: {
         labels: tArr,
         datasets: [
