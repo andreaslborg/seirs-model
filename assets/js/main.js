@@ -14,10 +14,18 @@ function fixedPopulation() {
     if (checkboxFixPop.checked == true) {
         S0Title.innerHTML = `Total Population (N)`;
         S0Des.innerHTML = `The total population, dependent of the initial E<span class="sub">0</span>, I<span class="sub">0</span>, R<span class="sub">0</span>.`;
-    } else {
-        S0Title.innerHTML = `Initial Susceptible (S<span class="sub">0</span>)`;
-        S0Des.innerHTML = `Amount of people who are susceptible to the disease.`;
+
+        N = parseFloat(localStorage.getItem("S0Value"));
+        S0 = N - E0 - I0 - R0;
+
+    } else if (checkboxFixPop.checked == false) {
+        S0Title.innerHTML = `Initial Susceptible `;
+        S0Des.innerHTML = `S<span class="sub">0</span> Amount of people who are susceptible to the disease.`;
+
+        N = S0 + E0 + I0 + R0;
+
     }
+
 
     console.log(checkboxFixPop.checked);
 }
@@ -66,14 +74,14 @@ function resetGraph() {
 }
 
 function rk4seirs(){
-    console.log("Start: rk4seirs.");
+    fixedPopulation();
 
-    N = S0 + E0 + I0 + R0;       // Total population
     dataS = [S0];
     dataE = [E0];   
     dataI = [I0];
     dataR = [R0];
     tArr = [0];
+    
     let totalSteps = steps*100;
     
     function fS(S, I, R){ return -(beta*S*I)/N + epsilon*R; }
@@ -130,8 +138,6 @@ function rk4seirs(){
 
     /* Updating the graph its data */
     seirsChart.update();
-
-    console.log("End: rk4seirs.");
 }
 
 function resizeArr() {

@@ -58,6 +58,11 @@ table, th, td, button {
     border-collapse: collapse;
 }
 
+.sub {
+    vertical-align: sub;
+    font-size: smaller;
+}
+
 th, td {
     padding: 5px;
     text-align: left;
@@ -282,11 +287,13 @@ input::-webkit-inner-spin-button {
     position: relative;
     display: inline-block;
     cursor: default;
-    background-color: rgb(64, 170, 241);
+    background-color: #0066FF;
     border-radius: 50%;
     width: 0.85vw;
     height: 0.85vw;
     text-align: center;
+    transition: 0.5s;
+    
 }
 
 /* Tooltip text */
@@ -311,7 +318,7 @@ input::-webkit-inner-spin-button {
 
     /* Fade in tooltip */
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.5s;
     cursor: default;
 }
 
@@ -333,6 +340,11 @@ input::-webkit-inner-spin-button {
     visibility: visible;
     opacity: 1;
     cursor: default;
+    
+}
+
+.tooltip:hover {
+    background-color: #555;
 }
 
 #graphHelp {
