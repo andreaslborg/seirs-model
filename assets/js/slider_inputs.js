@@ -22,14 +22,6 @@ let I0Slider = document.getElementById("I0Slider1");
 let R0Form = document.getElementById("R0Form1");
 let R0Slider = document.getElementById("R0Slider1");
 
-// Step size
-let stepForm = document.getElementById("stepForm1");
-let stepSlider = document.getElementById("stepSlider1");
-
-// Total Step size
-let totalStepForm = document.getElementById("totalStepForm1");
-let totalStepSlider = document.getElementById("totalStepSlider1");
-
 // Sigma
 let sigmaForm = document.getElementById("sigForm1");
 let sigmaSlider = document.getElementById("sigSlider1");
@@ -38,10 +30,17 @@ let sigmaSlider = document.getElementById("sigSlider1");
 let epsilonForm = document.getElementById("epsForm1");
 let epsilonSlider = document.getElementById("epsSlider1");
 
+// Total Step size
+let totalStepForm = document.getElementById("totalStepForm1");
+let totalStepSlider = document.getElementById("totalStepSlider1");
+
 // Information box
 let totalN = document.getElementById("totalPopulation");
 let maxInf = document.getElementById("maxInfected");
 let maxExp = document.getElementById("maxExposed");
+
+// Fixed population checkbox
+let checkboxFixPop = document.getElementById("fixedPopulation");
 
 /* Beta: Transmission rate */
 /* Update the current input value (each time you type in it) */
@@ -193,5 +192,9 @@ totalStepSlider.oninput = function() {
     localStorage.setItem("totalStepValue", this.value);           // Cookie
     totalStepForm.value = this.value;
     steps = parseFloat(this.value);
+    rk4seirs();
+}
+
+checkboxFixPop.oninput = function() {
     rk4seirs();
 }

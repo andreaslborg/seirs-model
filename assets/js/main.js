@@ -5,14 +5,11 @@ checkVisit();
 allCookies();
 
 function fixedPopulation() {
-    console.log("Fixed Population");
-
-    let checkboxFixPop = document.getElementById("fixedPopulation");
     let S0Title = document.getElementById("S0Title");
     let S0Des = document.getElementById("S0Des");
     
     if (checkboxFixPop.checked == true) {
-        S0Title.innerHTML = `Total Population (N)`;
+        S0Title.innerHTML = `Total Population`;
         S0Des.innerHTML = `The total population, dependent of the initial E<span class="sub">0</span>, I<span class="sub">0</span>, R<span class="sub">0</span>.`;
 
         N = parseFloat(localStorage.getItem("S0Value"));
@@ -20,14 +17,11 @@ function fixedPopulation() {
 
     } else if (checkboxFixPop.checked == false) {
         S0Title.innerHTML = `Initial Susceptible `;
-        S0Des.innerHTML = `S<span class="sub">0</span> Amount of people who are susceptible to the disease.`;
+        S0Des.innerHTML = `Amount of people who are susceptible to the disease. \\(S_0\\)`;
 
+        S0 = parseFloat(localStorage.getItem("S0Value"));
         N = S0 + E0 + I0 + R0;
-
     }
-
-
-    console.log(checkboxFixPop.checked);
 }
 
 let beta = betaCookie,
@@ -73,7 +67,7 @@ function resetGraph() {
     rk4seirs();
 }
 
-function rk4seirs(){
+function rk4seirs() {
     fixedPopulation();
 
     dataS = [S0];
