@@ -32,6 +32,7 @@ function saveParameters() {
 
     /* GETTING CURRENT PARAMETERS */
     let savedArr = [
+        localStorage.getItem("checkboxFixPopValue"),
         localStorage.getItem("S0Value"),
         localStorage.getItem("E0Value"),
         localStorage.getItem("I0Value"),
@@ -82,16 +83,17 @@ function loadParameters(rowNum) {
         savedTableload[rowNum][i] = parseFloat(savedTableload[rowNum][i])
     }
 
-    S0 = savedTableload[rowNum][0];
-    E0 = savedTableload[rowNum][1];
-    I0 = savedTableload[rowNum][2];
-    R0 = savedTableload[rowNum][3];
-    h = savedTableload[rowNum][4];
-    beta = savedTableload[rowNum][5];
-    gamma = savedTableload[rowNum][6];
-    epsilon = savedTableload[rowNum][7];
-    sigma = savedTableload[rowNum][8];
-    steps = savedTableload[rowNum][9];
+    checkboxFixPop.checked = savedTableload[rowNum][0];
+    S0 = savedTableload[rowNum][1];
+    E0 = savedTableload[rowNum][2];
+    I0 = savedTableload[rowNum][3];
+    R0 = savedTableload[rowNum][4];
+    h = savedTableload[rowNum][5];
+    beta = savedTableload[rowNum][6];
+    gamma = savedTableload[rowNum][7];
+    epsilon = savedTableload[rowNum][8];
+    sigma = savedTableload[rowNum][9];
+    steps = savedTableload[rowNum][10];
 
     console.log("Loading " + rowNum + ".");
 

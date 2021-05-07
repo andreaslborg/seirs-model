@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="da">
     <head>
-        <title>Epidemiological Modelling</title>
+        <title>Epidemiological Modelling | SEIRS</title>
         <meta charset="utf-8">
         <link rel="stylesheet" href="assets/css/main.css">
         <!-- Using google APIs font -->
@@ -15,7 +15,7 @@
         <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.7"></script>
         <!-- Math API typography link -->
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </head>
     <body>
         <div id="outerDiv">
@@ -30,7 +30,7 @@
                 <div class="chart">
                     <!-- Questionmark -->
                     <h2><div class="tooltip" id="graphHelp">?
-                        <span class="tooltiptext" id="graphHelpSpan">Here you can click on the boxes to remove/show  them on the graph.</span>
+                        <span class="tooltiptext" id="graphHelpSpan">Here you can click on the boxes to remove/show them on the graph.</span>
                     </div></h2>
                     <!-- Inserting the chart -->
                     <canvas id="seirsChart"></canvas>
@@ -38,59 +38,60 @@
                 <!-- Slider and input boxes -->
                 <h2 class="titles">Parameters
                 <div class="tooltip">?
-                    <span class="tooltiptext">Here you can change all the parameters for the model. The graph updates on a input.</span>
-                </div></h2>
+                    <span class="tooltiptext">Here you can change all the parameters for the model. The graph updates on a input.<br>Move the slider or type in a specific number.</span>
+                </div></h2> 
+                <text id="error"></text>
                 <div class="sliderDiv">
                     <div class="sliderBoxes">
                         <div class="sliderBox">
-                            <p class="sliderTitle" id="S0Title">Initial Susceptible </p>
-                            <p class="sliderDes" id="S0Des">    <br> </p>
+                            <p class="sliderTitle" id="S0Title"></p>
+                            <p class="sliderDes" id="S0Des"></p>
                             <p class="sliderDes" id="S0Checkbox"> 
                             <input type="checkbox" id="fixedPopulation" class="checkbox" name="fixedPopulation" value="" onchange="fixedPopulation()">Fixed Population</p>
-                            <input id="S0Form1"      class="inputForm"   type="number"   min="0"    max="10000000"    maxlength="3"   value="99000">
-                            <input id="S0Slider1"   class="slider"      type="range"    min="0"    max="10000000"    maxlength="3"   value="99000" step="1">
+                            <input id="S0Form1" class="inputForm" type="number" min="0" max="10000000" maxlength="3" value="99000">
+                            <input id="S0Slider1" class="slider" type="range" min="0" max="10000000" maxlength="3" value="99000" step="1">
                         </div>
                         <div class="sliderBox">
-                            <p class="sliderTitle">Initial Exposed</p>
-                            <p class="sliderDes">\(E_0\) Amount of people who are exposed but not infectious.</p>
-                            <input id="E0Form1"     class="inputForm"   type="number"   min="0"     max="100000"   maxlength="3"   value="0">
-                            <input id="E0Slider1"   class="slider"      type="range"    min="0"     max="100000"   maxlength="3"   value="0">
+                            <p class="sliderTitle">Initial Exposed (E<span class="sub">0</span>)</p>
+                            <p class="sliderDes">Amount of people who are exposed but not infectious.</p>
+                            <input id="E0Form1" class="inputForm" type="number" min="0" max="100000" maxlength="3" value="0">
+                            <input id="E0Slider1" class="slider" type="range" min="0" max="100000" maxlength="3" value="0">
                         </div>
                         <div class="sliderBox">
-                            <p class="sliderTitle">Initial Infected</p>
-                            <p class="sliderDes">\(I_0\) Amount of people who are infected and infectious.</p>
-                            <input id="I0Form1"     class="inputForm"   type="number"   min="0"     max="100000"   maxlength="3"   value="1000">
-                            <input id="I0Slider1"   class="slider"      type="range"    min="0"     max="100000"   maxlength="3"   value="1000">
+                            <p class="sliderTitle">Initial Infected (I<span class="sub">0</span>)</p>
+                            <p class="sliderDes">Amount of people who are infected and infectious.</p>
+                            <input id="I0Form1" class="inputForm" type="number" min="0" max="100000" maxlength="3" value="1000">
+                            <input id="I0Slider1" class="slider" type="range" min="0" max="100000" maxlength="3" value="1000">
                         </div>
                         <div class="sliderBox">
-                            <p class="sliderTitle">Initial Removed</p>
-                            <p class="sliderDes">\(R_0\) Amount of people who has either recovered from the disease or who are deceased.</p>
-                            <input id="R0Form1"     class="inputForm"   type="number"   min="0"     max="100000"   maxlength="3"   value="0">
-                            <input id="R0Slider1"   class="slider"      type="range"    min="0"     max="100000"   maxlength="3"   value="0">
+                            <p class="sliderTitle">Initial Removed (R<span class="sub">0</span>)</p>
+                            <p class="sliderDes">Amount of people who has either recovered from the disease or who are deceased.</p>
+                            <input id="R0Form1" class="inputForm" type="number" min="0" max="100000" maxlength="3" value="0">
+                            <input id="R0Slider1" class="slider" type="range" min="0" max="100000" maxlength="3" value="0">
                         </div>
                         <div class="sliderBox">
                             <p class="sliderTitle">Beta</p>
                             <p class="sliderDes">\(\beta\) determines the rate of spread.</p>
-                            <input id="betaForm1"   class="inputForm"   type="number"   min="0.001"  max="3"      value="0.02">
-                            <input id="betaSlider1" class="slider"      type="range"    min="0.001"     max="3"     value="0.02" step="0.001">
+                            <input id="betaForm1" class="inputForm" type="number" min="0." max="5" value="0.02">
+                            <input id="betaSlider1" class="slider" type="range" min="0." max="5" value="0.02" step="0.001">
                         </div>
                         <div class="sliderBox">
                             <p class="sliderTitle">Gamma</p>
                             <p class="sliderDes">\(\gamma\) determines the rate at which individuals recover.</p>
-                            <input id="gammaForm1"     class="inputForm"   type="number"   min="0.00001" max="0.5"  maxlength="10000000"    value="0.0006">
-                            <input id="gammaSlider1"   class="slider"      type="range"    min="0.00001" max="0.5"  maxlength="10000000"    value="0.0006" step="0.0001">
+                            <input id="gammaForm1" class="inputForm" type="number" min="0." max="0.5" maxlength="10000000" value="0.0006">
+                            <input id="gammaSlider1" class="slider" type="range" min="0." max="0.5" maxlength="10000000" value="0.0006" step="0.00001">
                         </div>
                         <div class="sliderBox">
                             <p class="sliderTitle">Epsilon</p>
                             <p class="sliderDes">\(\epsilon\) determines the rate of recovered individuals returning to susceptible.</p>
-                            <input id="epsForm1"    class="inputForm"   type="number"   min="0.00001"  max="0.1"     value="0.02">
-                            <input id="epsSlider1"  class="slider"      type="range"    min="0.00001"  max="0.1"     value="0.02" step="0.00001">
+                            <input id="epsForm1" class="inputForm" type="number" min="0" max="0.1" value="0.02">
+                            <input id="epsSlider1" class="slider" type="range" min="0" max="0.1" value="0.02" step="0.00001">
                         </div>
                         <div class="sliderBox">
                             <p class="sliderTitle">Sigma</p>
                             <p class="sliderDes">\(\sigma\) determines the rate of individuals who are exposed becoming infectious.</p>
-                            <input id="sigForm1"     class="inputForm"   type="number"   min="0.00001" max="0.2"  maxlength="10000000"    value="0.0006">
-                            <input id="sigSlider1"   class="slider"      type="range"    min="0.00001" max="0.2"  maxlength="10000000"    value="0.0006" step="0.0001">
+                            <input id="sigForm1" class="inputForm" type="number" min="0" max="0.2" maxlength="10000000" value="0.0006">
+                            <input id="sigSlider1" class="slider" type="range" min="0" max="0.2" maxlength="10000000" value="0.0006" step="0.00001">
                         </div>
                     </div>
                 </div>
@@ -149,6 +150,13 @@
                 <p class="mathFunc">\(t_n + 1 = t_n + \Delta t \)</p>
                 <text class="mathFunc">\(n = 0, 1, 2, 3, ...\)</text>
                 <br><br>
+                <h2 id="infoTitle">Help</h2>
+                <!-- Clear Cookies button -->
+                <p class="mathText">If you have any problems or just want to reset everything, press this button.<button id="clearCookiesButton" onclick="clearCookies()">Clear Cookies</button></p>
+                
+                <!-- Trigger/Open The Modal -->
+                <p class="mathText">Press on this button to show the popup message again.<button id="guideBtn" onclick="showPopup()">Start Guide</button></p>
+                <br>                
             </div>
             <div id="right-container">
                 <h2 id="infoTitle">Information
@@ -157,16 +165,10 @@
                     </div>
                 </h2>
 
-                <!-- Reset button -->
-                <button id="resetButton" onclick="resetGraph()">Reset graph</button>
-                <!-- Clear Cookies button -->
-                <button id="clearCookiesButton" onclick="clearCookies()">Clear Cookies</button>
-                <!-- Trigger/Open The Modal -->
-                <button id="guideBtn" onclick="showPopup()">Start Guide</button>
                 <!-- Infomation table -->
                 <table class="infoTable">
                     <tr>
-                        <th>Total Population</th>
+                        <th>Total Population (N)</th>
                         <td id="totalPopulation"></td>
                     </tr>
                     <tr>
@@ -177,7 +179,12 @@
                         <th>Peak Exposed</th>
                         <td id="maxExposed"></td>
                     </tr>
+
                 </table>
+                <!-- Reset button -->
+                <button id="resetButton" onclick="resetGraph()">Reset graph</button>
+                <text id="confirmReset"></text>
+
                 <!-- Save to CSV file button -->
                 <h2 class="titles">Download Data
                 <div class="tooltip">?
@@ -190,7 +197,7 @@
                 <div class="tooltip">?
                     <span class="tooltiptext">Here you can save your current parameters. These are only available on this device.</span>
                 </div></h2>
-                <input id="savedName" type="text" placeholder="File name" name="savedName" maxlength="20" value="">
+                <input id="savedName" type="text" placeholder="File name" name="savedName" maxlength="30" value="">
                 <button id="savedBtn" onclick="saveParameters()">Save Parameters</button>
                 <table id="savedParametersTable" class="savedTable">
                     <!-- Size of each colum in the table -->
@@ -209,6 +216,8 @@
                 </table>
             </div>
         </div>
+        
+
 
         <!-- The Modal / Popup Welcome Message -->
         <div id="guideBox" class="modal">
@@ -216,16 +225,21 @@
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h1>Welcome</h1>
-                <p class="modalText">This website has been developed by a group of 2nd semester Software students from Aalborg University, for the purpose of creating a tool that can aid experts with controlling the spread of ongoing epidemics.
-                     Additionally, the purpose of the website is to fulfill the curriculum requirements of the current semester.</p>
+                <p class="modalText">This website has been developed by a group of 2nd semester Software students from Aalborg University, 
+                    for the purpose of creating a tool that can aid experts with controlling the spread of ongoing epidemics.
+                    Additionally, the purpose of the website is to fulfill the curriculum requirements of the current semester.</p>
                 <h1>About the website</h1>
-                <p class="modalText">The modelling of infectious diseases is a tool that can be used to study the mechanisms by which diseases spread, to predict the future course of an outbreak, and to evaluate strategies to control an epidemic.
-                     The world is currently in the midst of the COVID-19 pandemic, which makes it even more crucial to have access to a tool like this.</p>
+                <p class="modalText">The modelling of infectious diseases is a tool that can be used to study the mechanisms by which diseases spread, 
+                    to predict the future course of an outbreak, and to evaluate strategies to control an epidemic.
+                    The world is currently in the midst of the COVID-19 pandemic, which makes it even more crucial to have access to a tool like this.</p>
                 <h1>Help</h1>
-                <p class="modalText">At most titles you will see a <a class="tooltip">?<span class="tooltiptext">Hover me, to be shown a short explanation.</span></a>, which you can hover over to get a short explanation for the section. And at the buttom of the webpage, the is also a explanation to the model used and its differential equations.</p>
+                <p class="modalText">At most titles you will see a <a class="tooltip">?<span class="tooltiptext">Hover me, to be shown a short explanation.</span></a>, 
+                    which you can hover over to get a short explanation for the section. And at the buttom of the webpage, the is also a explanation to the model used 
+                    and its differential equations. <br>
+                    The website works best on a computer with a 1920x1080 resolution or higher.</p>
                 <h1>Created by</h1>
                 <p class="modalText">Andreas Løvig Borg <br>Elias Davidsen <br>Lasse Ryge Andersen <br>Marius Ihlen Gardshodn <br>Mikkel Hagerup Dolmer</p>
-                <em class="modalText">Last updated on April 28, 2021</em>
+                <em class="modalText">Last updated on May 7, 2021</em>
             </div>
         </div>
 

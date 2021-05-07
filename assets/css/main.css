@@ -58,9 +58,14 @@ table, th, td, button {
     border-collapse: collapse;
 }
 
+#resetButton {
+    margin-top: 0.3vw;
+}
+
 .sub {
-    vertical-align: sub;
-    font-size: smaller;
+    position: relative; 
+    top: 0.8ex; 
+    font-size: 75%;
 }
 
 th, td {
@@ -351,5 +356,12 @@ input::-webkit-inner-spin-button {
 #graphHelp {
     margin-top: 0.3vw;
     margin-left: 17.8%;
+    position: absolute;
+}
+
+#error {
+    margin-left: 8vw;
+    margin-top: -1.1vw;
+    color: red;
     position: absolute;
 }

@@ -4,26 +4,6 @@ checkVisit();
 /* Loads all the values from the cookies */
 allCookies();
 
-function fixedPopulation() {
-    let S0Title = document.getElementById("S0Title");
-    let S0Des = document.getElementById("S0Des");
-    
-    if (checkboxFixPop.checked == true) {
-        S0Title.innerHTML = `Total Population`;
-        S0Des.innerHTML = `The total population, dependent of the initial E<span class="sub">0</span>, I<span class="sub">0</span>, R<span class="sub">0</span>.`;
-
-        N = parseFloat(localStorage.getItem("S0Value"));
-        S0 = N - E0 - I0 - R0;
-
-    } else if (checkboxFixPop.checked == false) {
-        S0Title.innerHTML = `Initial Susceptible `;
-        S0Des.innerHTML = `Amount of people who are susceptible to the disease. \\(S_0\\)`;
-
-        S0 = parseFloat(localStorage.getItem("S0Value"));
-        N = S0 + E0 + I0 + R0;
-    }
-}
-
 let beta = betaCookie,
     gamma = gammaCookie,
     epsilon = epsilonCookie,
@@ -43,19 +23,24 @@ let beta = betaCookie,
 
 /* Executed by the reset button */
 function resetGraph() {
-    console.log("Resetting parameters.");
+    confirmButtons.innerHTML = `<em class="modalText">Are you sure?</em><button onclick="confirmYes()">Yes</button><button onclick="confirmNo()">No</button>`; 
+}
 
-    beta = 2.2;
-    gamma = 0.33333;
-    epsilon = 0.07142;
-    sigma = 0.1428;
+function confirmYes() {
+    console.log("Resetting parameters.");
+    
+    checkboxFixPop.checked = 0;
+    beta = 1;
+    gamma = 0.1;
+    epsilon = 0.001;    
+    sigma = 0.1;
     S0 = 199;
     E0 = 0;
     I0 = 1;
     R0 = 0;
     h = 0.01;
-    steps = 100;
-    N = S0 + E0 + I0 + R0;
+    steps = 100; 
+    
     dataS = [S0];
     dataE = [E0];
     dataI = [I0];
@@ -65,7 +50,14 @@ function resetGraph() {
     setCookieValues();
     setFormSliders();
     rk4seirs();
+
+    confirmButtons.innerHTML = "";
 }
+
+function confirmNo() {
+    confirmButtons.innerHTML = "";
+}
+
 
 function rk4seirs() {
     fixedPopulation();
@@ -130,7 +122,7 @@ function rk4seirs() {
     /* Resizing */
     resizeArr();
 
-    /* Updating the graph its data */
+    /* Updating the graph */
     seirsChart.update();
 }
 
@@ -141,6 +133,7 @@ function resizeArr() {
     let newdataI = [];
     let newdataR = [];
     
+    /* Every 100' element in the data array is added to the new array */
     for(i = 0; i < dataS.length; i++) {
         if (i % 100 == 0) {
             newtArr.push(tArr[i]);
@@ -228,9 +221,5 @@ var seirsChart = new Chart(ctx, {
     },
 });
 
+/* Initializes the data when website is opend */
 rk4seirs();
-
-function updateGraph() {
-    console.log("Updating chart.")
-    seirsChart.update();
-}

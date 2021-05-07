@@ -90,5 +90,8 @@ function allCookies() {
     totalStepCookie = parseFloat(localStorage.getItem("totalStepValue"));
     totalStepForm.value = totalStepCookie;
     totalStepSlider.value = totalStepCookie;
+
+    /* Fixed population checkbox */
+    checkboxFixPop.checked = parseInt(localStorage.getItem("checkboxFixPopValue"));
 }
 

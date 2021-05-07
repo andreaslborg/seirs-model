@@ -34,4 +34,5 @@ function setFormSliders() {
     //stepSlider.value = h;
     totalStepForm.value = steps;
     totalStepSlider.value = steps;
+    
 }
