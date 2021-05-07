@@ -1,21 +1,25 @@
 function clearCookies() {
     localStorage.clear();
+    console.log("Cookies cleared.")
 }
 
 function checkVisit() {
     if (localStorage.getItem("firstVisit") === null) {
         console.log("First visit");
-        localStorage.setItem("firstVisit", 1);
-        let beta = 2.2,
-            gamma = 0.33333,
-            epsilon = 0.07142,
-            sigma = 0.1428,
+
+        /* Sets the default values first time a user visits */
+        let beta = 1,
+            gamma = 0.1,
+            epsilon = 0.001,
+            sigma = 0.1,
             S0 = 199,
             E0 = 0,
             I0 = 1,
             R0 = 0,
             h = 0.01,
-            steps = 100;
+            steps = 100; 
+        checkboxFixPop.checked = 0;
+        localStorage.setItem("firstVisit", 1);
         localStorage.setItem("betaValue", beta);
         localStorage.setItem("gammaValue", gamma);
         localStorage.setItem("epsilonValue", epsilon);
@@ -27,12 +31,14 @@ function checkVisit() {
         localStorage.setItem("stepValue", h);
         localStorage.setItem("totalStepValue", steps);
 
+        /* Creates an JSON array which is the values of the three cookies */
         let data = JSON.stringify([0]);
         localStorage.setItem("savedTable.filenameCookie", data);
         localStorage.setItem("savedTable.dateCookie", data);
         localStorage.setItem("savedTable.parametersCookie", data);
         
     } else {
+        /* Counts the number of visits */
         visitCounter = parseFloat(localStorage.getItem("firstVisit")) + 1;
         localStorage.setItem("firstVisit", visitCounter);
         console.log("Welcome back, this is your " + visitCounter + ". visit");
@@ -83,8 +89,6 @@ function allCookies() {
     
     /* Loads Step size */
     stepCookie = parseFloat(localStorage.getItem("stepValue"));
-    //stepForm.value = stepCookie;
-    //stepSlider.value = stepCookie;
     
     /* Loads Total step size */
     totalStepCookie = parseFloat(localStorage.getItem("totalStepValue"));
