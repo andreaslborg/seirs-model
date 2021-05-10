@@ -1,8 +1,12 @@
 /* Update the current input value (each time you type in it) */
 
 /* Function to write an error if there is now value in the form */
+let errorMessage = document.getElementById("error");
+
 function errorCheck(value) {
     if (value == "") { errorMessage.innerHTML = "Your initial value must be atleast 0."; }
+    else if (value > N) { errorMessage.innerHTML = `Error. The sum of E<span class="sub">0</span>, I<span class="sub">0</span> and R<span class="sub">0</span> can't be more than the total population (N).`; }
+    else { errorMessage.innerHTML = ""; }
 }
 
 
@@ -20,12 +24,8 @@ function fixedPopulation() {
         localStorage.setItem("checkboxFixPopValue", 1);
 
         /* Writes a error message if the sum of E0, I0 and R0 is larger than N */
-        if (E0+I0+R0 > N) { 
-            errorMessage.innerHTML = `Error. The sum of E<span class="sub">0</span>, I<span class="sub">0</span> and R<span class="sub">0</span> can't be more than the total population (N).`; 
-        } 
-        else { 
-            errorMessage.innerHTML = "";
-        }
+        let sumEIR = E0+I0+R0;
+        errorCheck(sumEIR);
 
     /* If the box is not checked */
     } else if (checkboxFixPop.checked == 0) {
@@ -215,7 +215,6 @@ totalStepSlider.oninput = function() {
 let totalN = document.getElementById("totalPopulation");
 let maxInf = document.getElementById("maxInfected");
 let maxExp = document.getElementById("maxExposed");
-let confirmButtons = document.getElementById("confirmReset");
 
 
 /* Fixed population checkbox */
@@ -225,6 +224,41 @@ checkboxFixPop.oninput = function() {
     rk4seirs();
 }
 
+/* Reset button functions */
+let confirmButtons = document.getElementById("confirmReset");
 
-/* Error text */
-let errorMessage = document.getElementById("error");
+function resetGraph() {
+    confirmButtons.innerHTML = `<em class="modalText">Are you sure?</em><button onclick="confirmYes()">Yes</button><button onclick="confirmNo()">No</button>`; 
+}
+/* Yes button */
+function confirmYes() {
+    console.log("Resetting parameters.");
+    
+    checkboxFixPop.checked = 0;
+    beta = 1;
+    gamma = 0.1;
+    epsilon = 0.001;    
+    sigma = 0.1;
+    S0 = 199;
+    E0 = 0;
+    I0 = 1;
+    R0 = 0;
+    h = 0.01;
+    steps = 100; 
+    
+    dataS = [S0];
+    dataE = [E0];
+    dataI = [I0];
+    dataR = [R0];
+    tArr = [0];
+
+    setCookieValues();
+    setFormSliders();
+    rk4seirs();
+
+    confirmButtons.innerHTML = "";
+}
+/* No button */
+function confirmNo() {
+    confirmButtons.innerHTML = "";
+}

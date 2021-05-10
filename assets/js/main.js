@@ -21,44 +21,6 @@ let beta = betaCookie,
     dataR = [R0],
     tArr = [0];
 
-/* Executed by the reset button */
-function resetGraph() {
-    confirmButtons.innerHTML = `<em class="modalText">Are you sure?</em><button onclick="confirmYes()">Yes</button><button onclick="confirmNo()">No</button>`; 
-}
-
-function confirmYes() {
-    console.log("Resetting parameters.");
-    
-    checkboxFixPop.checked = 0;
-    beta = 1;
-    gamma = 0.1;
-    epsilon = 0.001;    
-    sigma = 0.1;
-    S0 = 199;
-    E0 = 0;
-    I0 = 1;
-    R0 = 0;
-    h = 0.01;
-    steps = 100; 
-    
-    dataS = [S0];
-    dataE = [E0];
-    dataI = [I0];
-    dataR = [R0];
-    tArr = [0];
-
-    setCookieValues();
-    setFormSliders();
-    rk4seirs();
-
-    confirmButtons.innerHTML = "";
-}
-
-function confirmNo() {
-    confirmButtons.innerHTML = "";
-}
-
-
 function rk4seirs() {
     fixedPopulation();
 

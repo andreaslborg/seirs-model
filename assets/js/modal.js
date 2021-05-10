@@ -1,13 +1,13 @@
-// Get the modal
+/* Get the modal */
 let popupGuide = document.getElementById("guideBox");
 
-// Get the button that opens the modal
+/* Get the button that opens the modal */
 let btn = document.getElementById("guideBtn");
 
-// Get the <span> element that closes the modal
+/* Get the <span> element that closes the modal */
 let span = document.getElementsByClassName("close")[0];
 
-// When the user clicks the button, open the modal 
+/* When the user clicks the button, open the modal */
 function showPopup() {
     popupGuide.style.display = "block";
 }
@@ -17,14 +17,14 @@ if (localStorage.getItem("firstVisit") == 1) {
     popupGuide.style.display = "block";
 }
 
-// When the user clicks on <span> (x), close the modal
+/* When the user clicks on <span> (x), close the modal */
 span.onclick = function() {
-  popupGuide.style.display = "none";
+    popupGuide.style.display = "none";
 }
 
-// When the user clicks anywhere outside of the modal, close it
+/* When the user clicks anywhere outside of the modal, close it */
 window.onclick = function(event) {
-  if (event.target == popupGuide) {
-    popupGuide.style.display = "none";
-  }
+    if (event.target == popupGuide) {
+        popupGuide.style.display = "none";
+    }
 }
