@@ -67,7 +67,6 @@ S0Slider.oninput = function() {
     S0Form.value = this.value;
     S0 = parseFloat(this.value);
     rk4seirs();
-    errorCheck(this.value);
 }
 
 
@@ -87,7 +86,6 @@ E0Slider.oninput = function() {
     E0Form.value = this.value;
     E0 = parseFloat(this.value);
     rk4seirs();
-    errorCheck(this.value);
 }
 
 
@@ -107,7 +105,6 @@ I0Slider.oninput = function() {
     I0Form.value = this.value;
     I0 = parseFloat(this.value);
     rk4seirs();
-    errorCheck(this.value);
 }
 
 
@@ -127,7 +124,6 @@ R0Slider.oninput = function() {
     R0Form.value = this.value;
     R0 = parseFloat(this.value);
     rk4seirs();
-    errorCheck(this.value);
 }
 
 
@@ -140,6 +136,7 @@ betaForm.oninput = function() {
     betaSlider.value = this.value;
     beta = this.value;
     rk4seirs();
+    errorCheck(this.value);
 }
 betaSlider.oninput = function() {
     localStorage.setItem("betaValue", this.value);         
@@ -157,8 +154,8 @@ gammaForm.oninput = function() {
     localStorage.setItem("gammaValue", this.value);           
     gammaSlider.value = this.value;
     gamma = this.value;
-    if(this.value != 0)
-        rk4seirs();
+    rk4seirs();
+    errorCheck(this.value);
 }
 gammaSlider.oninput = function() {
     localStorage.setItem("gammaValue", this.value);           
@@ -177,6 +174,7 @@ epsilonForm.oninput = function() {
     epsilonSlider.value = this.value;
     epsilon = parseFloat(this.value);          
     rk4seirs();
+    errorCheck(this.value);
 }
 epsilonSlider.oninput = function() {
     localStorage.setItem("epsilonValue", this.value);           
@@ -195,6 +193,7 @@ sigmaForm.oninput = function() {
     sigmaSlider.value = this.value;
     sigma = parseFloat(this.value);          
     rk4seirs();
+    errorCheck(this.value);
 }
 sigmaSlider.oninput = function() {
     localStorage.setItem("sigmaValue", this.value);           
@@ -214,6 +213,7 @@ totalStepForm.oninput = function() {
     totalStepSlider.value = this.value;
     days = parseFloat(this.value);          
     rk4seirs();
+    errorCheck(this.value);
 }
 totalStepSlider.oninput = function() {
     localStorage.setItem("totalStepValue", this.value);           
