@@ -135,19 +135,23 @@ function resizeArr() {
     seirsChart.data.datasets[3].data = newdataR;
 }
 
-
+/* Transperant graph to compare */
 function transGraph() {
-
-    transdataS = newdataS;
-    transdataE = newdataE;
-    transdataI = newdataI;
-    transdataR = newdataR;
+    let transdataS = newdataS,
+        transdataE = newdataE,
+        transdataI = newdataI,
+        transdataR = newdataR;
 
     seirsChart.data.datasets[4].data = transdataS;
     seirsChart.data.datasets[5].data = transdataE;
     seirsChart.data.datasets[6].data = transdataI;
     seirsChart.data.datasets[7].data = transdataR;
 
+    seirsChart.update();
+}
+
+function removetransGraph() {
+    for (i = 4; i < 8; i++) { seirsChart.data.datasets[i].data = []; }
     seirsChart.update();
 }
 
@@ -162,22 +166,22 @@ var seirsChart = new Chart(ctx, {
         {
             label: "Susceptible individuals",
             data: dataS,
-            borderColor: "blue",
+            borderColor: "rgba(0, 0, 255, 1)", // Blue
         },
         {
             label: "Exposed individuals",
             data: dataE,
-            borderColor: "orange",
+            borderColor: "rgb(255, 165, 0, 1)", // Orange
         },
         {
             label: "Infectious individuals",
             data: dataI,
-            borderColor: "red",
+            borderColor: "rgb(255, 0, 0, 1)", // Red
         },
         {
-            label: "Removed individuals",
+            label: "Removed individuals\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
             data: dataR,
-            borderColor: "green",
+            borderColor: "rgb(0, 128, 0, 1)", // Green
         },
         
         {
@@ -188,17 +192,17 @@ var seirsChart = new Chart(ctx, {
         {
             label: "Old Exposed individuals",
             data: dataE,
-            borderColor: "rgb(255,165,0, 0.05)",
+            borderColor: "rgb(255, 165, 0, 0.05)",
         },
         {
             label: "Old Infectious individuals",
             data: dataI,
-            borderColor: "rgb(255,0,0, 0.05)",
+            borderColor: "rgb(255, 0, 0, 0.05)",
         },
         {
             label: "Old Removed individuals",
             data: dataR,
-            borderColor: "rgb(0,128,0, 0.05)",
+            borderColor: "rgb(0, 128, 0, 0.05)",
         },
         
     ]

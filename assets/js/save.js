@@ -270,8 +270,9 @@ function sortName() {
     }
 
     // Her er et array med alle navnene uden det første "0" element
-    console.log(sortNameArr);
+    console.log(sortNameArr); 
     
+    /* https://www.codegrepper.com/code-examples/javascript/javascript+sort+alphabetically */
     sortNameArr.sort(function (a, b) {
         return a.localeCompare(b);
     });
