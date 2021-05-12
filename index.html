@@ -3,7 +3,7 @@
     <head>
         <title>Epidemiological Modelling | SEIRS</title>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="assets/css/main.css">
+        <link rel="stylesheet" href="assets/css/style.css">
         <!-- Using google APIs font -->
         <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Work+Sans:400,700" rel="stylesheet">
         <!-- Icon in browser tab -->
@@ -150,7 +150,7 @@
                 <p class="mathFunc">\(t_n + 1 = t_n + \Delta t \)</p>
                 <text class="mathFunc">\(n = 0, 1, 2, 3, ...\)</text>
                 <br><br>
-                <h2 id="infoTitle">Help</h2>
+                <h2 class="titles">Help</h2>
                 <!-- Clear Cookies button -->
                 <p class="mathText">If you have any problems or just want to reset everything, press this button.<button id="clearCookiesButton" onclick="clearCookies()">Clear Cookies</button></p>
                 
@@ -223,7 +223,7 @@
         <div id="guideBox" class="modal">
             <!-- Modal content -->
             <div class="modal-content">
-                <span class="close">&times;</span>
+                <span class="close" id="guideClose">&times;</span> <!-- &times; = X sign-->
                 <h1>Welcome</h1>
                 <p class="modalText">This website has been developed by a group of 2nd semester Software students from Aalborg University, 
                     for the purpose of creating a tool that can aid experts with controlling the spread of ongoing epidemics.

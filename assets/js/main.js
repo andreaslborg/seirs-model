@@ -4,6 +4,10 @@ checkVisit();
 /* Loads all the values from the cookies */
 allCookies();
 
+const stepSize = 0.01;
+const stepsToDays = function(steps){ return steps / 100; }
+const daysToSteps = function(days) { return days * 100; }
+
 let beta = betaCookie,
     gamma = gammaCookie,
     epsilon = epsilonCookie,
@@ -12,8 +16,8 @@ let beta = betaCookie,
     E0 = E0Cookie,
     I0 = I0Cookie,
     R0 = R0Cookie,
-    h = stepCookie,             // Stepsize
-    steps = totalStepCookie,    // Total steps
+    h = stepSize,
+    days = totalStepCookie,
     N = S0 + E0 + I0 + R0,
     dataS = [S0],
     dataE = [E0],
@@ -30,13 +34,15 @@ function rk4seirs() {
     dataR = [R0];
     tArr = [0];
     
-    let totalSteps = steps*100;
+    let totalSteps = daysToSteps(days);
     
+    /* SEIRS functions */
     function fS(S, I, R){ return -(beta*S*I)/N + epsilon*R; }
     function fE(S, E, I){ return (beta*S*I)/N - sigma*E; }
     function fI(E, I)   { return sigma*E - gamma*I; }
     function fR(I, R)   { return gamma*I - epsilon*R; }
 
+    /* Runge-kutta 4 */
     for (i = 1; i <= totalSteps; i++){
         let Sk1 = fS(dataS[i-1], dataI[i-1], dataR[i-1]),
             Sk2 = fS(dataS[i-1] + h/2*Sk1, dataI[i-1] + h/2*Sk1, dataR[i-1] + h/2*Sk1),
@@ -66,20 +72,35 @@ function rk4seirs() {
         dataR.push(dataR[i-1] + (Rk1 + 2*(Rk2 + Rk3) + Rk4)*h/6);
     }
 
-    document.getElementById("totalSteps").innerText = "Total steps = " + totalSteps;
-
-    /* Sets N as the total population in the info table */
+    /* Updates the total steps description, when the days slider/form is changed */
+    totalStepsDes.innerText = "Total steps = " + totalSteps;
     totalN.innerHTML = N;
+    /*
+    /* Sets N as the total population in the info table 
     
+    function findMax(arr){
+        let max = 0;
+
+        for(i=0; i < arr.length; i++)
+            if(arr[i] > max)
+                max = arr[i]; 
+                        
+        maxInf.innerHTML = max / 100;
+    console.log("max infected: " + maxInf.innerHTML); 
+    }
+    */
+
+
+
     /* Finds the highest number (peak infected) in the dataI array and puts in into the info table */
-    let peakInfected = Math.max(...dataI).toFixed(0);
-    let peakInfectedDate = dataI.indexOf(Math.max(...dataI)) / 100;
-    maxInf.innerHTML = peakInfected + " at day " + peakInfectedDate;
+    let peakInfected = Math.max(...dataI);
+    let peakInfectedDate = stepsToDays(dataI.indexOf(peakInfected));
+    maxInf.innerHTML = peakInfected.toFixed(0) + " at day " + peakInfectedDate;
 
     /* Finds the highest number (peak exposed) in the dataE array and puts in into the info table */
-    let peakExposed = Math.max(...dataE).toFixed(0);
-    let peakExposedDate = dataE.indexOf(Math.max(...dataE)) / 100;
-    maxExp.innerHTML = peakExposed + " at day " + peakExposedDate;
+    let peakExposed = Math.max(...dataE);
+    let peakExposedDate = stepsToDays(dataE.indexOf(peakExposed));
+    maxExp.innerHTML = peakExposed.toFixed(0) + " at day " + peakExposedDate;
 
     /* Resizing */
     resizeArr();

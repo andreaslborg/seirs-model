@@ -28,7 +28,6 @@ function checkVisit() {
         localStorage.setItem("E0Value", E0);
         localStorage.setItem("I0Value", I0);
         localStorage.setItem("R0Value", R0);
-        localStorage.setItem("stepValue", h);
         localStorage.setItem("totalStepValue", steps);
 
         /* Creates an JSON array which is the values of the three cookies */
@@ -86,9 +85,6 @@ function allCookies() {
     R0Cookie = parseFloat(localStorage.getItem("R0Value"));
     R0Form.value = R0Cookie;
     R0Slider.value = R0Cookie;
-    
-    /* Loads Step size */
-    stepCookie = parseFloat(localStorage.getItem("stepValue"));
     
     /* Loads Total step size */
     totalStepCookie = parseFloat(localStorage.getItem("totalStepValue"));

@@ -207,17 +207,18 @@ sigmaSlider.oninput = function() {
 /* Days: Total Step size */
 let totalStepForm = document.getElementById("totalStepForm1");
 let totalStepSlider = document.getElementById("totalStepSlider1");
+let totalStepsDes = document.getElementById("totalSteps");
 
 totalStepForm.oninput = function() {
     localStorage.setItem("totalStepValue", this.value);           
     totalStepSlider.value = this.value;
-    steps = parseFloat(this.value);          
+    days = parseFloat(this.value);          
     rk4seirs();
 }
 totalStepSlider.oninput = function() {
     localStorage.setItem("totalStepValue", this.value);           
     totalStepForm.value = this.value;
-    steps = parseFloat(this.value);
+    days = parseFloat(this.value);
     rk4seirs();
 }
 
@@ -255,7 +256,7 @@ function confirmYes() {
     I0 = 1;
     R0 = 0;
     h = 0.01;
-    steps = 100; 
+    days = 100; 
     
     setCookieValues();
     setFormSliders();

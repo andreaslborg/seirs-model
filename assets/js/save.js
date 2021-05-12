@@ -30,6 +30,7 @@ function saveParameters() {
 
     savedTable.date.push(currentDate);
 
+
     /* GETTING CURRENT PARAMETERS */
     let savedArr = [
         localStorage.getItem("checkboxFixPopValue"),
@@ -37,7 +38,6 @@ function saveParameters() {
         localStorage.getItem("E0Value"),
         localStorage.getItem("I0Value"),
         localStorage.getItem("R0Value"),
-        localStorage.getItem("stepValue"),
         localStorage.getItem("betaValue"),
         localStorage.getItem("gammaValue"),
         localStorage.getItem("epsilonValue"),
@@ -88,12 +88,11 @@ function loadParameters(rowNum) {
     E0 = savedTableload[rowNum][2];
     I0 = savedTableload[rowNum][3];
     R0 = savedTableload[rowNum][4];
-    h = savedTableload[rowNum][5];
-    beta = savedTableload[rowNum][6];
-    gamma = savedTableload[rowNum][7];
-    epsilon = savedTableload[rowNum][8];
-    sigma = savedTableload[rowNum][9];
-    steps = savedTableload[rowNum][10];
+    beta = savedTableload[rowNum][5];
+    gamma = savedTableload[rowNum][6];
+    epsilon = savedTableload[rowNum][7];
+    sigma = savedTableload[rowNum][8];
+    days = savedTableload[rowNum][9];
 
     console.log("Loading " + rowNum + ".");
 

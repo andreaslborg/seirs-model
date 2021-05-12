@@ -8,8 +8,7 @@ function setCookieValues() {
     localStorage.setItem("E0Value", E0);
     localStorage.setItem("I0Value", I0);
     localStorage.setItem("R0Value", R0);
-    localStorage.setItem("stepValue", h);
-    localStorage.setItem("totalStepValue", steps); 
+    localStorage.setItem("totalStepValue", days); 
 }
 
 /* Set the new values to the sliders and forms */
@@ -30,7 +29,7 @@ function setFormSliders() {
     I0Slider.value = I0;
     R0Form.value = R0;
     R0Slider.value = R0;
-    totalStepForm.value = steps;
-    totalStepSlider.value = steps;
+    totalStepForm.value = days;
+    totalStepSlider.value = days;
     
 }

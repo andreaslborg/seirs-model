@@ -5,7 +5,7 @@ let popupGuide = document.getElementById("guideBox");
 let btn = document.getElementById("guideBtn");
 
 /* Get the <span> element that closes the modal */
-let span = document.getElementsByClassName("close")[0];
+let span = document.getElementById("guideClose");
 
 /* When the user clicks the button, open the modal */
 function showPopup() {
