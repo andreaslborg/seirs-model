@@ -94,7 +94,6 @@ h2, .infoTable {
 
 .savedTable {
     margin-top: 1%;
-    width: 98%;
 }
 
 .titles {
@@ -363,4 +362,9 @@ input::-webkit-inner-spin-button {
     margin-top: -1.1vw;
     color: red;
     position: absolute;
+}
+
+.arrow:hover {
+    cursor: pointer;
+    color: #555;
 }

@@ -183,6 +183,7 @@
                 </table>
                 <!-- Reset button -->
                 <button id="resetButton" onclick="resetGraph()">Reset graph</button>
+                <button onclick="transGraph()">TransGraph()</button>
                 <text id="confirmReset"></text>
 
                 <!-- Save to CSV file button -->
@@ -194,23 +195,30 @@
                 
                 <!-- Saved parameters table -->
                 <h2 class="titles">Save Parameters
-                <div class="tooltip">?
-                    <span class="tooltiptext">Here you can save your current parameters. These are only available on this device.</span>
-                </div></h2>
+                    <div class="tooltip">?
+                        <span class="tooltiptext">Here you can save your current parameters. These are only available on this device.<br>
+                            Click on one of the arrows below to sort the list.
+                        </span>
+                    </div>
+                </h2>
                 <input id="savedName" type="text" placeholder="File name" name="savedName" maxlength="30" value="">
                 <button id="savedBtn" onclick="saveParameters()">Save Parameters</button>
                 <table id="savedParametersTable" class="savedTable">
-                    <!-- Size of each colum in the table -->
+                    <!-- Size of each colum in the table 
                     <colgroup>
-                        <col span="1" style="width: 20%;">
-                        <col span="1" style="width: 23%;">
-                        <col span="1" style="width: 20%;">
-                        <col span="1" style="width: 5%;">
-                     </colgroup>
+                        <col span="1" style="width: 100vw;">
+                        <col span="1" style="width: 5vw;">
+                        <col span="1" style="width: 5vw;">
+                        <col span="1" style="width: 5vw;">
+                        <col span="1" style="width: 5vw;">
+                        <col span="1" style="width: 5vw;">
+                     </colgroup>-->
                     <tr>
-                        <th>File Name</th>
-                        <th>Saved Date</th>
-                        <th>Load Parameters</th>
+                        <th>File Name <text id="nameArrow" class="arrow"></text></th>
+                        <th>Saved Date <text id="dateArrow" class="arrow"></text></th>
+                        <th>Peak Inf <text id="infArrow" class="arrow"></text></th>
+                        <th>Peak Exp <text id="expArrow" class="arrow"></text></th>
+                        <th>Load</th>
                         <th>Delete</th>
                     </tr>
                 </table>

@@ -32,10 +32,16 @@ function checkVisit() {
 
         /* Creates an JSON array which is the values of the three cookies */
         let data = JSON.stringify([0]);
-        localStorage.setItem("savedTable.filenameCookie", data);
-        localStorage.setItem("savedTable.dateCookie", data);
-        localStorage.setItem("savedTable.parametersCookie", data);
+        localStorage.setItem("filenameArrCookie", data);
+        localStorage.setItem("dateArrCookie", data);
+        localStorage.setItem("peakInfArrCookie", data);
+        localStorage.setItem("peakExpArrCookie", data);
+        localStorage.setItem("parametersArrCookie", data);
         
+        localStorage.setItem("nameArrow", "▼");
+        localStorage.setItem("dateArrow", "▼");
+        localStorage.setItem("infArrow", "▼");
+        localStorage.setItem("expArrow", "▼");
     } else {
         /* Counts the number of visits */
         visitCounter = parseFloat(localStorage.getItem("firstVisit")) + 1;
@@ -93,5 +99,8 @@ function allCookies() {
 
     /* Fixed population checkbox */
     checkboxFixPop.checked = parseInt(localStorage.getItem("checkboxFixPopValue"));
+
+
+
 }
 

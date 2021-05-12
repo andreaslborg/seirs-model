@@ -1,10 +1,11 @@
 let table = document.getElementById("savedParametersTable");
 
-let savedTable = {
-    filename: JSON.parse(localStorage.getItem("savedTable.filenameCookie")),
-    date: JSON.parse(localStorage.getItem("savedTable.dateCookie")),
-    parameters: JSON.parse(localStorage.getItem("savedTable.parametersCookie"))
-}
+/* Arrays for holding the saved data */
+let filenameArr = JSON.parse(localStorage.getItem("filenameArrCookie")),
+    dateArr = JSON.parse(localStorage.getItem("dateArrCookie")),
+    peakInfArr = JSON.parse(localStorage.getItem("peakInfArrCookie")),
+    peakExpArr = JSON.parse(localStorage.getItem("peakExpArrCookie")),
+    parametersArr = JSON.parse(localStorage.getItem("parametersArrCookie"));
 
 function saveParameters() {
     /* FILENAME */
@@ -15,7 +16,7 @@ function saveParameters() {
     let fileName = fileForm.value;
     if (fileName == "") {fileName = "<em>No file name</em>";}
 
-    savedTable.filename.push(fileName);
+    filenameArr.push(fileName);
 
     /* CURRENT DATE AND TIME */
     let dateObj = new Date();
@@ -28,7 +29,7 @@ function saveParameters() {
 
     let currentDate = day + "/" + month + "/" + year + " " + hour + ":" + min + ":" + sec;
 
-    savedTable.date.push(currentDate);
+    dateArr.push(currentDate);
 
 
     /* GETTING CURRENT PARAMETERS */
@@ -45,13 +46,21 @@ function saveParameters() {
         localStorage.getItem("totalStepValue")
     ];
     
-    savedTable.parameters.push(savedArr);
+    parametersArr.push(savedArr);
+
+    /* Store peak infected */
+    peakInfArr.push(peakInfPercent);
+
+    /* Store peak exposed */
+    peakExpArr.push(peakExpPercent);
 
     
     /* STORE/UPDATES COOKIES */
-    localStorage.setItem("savedTable.filenameCookie", JSON.stringify(savedTable.filename));
-    localStorage.setItem("savedTable.dateCookie", JSON.stringify(savedTable.date));
-    localStorage.setItem("savedTable.parametersCookie", JSON.stringify(savedTable.parameters));
+    localStorage.setItem("filenameArrCookie", JSON.stringify(filenameArr));
+    localStorage.setItem("dateArrCookie", JSON.stringify(dateArr));
+    localStorage.setItem("peakInfArrCookie", JSON.stringify(peakInfArr));
+    localStorage.setItem("peakExpArrCookie", JSON.stringify(peakExpArr));
+    localStorage.setItem("parametersArrCookie", JSON.stringify(parametersArr));
 
 
     console.log("Saving parameters.");
@@ -65,18 +74,22 @@ function saveParameters() {
     let row1cell2 = newRow.insertCell(1);
     let row1cell3 = newRow.insertCell(2);
     let row1cell4 = newRow.insertCell(3);
+    let row1cell5 = newRow.insertCell(4);
+    let row1cell6 = newRow.insertCell(5);
 
     /* Inputting into the cells */
     row1cell1.innerHTML = fileName;
     row1cell2.innerHTML = currentDate;
-    row1cell3.innerHTML = "";           // Button is created in redefineRow()
-    row1cell4.innerHTML = "";           // Button is created in redefineRow()
+    row1cell3.innerHTML = peakInfPercent;
+    row1cell4.innerHTML = peakExpPercent;
+    row1cell5.innerHTML = "";           // Button is created in redefineRow()
+    row1cell6.innerHTML = "";           // Button is created in redefineRow()
 
     redefineRow();
 }
 
 function loadParameters(rowNum) {
-    let savedTableload = JSON.parse(localStorage.getItem("savedTable.parametersCookie"));
+    let savedTableload = JSON.parse(localStorage.getItem("parametersArrCookie"));
 
     /* Converts cookie string to float */
     for(i = 0; i < savedTableload[rowNum].length; i++) {
@@ -106,24 +119,34 @@ function deleteRow(rowNum) {
     document.getElementById("savedParametersTable").deleteRow(rowNum);
 
     /* Delete the element in the array */
-    let savedTablefilename = JSON.parse(localStorage.getItem("savedTable.filenameCookie"));
-    savedTablefilename.splice(rowNum, 1);
+    let filenameArrNew = JSON.parse(localStorage.getItem("filenameArrCookie"));
+    filenameArrNew.splice(rowNum, 1);
 
-    let savedTabledate = JSON.parse(localStorage.getItem("savedTable.dateCookie"));
-    savedTabledate.splice(rowNum, 1);
+    let dateArrNew = JSON.parse(localStorage.getItem("dateArrCookie"));
+    dateArrNew.splice(rowNum, 1);
 
-    let savedTableparameters = JSON.parse(localStorage.getItem("savedTable.parametersCookie"));
-    savedTableparameters.splice(rowNum, 1);
+    let peakInfArrNew = JSON.parse(localStorage.getItem("peakInfArrCookie"));
+    peakInfArrNew.splice(rowNum, 1);
 
-    /* Update the global object */
-    savedTable.filename = savedTablefilename;
-    savedTable.date = savedTabledate;
-    savedTable.parameters = savedTableparameters;
+    let peakExpArrNew = JSON.parse(localStorage.getItem("peakExpArrCookie"));
+    peakExpArrNew.splice(rowNum, 1);
+
+    let parametersArrNew = JSON.parse(localStorage.getItem("parametersArrCookie"));
+    parametersArrNew.splice(rowNum, 1);
+
+    /* Update the arrays */
+    filenameArr = filenameArrNew;
+    dateArr = dateArrNew;
+    peakInfArr = peakInfArrNew;
+    peakExpArr = peakExpArrNew;
+    parametersArr = parametersArrNew;
 
     /* Update the cookies */
-    localStorage.setItem("savedTable.filenameCookie", JSON.stringify(savedTablefilename));
-    localStorage.setItem("savedTable.dateCookie", JSON.stringify(savedTabledate));
-    localStorage.setItem("savedTable.parametersCookie", JSON.stringify(savedTableparameters));
+    localStorage.setItem("filenameArrCookie", JSON.stringify(filenameArrNew));
+    localStorage.setItem("dateArrCookie", JSON.stringify(dateArrNew));
+    localStorage.setItem("peakInfArrCookie", JSON.stringify(peakInfArrNew));
+    localStorage.setItem("peakExpArrCookie", JSON.stringify(peakExpArrNew));
+    localStorage.setItem("parametersArrCookie", JSON.stringify(parametersArrNew));
 
     console.log("Deleted row " + rowNum + ".")
     redefineRow();
@@ -131,9 +154,9 @@ function deleteRow(rowNum) {
 
 /* When deleting a row, the index changes accordingly */
 function redefineRow() {
-    for(i = 1; i < savedTable.date.length; i++) { 
-        table.rows[i].cells[2].innerHTML = `<button onclick="loadParameters(${i})">Load Parameters</button>`;
-        table.rows[i].cells[3].innerHTML = `<button onclick="deleteRow(${i})">Delete</button>`;
+    for(i = 1; i < dateArr.length; i++) { 
+        table.rows[i].cells[4].innerHTML = `<button onclick="loadParameters(${i})">Load</button>`;
+        table.rows[i].cells[5].innerHTML = `<button onclick="deleteRow(${i})">Delete</button>`;
     }
     
     console.log("Redefining rows.");
@@ -141,14 +164,16 @@ function redefineRow() {
 
 /* Loading the saved parameters when the website is opened */
 function runSavedParameters() {
-    let savedTableload = JSON.parse(localStorage.getItem("savedTable.parametersCookie"));
+    let savedTableload = JSON.parse(localStorage.getItem("parametersArrCookie"));
 
     for(i = 1; i < savedTableload.length; i++) {
         let newRow = table.insertRow();
-        newRow.insertCell(0).innerHTML = JSON.parse(localStorage.getItem("savedTable.filenameCookie"))[i];
-        newRow.insertCell(1).innerHTML = JSON.parse(localStorage.getItem("savedTable.dateCookie"))[i];
-        newRow.insertCell(2).innerHTML = `<button onclick="loadParameters()">Load</button>`;
-        newRow.insertCell(3).innerHTML = `<button onclick="deleteRow()">Delete</button>`;
+        newRow.insertCell(0).innerHTML = JSON.parse(localStorage.getItem("filenameArrCookie"))[i];
+        newRow.insertCell(1).innerHTML = JSON.parse(localStorage.getItem("dateArrCookie"))[i];
+        newRow.insertCell(2).innerHTML = JSON.parse(localStorage.getItem("peakInfArrCookie"))[i];
+        newRow.insertCell(3).innerHTML = JSON.parse(localStorage.getItem("peakExpArrCookie"))[i];
+        newRow.insertCell(4).innerHTML = `<button onclick="loadParameters()">Load</button>`;
+        newRow.insertCell(5).innerHTML = `<button onclick="deleteRow()">Delete</button>`;
     }
 
     redefineRow();
@@ -169,7 +194,7 @@ function saveCSV() {
             if(j == csvContent.length - 1) {csvRows.push(csvContent[j][i]);}
             else {csvRows.push(csvContent[j][i] + ",");}
         }
-        csvRows.push("\r"); // New row
+        csvRows.push("\r"); // New row (Carriage Return)
     }
 
     /* Getting current date */
@@ -191,4 +216,79 @@ function saveCSV() {
 
     document.body.appendChild(a);
     a.click();
+}
+
+/* ARROWS AND SORTING */
+let nameArrow = document.getElementById("nameArrow");
+let dateArrow = document.getElementById("dateArrow");
+let infArrow = document.getElementById("infArrow");
+let expArrow = document.getElementById("expArrow");
+
+/* Set the correct arrows when website is loaded */
+nameArrow.innerHTML = localStorage.getItem("nameArrow")
+dateArrow.innerHTML = localStorage.getItem("dateArrow");
+infArrow.innerHTML = localStorage.getItem("infArrow");
+expArrow.innerHTML = localStorage.getItem("expArrow");
+
+function changeArrow(arrowName) {
+    if (arrowName.innerHTML == "▼") { 
+        arrowName.innerHTML = "▲"; 
+        /* Update the cookie value */
+        localStorage.setItem(`${arrowName.id}`, "▲");
+    } else { 
+        arrowName.innerHTML = "▼"; 
+        /* Update the cookie value */
+        localStorage.setItem(`${arrowName.id}`, "▼");
+    }
+}
+
+nameArrow.onclick = function() {
+    changeArrow(nameArrow);
+    sortName();
+}
+
+dateArrow.onclick = function() {
+    changeArrow(dateArrow);
+    sortDate();
+}
+
+infArrow.onclick = function() {
+    changeArrow(infArrow);
+    sortNumber();
+}
+
+expArrow.onclick = function() {
+    changeArrow(expArrow);
+    sortNumber();
+}
+
+
+function sortName() {
+    let sortNameArr = [];
+    for (i = 1; i < filenameArr.length; i++){
+        sortNameArr.push(filenameArr[i]);
+    }
+
+    // Her er et array med alle navnene uden det første "0" element
+    console.log(sortNameArr);
+    
+    sortNameArr.sort(function (a, b) {
+        return a.localeCompare(b);
+    });
+
+    console.log(sortNameArr);
+
+}
+
+function sortDate() {   
+    let sortDateArr = [];
+    for (i = 1; i < dateArr.length; i++){
+        sortDateArr.push(dateArr[i]);
+    }
+    // Array med datoerne uden det første "0" element
+    console.log(sortDateArr);
+}
+
+function sortNumber() {   
+
 }

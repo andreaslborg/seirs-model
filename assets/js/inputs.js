@@ -12,7 +12,6 @@ function errorCheck(value) {
     else { errorMessage.innerHTML = ""; }
 }
 
-
 /* Function to calculate total population and S0, depending on the checkbox "Fixed Population" */
 function fixedPopulation() {
     /* If the box is checked */
@@ -30,6 +29,7 @@ function fixedPopulation() {
 
         /* Writes a error message if the sum of E0, I0 and R0 is larger than N */
         let sumEIR = E0+I0+R0;
+        sliderInputValidation();
         errorCheck(sumEIR);
 
     /* If the box is not checked */
@@ -43,11 +43,14 @@ function fixedPopulation() {
         S0Des.innerHTML = `Amount of people who are susceptible to the disease.`;
         errorMessage.innerHTML = "";
 
+        E0Slider.max = 100000;
+        I0Slider.max = 100000;
+        R0Slider.max = 100000;
+
         /* Setting cookie value for the checkbox to 0 (false) */
         localStorage.setItem("checkboxFixPopValue", 0);
     }
 }
-
 
 /* S0 Initial Susceptible */
 let S0Form = document.getElementById("S0Form1");
@@ -60,7 +63,6 @@ S0Form.oninput = function() {
     S0Slider.value = this.value;
     S0 = parseFloat(this.value);
     rk4seirs();
-    errorCheck(this.value);
 }
 S0Slider.oninput = function() {
     localStorage.setItem("S0Value", this.value); 
@@ -269,3 +271,17 @@ function confirmYes() {
 function confirmNo() {
     confirmButtons.innerHTML = "";
 }
+
+function sliderInputValidation() {
+    // Et eller andet smart.
+    S0Slider.min = E0+I0+R0;
+    E0Slider.max = N-I0-R0;
+    I0Slider.max = N-E0-R0;
+    R0Slider.max = N-I0-E0;
+}
+
+/* Runs input valdation on the sliders if anyone of them is changed/moved */
+S0Slider.onchange = function() { if (checkboxFixPop.checked == 1) { sliderInputValidation(); }}
+E0Slider.onchange = function() { if (checkboxFixPop.checked == 1) { sliderInputValidation(); }}
+I0Slider.onchange = function() { if (checkboxFixPop.checked == 1) { sliderInputValidation(); }}
+R0Slider.onchange = function() { if (checkboxFixPop.checked == 1) { sliderInputValidation(); }}

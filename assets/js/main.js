@@ -5,7 +5,7 @@ checkVisit();
 allCookies();
 
 const stepSize = 0.01;
-const stepsToDays = function(steps){ return steps / 100; }
+const stepsToDays = function(steps){ return steps / 100; } 
 const daysToSteps = function(days) { return days * 100; }
 
 let beta = betaCookie,
@@ -90,17 +90,17 @@ function rk4seirs() {
     }
     */
 
-
-
     /* Finds the highest number (peak infected) in the dataI array and puts in into the info table */
-    let peakInfected = Math.max(...dataI);
-    let peakInfectedDate = stepsToDays(dataI.indexOf(peakInfected));
-    maxInf.innerHTML = peakInfected.toFixed(0) + " at day " + peakInfectedDate;
+    peakInfected = Math.max(...dataI);
+    peakInfPercent = ((peakInfected / N) * 100).toFixed(2) + "%";
+    peakInfectedDate = stepsToDays(dataI.indexOf(peakInfected));
+    maxInf.innerHTML = peakInfected.toFixed(0) + " at day " + peakInfectedDate + " (" + peakInfPercent + ")";
 
     /* Finds the highest number (peak exposed) in the dataE array and puts in into the info table */
-    let peakExposed = Math.max(...dataE);
-    let peakExposedDate = stepsToDays(dataE.indexOf(peakExposed));
-    maxExp.innerHTML = peakExposed.toFixed(0) + " at day " + peakExposedDate;
+    peakExposed = Math.max(...dataE);
+    peakExpPercent = ((peakExposed / N) * 100).toFixed(2) + "%";
+    peakExposedDate = stepsToDays(dataE.indexOf(peakExposed));
+    maxExp.innerHTML = peakExposed.toFixed(0) + " at day " + peakExposedDate + " (" + peakExpPercent + ")";
 
     /* Resizing */
     resizeArr();
@@ -111,12 +111,13 @@ function rk4seirs() {
 
 function resizeArr() {
     let newtArr = [];
-    let newdataS = [];
-    let newdataE = [];
-    let newdataI = [];
-    let newdataR = [];
+    newdataS = [];
+    newdataE = [];
+    newdataI = [];
+    newdataR = [];
     
     /* Every 100' element in the data array is added to the new array */
+    /* Always 100 points */
     for(i = 0; i < dataS.length; i++) {
         if (i % 100 == 0) {
             newtArr.push(tArr[i]);
@@ -133,6 +134,23 @@ function resizeArr() {
     seirsChart.data.datasets[2].data = newdataI;
     seirsChart.data.datasets[3].data = newdataR;
 }
+
+
+function transGraph() {
+
+    transdataS = newdataS;
+    transdataE = newdataE;
+    transdataI = newdataI;
+    transdataR = newdataR;
+
+    seirsChart.data.datasets[4].data = transdataS;
+    seirsChart.data.datasets[5].data = transdataE;
+    seirsChart.data.datasets[6].data = transdataI;
+    seirsChart.data.datasets[7].data = transdataR;
+
+    seirsChart.update();
+}
+
 
 /* Initializes graph */
 var ctx = document.getElementById("seirsChart").getContext('2d');
@@ -160,7 +178,30 @@ var seirsChart = new Chart(ctx, {
             label: "Removed individuals",
             data: dataR,
             borderColor: "green",
-        }]
+        },
+        
+        {
+            label: "Old Susceptible individuals",
+            data: dataS,
+            borderColor: "rgba(0, 0, 255, 0.05)",
+        },
+        {
+            label: "Old Exposed individuals",
+            data: dataE,
+            borderColor: "rgb(255,165,0, 0.05)",
+        },
+        {
+            label: "Old Infectious individuals",
+            data: dataI,
+            borderColor: "rgb(255,0,0, 0.05)",
+        },
+        {
+            label: "Old Removed individuals",
+            data: dataR,
+            borderColor: "rgb(0,128,0, 0.05)",
+        },
+        
+    ]
     },
     options: {
         responsive: true,
