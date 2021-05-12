@@ -179,28 +179,28 @@ var seirsChart = new Chart(ctx, {
             borderColor: "rgb(255, 0, 0, 1)", // Red
         },
         {
-            label: "Removed individuals\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+            label: "Removed individuals\r\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
             data: dataR,
             borderColor: "rgb(0, 128, 0, 1)", // Green
         },
         
         {
-            label: "Old Susceptible individuals",
+            label: "Susceptible individuals",
             data: dataS,
             borderColor: "rgba(0, 0, 255, 0.05)",
         },
         {
-            label: "Old Exposed individuals",
+            label: "Exposed individuals",
             data: dataE,
             borderColor: "rgb(255, 165, 0, 0.05)",
         },
         {
-            label: "Old Infectious individuals",
+            label: "Infectious individuals",
             data: dataI,
             borderColor: "rgb(255, 0, 0, 0.05)",
         },
         {
-            label: "Old Removed individuals",
+            label: "Removed individuals",
             data: dataR,
             borderColor: "rgb(0, 128, 0, 0.05)",
         },
@@ -209,6 +209,10 @@ var seirsChart = new Chart(ctx, {
     },
     options: {
         responsive: true,
+        legend: {
+            display: true,
+            align: "start",
+        },
         scales: {
             xAxes: [{
                 ticks: {

@@ -182,9 +182,15 @@
                 </table>
                 <!-- Reset button -->
                 <button id="resetButton" onclick="resetGraph()">Reset graph</button>
-                <text id="confirmReset"></text><br>
-                <button onclick="transGraph()">Show transperant graph</button>
-                <button onclick="removetransGraph()">Remove transperant graph</button>
+                <text id="confirmReset"></text>
+
+                <h2 class="titles">Transperant graph
+                    <div class="tooltip">?
+                        <span class="tooltiptext">This will create a transperant graph, with the current data points.</span>
+                    </div>
+                </h2>
+                <button onclick="transGraph()">Show</button>
+                <button onclick="removetransGraph()">Remove</button>
 
                 <!-- Save to CSV file button -->
                 <h2 class="titles">Download Data
