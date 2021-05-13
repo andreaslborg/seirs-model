@@ -9,6 +9,7 @@ function errorCheck(value) {
     /* If the sum of EIR is greater than the population */
     else if (value > N) { errorMessage.innerHTML = `Error. The sum of E<span class="sub">0</span>, I<span class="sub">0</span> and R<span class="sub">0</span> can't be more than the total population (N).`; }
     /* Removes the text if none of the above statements hold */
+    else if (S0 < 0) { errorMessage.innerHTML = `Error. The sum of E<span class="sub">0</span>, I<span class="sub">0</span> and R<span class="sub">0</span> can't be more than the total population (N).`}
     else { errorMessage.innerHTML = ""; }
 }
 
@@ -216,12 +217,14 @@ totalStepForm.oninput = function() {
     days = parseFloat(this.value);          
     rk4seirs();
     errorCheck(this.value);
+    removeTransGraphs()
 }
 totalStepSlider.oninput = function() {
     localStorage.setItem("totalStepValue", this.value);           
     totalStepForm.value = this.value;
     days = parseFloat(this.value);
     rk4seirs();
+    removeTransGraphs()
 }
 
 
@@ -242,7 +245,9 @@ checkboxFixPop.oninput = function() {
 let confirmButtons = document.getElementById("confirmReset");
 
 function resetGraph() {
-    confirmButtons.innerHTML = `<em class="modalText">Are you sure?</em><button onclick="confirmYes()">Yes</button><button onclick="confirmNo()">No</button>`; 
+    confirmButtons.innerHTML = `<em class="modalText">Are you sure?</em>
+                                <button onclick="confirmYes()">Yes</button>
+                                <button onclick="confirmNo()">No</button>`; 
 }
 /* "Yes" button */
 function confirmYes() {

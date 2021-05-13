@@ -112,6 +112,10 @@ h2, .infoTable {
     text-align: center;
 }
 
+#parametersTitle {
+    margin-bottom: -2%;
+}
+
 #left-container {
     float: left;
     /*border: 2px solid red;*/
@@ -216,10 +220,9 @@ h2, .infoTable {
 }
 
 /* Removes arrows in the input form */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .mathFunc {
@@ -292,7 +295,7 @@ input::-webkit-inner-spin-button {
     position: relative;
     display: inline-block;
     cursor: default;
-    background-color: #0066FF;
+    background-color: blue;
     border-radius: 50%;
     width: 0.85vw;
     height: 0.85vw;
@@ -352,14 +355,14 @@ input::-webkit-inner-spin-button {
 }
 
 #graphHelp {
-    margin-top: 0.9vw;
-    margin-left: 3.5%;
+    margin-top: 0.3vw;
+    margin-left: 31vw;
     position: absolute;
 }
 
 #error {
     margin-left: 8vw;
-    margin-top: -1.1vw;
+    margin-top: 0.1vw;
     color: red;
     position: absolute;
 }
@@ -367,4 +370,16 @@ input::-webkit-inner-spin-button {
 .arrow:hover {
     cursor: pointer;
     color: #555;
+}
+
+#transGraph {
+    margin-left: 54vw;
+    margin-top: -1vw;
+    position: absolute;
+}
+
+#transHelp {
+    margin-left: 61.3vw;
+    margin-top: -1vw;
+    position: absolute;
 }

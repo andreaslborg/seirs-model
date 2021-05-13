@@ -38,10 +38,10 @@ function checkVisit() {
         localStorage.setItem("peakExpArrCookie", data);
         localStorage.setItem("parametersArrCookie", data);
         
-        localStorage.setItem("nameArrow", "▼");
-        localStorage.setItem("dateArrow", "▼");
-        localStorage.setItem("infArrow", "▼");
-        localStorage.setItem("expArrow", "▼");
+        localStorage.setItem("nameArrow", "black");
+        localStorage.setItem("dateArrow", "blue");
+        localStorage.setItem("infArrow", "black");
+        localStorage.setItem("expArrow", "black");
     } else {
         /* Counts the number of visits */
         visitCounter = parseFloat(localStorage.getItem("firstVisit")) + 1;

@@ -1,3 +1,9 @@
+const YEAR = 31557600;
+const MONTH = 2628288;
+const DAY = 86400;
+const HOUR = 3600;
+const MINUTE = 60;
+
 let table = document.getElementById("savedParametersTable");
 
 /* Arrays for holding the saved data */
@@ -8,6 +14,7 @@ let filenameArr = JSON.parse(localStorage.getItem("filenameArrCookie")),
     parametersArr = JSON.parse(localStorage.getItem("parametersArrCookie"));
 
 function saveParameters() {
+    blackArrows();
     /* FILENAME */
     /* Finds the table in the html file and filename form */
     let fileForm = document.getElementById("savedName");   
@@ -116,7 +123,7 @@ function loadParameters(rowNum) {
 
 function deleteRow(rowNum) {
     /* Removing the table row */
-    document.getElementById("savedParametersTable").deleteRow(rowNum);
+    table.deleteRow(rowNum);
 
     /* Delete the element in the array */
     let filenameArrNew = JSON.parse(localStorage.getItem("filenameArrCookie"));
@@ -164,10 +171,10 @@ function redefineRow() {
 
 /* Loading the saved parameters when the website is opened */
 function runSavedParameters() {
-    let savedTableload = JSON.parse(localStorage.getItem("parametersArrCookie"));
-
-    for(i = 1; i < savedTableload.length; i++) {
+    
+    for (i = 1; i < peakExpArr.length; i++) {
         let newRow = table.insertRow();
+        
         newRow.insertCell(0).innerHTML = JSON.parse(localStorage.getItem("filenameArrCookie"))[i];
         newRow.insertCell(1).innerHTML = JSON.parse(localStorage.getItem("dateArrCookie"))[i];
         newRow.insertCell(2).innerHTML = JSON.parse(localStorage.getItem("peakInfArrCookie"))[i];
@@ -175,7 +182,6 @@ function runSavedParameters() {
         newRow.insertCell(4).innerHTML = `<button onclick="loadParameters()">Load</button>`;
         newRow.insertCell(5).innerHTML = `<button onclick="deleteRow()">Delete</button>`;
     }
-
     redefineRow();
 }
 
@@ -190,12 +196,12 @@ function saveCSV() {
     let csvRows = ["Time,Susceptible,Exposed,Infected,Removed\r"];
 
     for(let i = 0; i < tArr.length; i++) {
-        for(let j = 0; j < csvContent.length; j++) {
+        for(let j = 0; j < csvContent.length; j++)
             if(j == csvContent.length - 1) {csvRows.push(csvContent[j][i]);}
             else {csvRows.push(csvContent[j][i] + ",");}
         }
         csvRows.push("\r"); // New row (Carriage Return)
-    }
+    
 
     /* Getting current date */
     let dateObj = new Date();
@@ -225,71 +231,154 @@ let infArrow = document.getElementById("infArrow");
 let expArrow = document.getElementById("expArrow");
 
 /* Set the correct arrows when website is loaded */
-nameArrow.innerHTML = localStorage.getItem("nameArrow")
-dateArrow.innerHTML = localStorage.getItem("dateArrow");
-infArrow.innerHTML = localStorage.getItem("infArrow");
-expArrow.innerHTML = localStorage.getItem("expArrow");
+nameArrow.style.color = localStorage.getItem("nameArrow")
+dateArrow.style.color = localStorage.getItem("dateArrow");
+infArrow.style.color = localStorage.getItem("infArrow");
+expArrow.style.color = localStorage.getItem("expArrow");
+
+function blackArrows() {
+    nameArrow.style.color = "black";
+    dateArrow.style.color = "black";
+    infArrow.style.color = "black";
+    expArrow.style.color = "black";
+    localStorage.setItem("nameArrow", "black");
+    localStorage.setItem("dateArrow", "black");
+    localStorage.setItem("infArrow", "black");
+    localStorage.setItem("expArrow", "black");
+}
 
 function changeArrow(arrowName) {
-    if (arrowName.innerHTML == "▼") { 
-        arrowName.innerHTML = "▲"; 
-        /* Update the cookie value */
-        localStorage.setItem(`${arrowName.id}`, "▲");
-    } else { 
-        arrowName.innerHTML = "▼"; 
-        /* Update the cookie value */
-        localStorage.setItem(`${arrowName.id}`, "▼");
-    }
+    blackArrows();
+
+    localStorage.setItem(`${arrowName.id}`, "blue");
+    arrowName.style.color = "blue";
 }
 
 nameArrow.onclick = function() {
     changeArrow(nameArrow);
-    sortName();
+    sortingOrder(insertionSortStrings(filenameArr));
+    resetRows(filenameArr.length);
 }
 
 dateArrow.onclick = function() {
     changeArrow(dateArrow);
-    sortDate();
+    sortingOrder(insertionSort(dateToInt(dateArr)));
+    resetRows(dateArr.length);
 }
 
 infArrow.onclick = function() {
     changeArrow(infArrow);
-    sortNumber();
+    sortingOrder(insertionSort(peakInfArr));
+    resetRows(peakInfArr.length);
 }
 
-expArrow.onclick = function() {
+expArrow.onclick = function() {    
     changeArrow(expArrow);
-    sortNumber();
+    sortingOrder(insertionSort(peakExpArr));
+    resetRows(peakExpArr.length);
 }
 
+function resetRows(arrLength) {
+    for (i = 1; i < arrLength; i++) {
+        table.deleteRow(1);
+    }
+    runSavedParameters();
+}
 
-function sortName() {
-    let sortNameArr = [];
-    for (i = 1; i < filenameArr.length; i++){
-        sortNameArr.push(filenameArr[i]);
+function sortingOrder(indexArr) {
+    let filenameArrNew = [0],
+        dateArrNew = [0],
+        peakInfArrNew = [0],
+        peakExpArrNew = [0],
+        parametersArrNew = [0];
+
+    for(i = 1; i < indexArr.length; i++) {
+        filenameArrNew[i] = filenameArr[indexArr[i]];
+        dateArrNew[i] = dateArr[indexArr[i]];
+        peakInfArrNew[i] = peakInfArr[indexArr[i]];
+        peakExpArrNew[i] = peakExpArr[indexArr[i]];
+        parametersArrNew[i] = parametersArr[indexArr[i]];
     }
 
-    // Her er et array med alle navnene uden det første "0" element
-    console.log(sortNameArr); 
-    
-    /* https://www.codegrepper.com/code-examples/javascript/javascript+sort+alphabetically */
-    sortNameArr.sort(function (a, b) {
-        return a.localeCompare(b);
-    });
+    // Update arrays
+    filenameArr = filenameArrNew;
+    dateArr = dateArrNew;
+    peakInfArr = peakInfArrNew;
+    peakExpArr = peakExpArrNew;
+    parametersArr = parametersArrNew;
 
-    console.log(sortNameArr);
-
+    // Update cookies
+    localStorage.setItem("filenameArrCookie", JSON.stringify(filenameArrNew));
+    localStorage.setItem("dateArrCookie", JSON.stringify(dateArrNew));
+    localStorage.setItem("peakInfArrCookie", JSON.stringify(peakInfArrNew));
+    localStorage.setItem("peakExpArrCookie", JSON.stringify(peakExpArrNew));
+    localStorage.setItem("parametersArrCookie", JSON.stringify(parametersArrNew));
 }
 
-function sortDate() {   
-    let sortDateArr = [];
-    for (i = 1; i < dateArr.length; i++){
-        sortDateArr.push(dateArr[i]);
+function insertionSort(inputArr) {
+    let indexArr = [];
+    for(i = 0; i < inputArr.length; i++)
+        indexArr[i] = i;
+
+    let inputArrCopy = [];
+    for (i = 0; i < inputArr.length; i++)
+        inputArrCopy[i] = parseFloat(inputArr[i]);
+
+    // Does not sort first index
+    for (i = 2; i < inputArrCopy.length; i++) {
+        // Choosing the first element in the unsorted subarray
+        let current = inputArrCopy[i];
+        let currentIndex = indexArr[i];
+        // The last element of the sorted subarray
+        let j = i-1;
+        while ((j > 0) && (current < inputArrCopy[j])) {
+            inputArrCopy[j+1] = inputArrCopy[j];
+            indexArr[j+1] = indexArr[j];
+            j--;
+        }
+        inputArrCopy[j+1] = current;
+        indexArr[j+1] = currentIndex;
     }
-    // Array med datoerne uden det første "0" element
-    console.log(sortDateArr);
+    return indexArr;
 }
 
-function sortNumber() {   
+function insertionSortStrings(inputArr) {
+    let indexArr = [];
+    for(i = 0; i < inputArr.length; i++)
+        indexArr[i] = i;
 
+    let inputArrCopy = [];
+    for (i = 0; i < inputArr.length; i++)
+        inputArrCopy[i] = inputArr[i];
+
+    // Does not sort first index
+    for (i = 2; i < inputArrCopy.length; i++) {
+        // Choosing the first element in the unsorted subarray
+        let current = inputArrCopy[i];
+        let currentIndex = indexArr[i];
+        // The last element of the sorted subarray
+        let j = i-1;
+        while ((j > 0) && (0 < inputArrCopy[j].localeCompare(current, 'en', {caseFirst: 'upper', ignorePunctuation: 'true', numeric: 'true'},))) {
+            inputArrCopy[j+1] = inputArrCopy[j];
+            indexArr[j+1] = indexArr[j];
+            j--;
+        }
+        inputArrCopy[j+1] = current;
+        indexArr[j+1] = currentIndex;
+    }
+    return indexArr;
+}
+
+function dateToInt(inputArr) {
+    let floatArr = [];
+
+    for (i = 1; i < inputArr.length; i++) {
+        floatArr[i] = parseInt(inputArr[i].slice(6,10))*YEAR + 
+                      parseInt(inputArr[i].slice(3,5))*MONTH + 
+                      parseInt(inputArr[i].slice(0,2))*DAY + 
+                      parseInt(inputArr[i].slice(11,13))*HOUR + 
+                      parseInt(inputArr[i].slice(14,16))*MINUTE + 
+                      parseInt(inputArr[i].slice(17,19));
+    }
+    return floatArr;
 }

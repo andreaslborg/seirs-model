@@ -75,29 +75,30 @@ function rk4seirs() {
     /* Updates the total steps description, when the days slider/form is changed */
     totalStepsDes.innerText = "Total steps = " + totalSteps;
     totalN.innerHTML = N;
-    /*
-    /* Sets N as the total population in the info table 
     
+    /* Sets N as the total population in the info table */
+    
+    /* Finds the max value in an array */
     function findMax(arr){
         let max = 0;
 
-        for(i=0; i < arr.length; i++)
+        for(i=0; i < arr.length; i++){
             if(arr[i] > max)
-                max = arr[i]; 
-                        
-        maxInf.innerHTML = max / 100;
-    console.log("max infected: " + maxInf.innerHTML); 
+                max = arr[i];
+        }
+        return max;
     }
-    */
 
     /* Finds the highest number (peak infected) in the dataI array and puts in into the info table */
-    peakInfected = Math.max(...dataI);
+    //  peakInfected2 = Math.max(...dataI);
+    peakInfected = findMax(dataI);
     peakInfPercent = ((peakInfected / N) * 100).toFixed(2) + "%";
     peakInfectedDate = stepsToDays(dataI.indexOf(peakInfected));
     maxInf.innerHTML = peakInfected.toFixed(0) + " at day " + peakInfectedDate + " (" + peakInfPercent + ")";
 
     /* Finds the highest number (peak exposed) in the dataE array and puts in into the info table */
-    peakExposed = Math.max(...dataE);
+    //  peakExposed = Math.max(...dataE);
+    peakExposed = findMax(dataE);
     peakExpPercent = ((peakExposed / N) * 100).toFixed(2) + "%";
     peakExposedDate = stepsToDays(dataE.indexOf(peakExposed));
     maxExp.innerHTML = peakExposed.toFixed(0) + " at day " + peakExposedDate + " (" + peakExpPercent + ")";
@@ -116,11 +117,17 @@ function resizeArr() {
     newdataI = [];
     newdataR = [];
     
-    /* Every 100' element in the data array is added to the new array */
-    /* Always 100 points */
+    let stepsToSkip;
+    
+    /* Always 100 points from the data array is added to the new array */
+    if (dataS.length > 100) 
+        stepsToSkip = (dataS.length/100).toFixed(0);
+    else
+        stepsToSkip = 1;
+
     for(i = 0; i < dataS.length; i++) {
-        if (i % 100 == 0) {
-            newtArr.push(tArr[i]);
+        if (i % stepsToSkip == 0) {
+            newtArr.push(tArr[i].toFixed(0));
             newdataS.push(dataS[i]);
             newdataE.push(dataE[i]);
             newdataI.push(dataI[i]);
@@ -136,23 +143,30 @@ function resizeArr() {
 }
 
 /* Transperant graph to compare */
+transBox = document.getElementById("transBox");
+
 function transGraph() {
-    let transdataS = newdataS,
-        transdataE = newdataE,
-        transdataI = newdataI,
-        transdataR = newdataR;
+    if (transBox.checked == 1) {
+        let transdataS = newdataS,
+            transdataE = newdataE,
+            transdataI = newdataI,
+            transdataR = newdataR;
 
-    seirsChart.data.datasets[4].data = transdataS;
-    seirsChart.data.datasets[5].data = transdataE;
-    seirsChart.data.datasets[6].data = transdataI;
-    seirsChart.data.datasets[7].data = transdataR;
+        seirsChart.data.datasets[4].data = transdataS;
+        seirsChart.data.datasets[5].data = transdataE;
+        seirsChart.data.datasets[6].data = transdataI;
+        seirsChart.data.datasets[7].data = transdataR;
 
-    seirsChart.update();
+        seirsChart.update();
+    } else {
+        removeTransGraphs();
+    }
 }
 
-function removetransGraph() {
+function removeTransGraphs() {
+    transBox.checked = 0;
     for (i = 4; i < 8; i++) { seirsChart.data.datasets[i].data = []; }
-    seirsChart.update();
+        seirsChart.update();
 }
 
 
@@ -165,44 +179,44 @@ var seirsChart = new Chart(ctx, {
         datasets: [
         {
             label: "Susceptible individuals",
-            data: dataS,
+            data: [],
             borderColor: "rgba(0, 0, 255, 1)", // Blue
         },
         {
             label: "Exposed individuals",
-            data: dataE,
+            data: [],
             borderColor: "rgb(255, 165, 0, 1)", // Orange
         },
         {
             label: "Infectious individuals",
-            data: dataI,
+            data: [],
             borderColor: "rgb(255, 0, 0, 1)", // Red
         },
         {
-            label: "Removed individuals\r\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
-            data: dataR,
+            label: "Removed individuals\r",
+            data: [],
             borderColor: "rgb(0, 128, 0, 1)", // Green
         },
         
         {
             label: "Susceptible individuals",
-            data: dataS,
-            borderColor: "rgba(0, 0, 255, 0.05)",
+            data: [],
+            borderColor: "rgba(0, 0, 255, 0.1)",
         },
         {
             label: "Exposed individuals",
-            data: dataE,
-            borderColor: "rgb(255, 165, 0, 0.05)",
+            data: [],
+            borderColor: "rgb(255, 165, 0, 0.1)",
         },
         {
             label: "Infectious individuals",
-            data: dataI,
-            borderColor: "rgb(255, 0, 0, 0.05)",
+            data: [],
+            borderColor: "rgb(255, 0, 0, 0.1)",
         },
         {
             label: "Removed individuals",
-            data: dataR,
-            borderColor: "rgb(0, 128, 0, 0.05)",
+            data: [],
+            borderColor: "rgb(0, 128, 0, 0.1)",
         },
         
     ]
@@ -211,7 +225,10 @@ var seirsChart = new Chart(ctx, {
         responsive: true,
         legend: {
             display: true,
-            align: "start",
+            align: "center",
+            labels: {
+                boxWidth: 20,
+            }
         },
         scales: {
             xAxes: [{
@@ -253,5 +270,5 @@ var seirsChart = new Chart(ctx, {
     },
 });
 
-/* Initializes the data when website is opend */
+/* Initializes the data when website is opened */
 rk4seirs();

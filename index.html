@@ -29,17 +29,25 @@
                 <div class="chart">
                     <!-- Questionmark -->
                     <h2><div class="tooltip" id="graphHelp">?
-                        <span class="tooltiptext" id="graphHelpSpan">Here you can click on the boxes to remove/show them on the graph.</span>
+                        <span class="tooltiptext">Here you can click on the boxes to remove/show them on the graph.</span>
                     </div></h2>
                     <!-- Inserting the chart -->
                     <canvas id="seirsChart"></canvas>
                 </div>
                 <!-- Slider and input boxes -->
-                <h2 class="titles">Parameters
+                <h2 class="titles" id="parametersTitle">Parameters
                 <div class="tooltip">?
                     <span class="tooltiptext">Here you can change all the parameters for the model. The graph updates on a input.<br>Move the slider or type in a specific number.</span>
                 </div></h2> 
                 <text id="error"></text>
+                <h2><p class="mathText" id="transGraph" >Transparent Graph
+                    <input type="checkbox" id="transBox" class="checkbox" onchange="transGraph()">
+                        <div class="tooltip" id="transHelp">?
+                            <span class="tooltiptext">This will create a transparent graph, with the current data points.</span>
+                        </div>
+                    </p>
+                </h2>
+                    
                 <div class="sliderDiv">
                     <div class="sliderBoxes">
                         <div class="sliderBox">
@@ -184,14 +192,6 @@
                 <button id="resetButton" onclick="resetGraph()">Reset graph</button>
                 <text id="confirmReset"></text>
 
-                <h2 class="titles">Transperant graph
-                    <div class="tooltip">?
-                        <span class="tooltiptext">This will create a transperant graph, with the current data points.</span>
-                    </div>
-                </h2>
-                <button onclick="transGraph()">Show</button>
-                <button onclick="removetransGraph()">Remove</button>
-
                 <!-- Save to CSV file button -->
                 <h2 class="titles">Download Data
                 <div class="tooltip">?
@@ -220,10 +220,10 @@
                         <col span="1" style="width: 5vw;">
                      </colgroup>-->
                     <tr>
-                        <th>File Name <text id="nameArrow" class="arrow"></text></th>
-                        <th>Saved Date <text id="dateArrow" class="arrow"></text></th>
-                        <th>Peak Inf <text id="infArrow" class="arrow"></text></th>
-                        <th>Peak Exp <text id="expArrow" class="arrow"></text></th>
+                        <th>File Name <text id="nameArrow" class="arrow">▼</text></th>
+                        <th>Saved Date <text id="dateArrow" class="arrow">▼</text></th>
+                        <th>Peak Inf <text id="infArrow" class="arrow">▼</text></th>
+                        <th>Peak Exp <text id="expArrow" class="arrow">▼</text></th>
                         <th>Load</th>
                         <th>Delete</th>
                     </tr>

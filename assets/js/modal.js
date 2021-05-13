@@ -8,19 +8,13 @@ let btn = document.getElementById("guideBtn");
 let span = document.getElementById("guideClose");
 
 /* When the user clicks the button, open the modal */
-function showPopup() {
-    popupGuide.style.display = "block";
-}
+function showPopup() { popupGuide.style.display = "block"; }
 
 /* When the user uses the website for the first time, the modal opens */  
-if (localStorage.getItem("firstVisit") == 1) {
-    popupGuide.style.display = "block";
-}
+if (localStorage.getItem("firstVisit") == 1) { popupGuide.style.display = "block"; }
 
 /* When the user clicks on <span> (x), close the modal */
-span.onclick = function() {
-    popupGuide.style.display = "none";
-}
+span.onclick = function() { popupGuide.style.display = "none"; }
 
 /* When the user clicks anywhere outside of the modal, close it */
 window.onclick = function(event) {
