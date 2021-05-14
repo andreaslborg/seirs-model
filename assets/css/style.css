@@ -58,6 +58,31 @@ table, th, td, button {
     border-collapse: collapse;
 }
 
+#savedParametersTable {
+    hyphens: auto;
+}
+
+#fileName {
+    text-align: center;
+    width: 10%;
+}
+
+.tablealign {
+    text-align: center;
+}
+
+.loadColumn {
+    text-align: center;
+    margin-left: 5%;
+    width: 5%;
+}
+
+.deleteColumn {
+    text-align: center;
+    margin-left: 5%;
+    
+}
+
 #resetButton {
     margin-top: 0.3vw;
 }

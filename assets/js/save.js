@@ -165,16 +165,15 @@ function redefineRow() {
         table.rows[i].cells[4].innerHTML = `<button onclick="loadParameters(${i})">Load</button>`;
         table.rows[i].cells[5].innerHTML = `<button onclick="deleteRow(${i})">Delete</button>`;
     }
-    
     console.log("Redefining rows.");
 }
 
 /* Loading the saved parameters when the website is opened */
 function runSavedParameters() {
-    
+
     for (i = 1; i < peakExpArr.length; i++) {
         let newRow = table.insertRow();
-        
+
         newRow.insertCell(0).innerHTML = JSON.parse(localStorage.getItem("filenameArrCookie"))[i];
         newRow.insertCell(1).innerHTML = JSON.parse(localStorage.getItem("dateArrCookie"))[i];
         newRow.insertCell(2).innerHTML = JSON.parse(localStorage.getItem("peakInfArrCookie"))[i];
@@ -192,16 +191,15 @@ function saveCSV() {
     console.log("Saving CSV file.")
 
     let csvContent = [tArr, dataS, dataE, dataI, dataR];
-
     let csvRows = ["Time,Susceptible,Exposed,Infected,Removed\r"];
 
-    for(let i = 0; i < tArr.length; i++) {
-        for(let j = 0; j < csvContent.length; j++)
+    for (let i = 0; i < tArr.length; i++) {
+        for (let j = 0; j < csvContent.length; j++) {
             if(j == csvContent.length - 1) {csvRows.push(csvContent[j][i]);}
             else {csvRows.push(csvContent[j][i] + ",");}
         }
         csvRows.push("\r"); // New row (Carriage Return)
-    
+    }
 
     /* Getting current date */
     let dateObj = new Date();
@@ -215,10 +213,10 @@ function saveCSV() {
 
     /* Creating the CSV file */
     let csvString = csvRows.join("");
-    let a         = document.createElement('a');
-    a.href        = 'data:attachment/csv,' +  encodeURIComponent(csvString);
-    a.target      = '_blank';
-    a.download    = "seirs_data_"+ currentDate + '.csv';
+    let a         = document.createElement("a");
+    a.href        = "data:attachment/csv," +  encodeURIComponent(csvString);
+    a.target      = "_blank";
+    a.download    = "seirs_data_"+ currentDate + ".csv";
 
     document.body.appendChild(a);
     a.click();
@@ -358,7 +356,7 @@ function insertionSortStrings(inputArr) {
         let currentIndex = indexArr[i];
         // The last element of the sorted subarray
         let j = i-1;
-        while ((j > 0) && (0 < inputArrCopy[j].localeCompare(current, 'en', {caseFirst: 'upper', ignorePunctuation: 'true', numeric: 'true'},))) {
+        while ((j > 0) && (0 < inputArrCopy[j].localeCompare(current, "en", {caseFirst: "upper", ignorePunctuation: "true", numeric: "true"},))) {
             inputArrCopy[j+1] = inputArrCopy[j];
             indexArr[j+1] = indexArr[j];
             j--;

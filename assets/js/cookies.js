@@ -39,7 +39,7 @@ function checkVisit() {
         localStorage.setItem("parametersArrCookie", data);
         
         localStorage.setItem("nameArrow", "black");
-        localStorage.setItem("dateArrow", "blue");
+        localStorage.setItem("dateArrow", "black");
         localStorage.setItem("infArrow", "black");
         localStorage.setItem("expArrow", "black");
     } else {

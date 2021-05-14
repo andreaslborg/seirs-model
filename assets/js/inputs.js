@@ -217,14 +217,14 @@ totalStepForm.oninput = function() {
     days = parseFloat(this.value);          
     rk4seirs();
     errorCheck(this.value);
-    removeTransGraphs()
+    removeTransGraphs();
 }
 totalStepSlider.oninput = function() {
     localStorage.setItem("totalStepValue", this.value);           
     totalStepForm.value = this.value;
     days = parseFloat(this.value);
     rk4seirs();
-    removeTransGraphs()
+    removeTransGraphs();
 }
 
 
@@ -267,6 +267,7 @@ function confirmYes() {
     
     setCookieValues();
     setFormSliders();
+    removeTransGraphs();
     rk4seirs();
 
     /* Removes the buttons */

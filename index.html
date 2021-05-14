@@ -133,30 +133,35 @@
                 <text class="mathFunc">\( {dS \over dt} = -{\beta SI \over N} + \epsilon R, \)</text>
                 <text class="mathFunc">\( {dE \over dt} = {\beta IS \over N} - \sigma E,  \)</text>
                 <text class="mathFunc">\( {dI \over dt} = \sigma E - \gamma I, \)</text>
-                <text class="mathFunc">\( {dR \over dt} = \gamma I - \epsilon R \)</text>
+                <text class="mathFunc">\( {dR \over dt} = \gamma I - \epsilon R. \)</text>
                 <br><br>
                 <p class="mathText"><em>where</em></p><br>
                 <p class="mathText">\(S\) is the number of susceptible individuals.</p>
                 <p class="mathText">\(E\) is the number of exposed individuals.</p>
                 <p class="mathText">\(I\) is the number of infected individuals.</p>
                 <p class="mathText">\(R\) is the number of removed individuals.</p>
+                <p class="mathText">\(N=S+E+I+R\) is the total population.</p>
                 <p class="mathText">\(\beta\) is the infectious rate.</p>                   
                 <p class="mathText">\(\sigma\) is the incubation rate.</p>
                 <p class="mathText">\(\gamma\) is the recovery rate.</p>
-                <p class="mathText">\(\epsilon\) is the rate which recovered individuals return to the susceptible statue due to loss of immunity.</p> 
+                <p class="mathText">\(\epsilon\) is the rate which recovered individuals return to the susceptible statue due to loss of immunity.</p><br>
+                <p class="mathText">Based on the SEIRS system and the expression for the total population, the initial conditions are</p><br>
+                <text class="mathFunc">\((S_0,E_0,I_0,R_0)\in\{(S,E,I,R)\in[0,N]^4\,|\,S\leq0,\,E\leq0,\,I\leq0,\,R\leq0,\,S+E+I+R=N\}.\)</text><br><br>
+                <p class="mathText">In order to perform simulations using the SEIRS system of coupled differential equations, the system must be solved with a numerical method. The model uses Runge-kutta 4th order to solve the system.</p>
                 
                 <h2 class="titles">Runge-kutta 4th Order</h2>
-                <p class="mathText">Consider the following initial value problem of ODE</p><br>
-                <text class="mathFunc">\({dy \over dt} = f(t, y), y(t_0) = y_0\)</text><br><br>
-                <p class="mathText">The iterative formula of RK4 method for solving the ODE above is as follows</p>
-                <p class="mathFunc">\(y_n+1 = y_n + {\Delta t \over 6} (k_1 + 2k_2 + 2k_3 + k_4) \)</p>
-                <text class="mathFunc">\(k_1 = f(t_n, y_n), \)</text>
-                <text class="mathFunc">\(k_2 = f(t_n + {\Delta t \over 2}, y_n + + {k_1\Delta t \over 2}), \)</text>
-                <text class="mathFunc">\(k_3 = f(t_n + {\Delta t \over 2}, y_n + + {k_2\Delta t \over 2}), \)</text>
-                <text class="mathFunc">\(k_4 = f(t_n + \Delta t, y_n + k_3 \Delta t) \)</text>
-                <p class="mathFunc">\(t_n + 1 = t_n + \Delta t \)</p>
-                <text class="mathFunc">\(n = 0, 1, 2, 3, ...\)</text>
-                <br><br>
+                <p class="mathText">The classic Runge-Kutta method is also referred to as RK4 since the method is a fourthorder method as the global truncation error of the method is \(O(h^4)\).</p>
+                <p class="mathText">The incrementing function \(\Phi(t_n,\hat{x}_n,h)\) for RK4 consists of a weighted average of four functions. The functions are</p><br>
+                <text class="mathFunc">\(k_1=f(t_n,\hat{x}_n), \)</text>
+                <text class="mathFunc">\(k_2=f\Bigl(t_n+\frac{h}{2},\hat{x}_n+\frac{h}{2}k_1\Bigr), \)</text>
+                <text class="mathFunc">\(k_3=f\Bigl(t_n\frac{h}{2},\hat{x}_n+\frac{h}{2}k_2\Bigr), \)</text>
+                <text class="mathFunc">\(k_4=f(t_n+h,\hat{x}_n+hk_3). \)</text><br><br>
+                <p class="mathText">The incrementing function is</p>
+                <p class="mathFunc">\(\Phi(t_n,\hat{x}_n,h)=\frac{1}{6}(k_1+2(k_2+k_3)+k_4). \)</p>
+                <p class="mathText">By applying the incrementing function, the iterative approximation with step size \(h\) is given by</p><br>
+                <text class="mathFunc">\(\hat{x}_{n+1}=\hat{x}_n+\frac{h}{6}(k_1+2(k_2+k_3)+k_4).\)</text><br><br>
+                <p class="mathText">Through the use of the iterative approximation above, it is possible to approximate a solution to ordinary differential equations, and thus, it will allow for conducting simulations with the SEIRS model.</p>
+
                 <h2 class="titles">Help</h2>
                 <!-- Clear Cookies button -->
                 <p class="mathText">If you have any problems or just want to reset everything, press this button.<button id="clearCookiesButton" onclick="clearCookies()">Clear Cookies</button></p>
@@ -210,22 +215,13 @@
                 <input id="savedName" type="text" placeholder="File name" name="savedName" maxlength="30" value="">
                 <button id="savedBtn" onclick="saveParameters()">Save Parameters</button>
                 <table id="savedParametersTable" class="savedTable">
-                    <!-- Size of each colum in the table 
-                    <colgroup>
-                        <col span="1" style="width: 100vw;">
-                        <col span="1" style="width: 5vw;">
-                        <col span="1" style="width: 5vw;">
-                        <col span="1" style="width: 5vw;">
-                        <col span="1" style="width: 5vw;">
-                        <col span="1" style="width: 5vw;">
-                     </colgroup>-->
                     <tr>
-                        <th>File Name <text id="nameArrow" class="arrow">▼</text></th>
-                        <th>Saved Date <text id="dateArrow" class="arrow">▼</text></th>
-                        <th>Peak Inf <text id="infArrow" class="arrow">▼</text></th>
-                        <th>Peak Exp <text id="expArrow" class="arrow">▼</text></th>
-                        <th>Load</th>
-                        <th>Delete</th>
+                        <th id="fileName">File Name <text id="nameArrow" class="arrow">▼</text></th>
+                        <th class="tablealign">Saved Date <text id="dateArrow" class="arrow">▼</text></th>
+                        <th class="tablealign">Peak Inf <text id="infArrow" class="arrow">▼</text></th>
+                        <th class="tablealign">Peak Exp <text id="expArrow" class="arrow">▼</text></th>
+                        <th id="loadColumn" >Load</th>
+                        <th id="deleteColumn" width="50%">Delete</th>
                     </tr>
                 </table>
             </div>
