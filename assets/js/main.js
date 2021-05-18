@@ -43,34 +43,39 @@ function rk4seirs() {
     function fI(E, I)   { return sigma*E - gamma*I; }
     function fR(I, R)   { return gamma*I - epsilon*R; }
 
-    /* Runge-kutta 4 */
-    for (i = 1; i <= totalSteps; i++){
-        let Sk1 = fS(dataS[i-1], dataI[i-1], dataR[i-1]),
-            Sk2 = fS(dataS[i-1] + h/2*Sk1, dataI[i-1] + h/2*Sk1, dataR[i-1] + h/2*Sk1),
-            Sk3 = fS(dataS[i-1] + h/2*Sk2, dataI[i-1] + h/2*Sk2, dataR[i-1] + h/2*Sk2),
-            Sk4 = fS(dataS[i-1] + h*Sk3, dataI[i-1] + h*Sk3, dataR[i-1] + h*Sk3),
+    /* Input validation so the website doesn't crash '*/
+    if (totalSteps > 5000000) {
+        errorMessage.innerHTML = "Max total steps is 5000000 (5000 days).";
+    } else {
+        /* Runge-kutta 4 */
+        for (i = 1; i <= totalSteps; i++){
+            let Sk1 = fS(dataS[i-1], dataI[i-1], dataR[i-1]),
+                Sk2 = fS(dataS[i-1] + h/2*Sk1, dataI[i-1] + h/2*Sk1, dataR[i-1] + h/2*Sk1),
+                Sk3 = fS(dataS[i-1] + h/2*Sk2, dataI[i-1] + h/2*Sk2, dataR[i-1] + h/2*Sk2),
+                Sk4 = fS(dataS[i-1] + h*Sk3, dataI[i-1] + h*Sk3, dataR[i-1] + h*Sk3),
 
-            Ek1 = fE(dataS[i-1], dataE[i-1], dataI[i-1]),
-            Ek2 = fE(dataS[i-1] + h/2*Ek1, dataE[i-1] + h/2*Ek1, dataI[i-1] + h/2*Ek1),
-            Ek3 = fE(dataS[i-1] + h/2*Ek2, dataE[i-1] + h/2*Ek2, dataI[i-1] + h/2*Ek2),
-            Ek4 = fE(dataS[i-1] + h*Ek3, dataE[i-1] + h*Ek3, dataI[i-1] + h*Ek3),
+                Ek1 = fE(dataS[i-1], dataE[i-1], dataI[i-1]),
+                Ek2 = fE(dataS[i-1] + h/2*Ek1, dataE[i-1] + h/2*Ek1, dataI[i-1] + h/2*Ek1),
+                Ek3 = fE(dataS[i-1] + h/2*Ek2, dataE[i-1] + h/2*Ek2, dataI[i-1] + h/2*Ek2),
+                Ek4 = fE(dataS[i-1] + h*Ek3, dataE[i-1] + h*Ek3, dataI[i-1] + h*Ek3),
 
-            Ik1 = fI(dataE[i-1], dataI[i-1]),
-            Ik2 = fI(dataE[i-1] + h/2*Ik1, dataI[i-1] + h/2*Ik1),
-            Ik3 = fI(dataE[i-1] + h/2*Ik2, dataI[i-1] + h/2*Ik2),
-            Ik4 = fI(dataE[i-1] + h*Ik3, dataI[i-1] + h*Ik3),
+                Ik1 = fI(dataE[i-1], dataI[i-1]),
+                Ik2 = fI(dataE[i-1] + h/2*Ik1, dataI[i-1] + h/2*Ik1),
+                Ik3 = fI(dataE[i-1] + h/2*Ik2, dataI[i-1] + h/2*Ik2),
+                Ik4 = fI(dataE[i-1] + h*Ik3, dataI[i-1] + h*Ik3),
 
-            Rk1 = fR(dataI[i-1], dataR[i-1]),
-            Rk2 = fR(dataI[i-1] + h/2*Rk1, dataR[i-1] + h/2*Rk1),
-            Rk3 = fR(dataI[i-1] + h/2*Rk2, dataR[i-1] + h/2*Rk2),
-            Rk4 = fR(dataI[i-1] + h*Rk3, dataR[i-1] + h*Rk3);
+                Rk1 = fR(dataI[i-1], dataR[i-1]),
+                Rk2 = fR(dataI[i-1] + h/2*Rk1, dataR[i-1] + h/2*Rk1),
+                Rk3 = fR(dataI[i-1] + h/2*Rk2, dataR[i-1] + h/2*Rk2),
+                Rk4 = fR(dataI[i-1] + h*Rk3, dataR[i-1] + h*Rk3);
+                
+            tArr[i] = (i*h);
             
-        tArr[i] = (i*h);
-        
-        dataS.push(dataS[i-1] + (Sk1 + 2*(Sk2 + Sk3) + Sk4)*h/6);
-        dataE.push(dataE[i-1] + (Ek1 + 2*(Ek2 + Ek3) + Ek4)*h/6);
-        dataI.push(dataI[i-1] + (Ik1 + 2*(Ik2 + Ik3) + Ik4)*h/6);
-        dataR.push(dataR[i-1] + (Rk1 + 2*(Rk2 + Rk3) + Rk4)*h/6);
+            dataS.push(dataS[i-1] + (Sk1 + 2*(Sk2 + Sk3) + Sk4)*h/6);
+            dataE.push(dataE[i-1] + (Ek1 + 2*(Ek2 + Ek3) + Ek4)*h/6);
+            dataI.push(dataI[i-1] + (Ik1 + 2*(Ik2 + Ik3) + Ik4)*h/6);
+            dataR.push(dataR[i-1] + (Rk1 + 2*(Rk2 + Rk3) + Rk4)*h/6);
+        }
     }
 
     /* Updates the total steps description, when the days slider/form is changed */
