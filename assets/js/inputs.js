@@ -4,13 +4,17 @@
 let errorMessage = document.getElementById("error");
 
 function errorCheck(value) {
+    let errMess;
+
     /* If the form input is empty */
-    if (value == "") { errorMessage.innerHTML = "Your initial value must be atleast 0."; }
+    if (value == "") { errMess = "Your initial value must be atleast 0."; }
     /* If the sum of EIR is greater than the population */
-    else if (value > N) { errorMessage.innerHTML = `Error. The sum of E<span class="sub">0</span>, I<span class="sub">0</span> and R<span class="sub">0</span> can't be more than the total population (N).`; }
+    else if (value > N) { errMess = `Error. The sum of E<span class="sub">0</span>, I<span class="sub">0</span> and R<span class="sub">0</span> can't be more than the total population (N).`; }
+    else if (value < 0) { errMess = `Value can't be less than zero`; }
     /* Removes the text if none of the above statements hold */
-    else if (S0 < 0) { errorMessage.innerHTML = `Error. The sum of E<span class="sub">0</span>, I<span class="sub">0</span> and R<span class="sub">0</span> can't be more than the total population (N).`}
-    else { errorMessage.innerHTML = ""; }
+    else { errMess = ""; }
+
+    return errMess;
 }
 
 /* Function to calculate total population and S0, depending on the checkbox "Fixed Population" */
@@ -31,7 +35,7 @@ function fixedPopulation() {
         /* Writes a error message if the sum of E0, I0 and R0 is larger than N */
         let sumEIR = E0+I0+R0;
         sliderInputValidation();
-        errorCheck(sumEIR);
+        errorMessage.innerHTML = errorCheck(sumEIR);
 
     /* If the box is not checked */
     } else if (checkboxFixPop.checked == 0) {
@@ -82,7 +86,7 @@ E0Form.oninput = function() {
     E0Slider.value = this.value;
     E0 = parseFloat(this.value);          
     rk4seirs();
-    errorCheck(this.value);
+    errorMessage.innerHTML = errorCheck(this.value);
 } 
 E0Slider.oninput = function() {
     localStorage.setItem("E0Value", this.value);           
@@ -101,7 +105,7 @@ I0Form.oninput = function() {
     I0Slider.value = this.value;
     I0 = parseFloat(this.value);          
     rk4seirs();
-    errorCheck(this.value);
+    errorMessage.innerHTML = errorCheck(this.value);
 }
 I0Slider.oninput = function() {
     localStorage.setItem("I0Value", this.value); 
@@ -120,7 +124,7 @@ R0Form.oninput = function() {
     R0Slider.value = this.value;
     R0 = parseFloat(this.value);          
     rk4seirs();
-    errorCheck(this.value);
+    errorMessage.innerHTML = errorCheck(this.value);
 }
 R0Slider.oninput = function() {
     localStorage.setItem("R0Value", this.value);           
@@ -139,7 +143,7 @@ betaForm.oninput = function() {
     betaSlider.value = this.value;
     beta = this.value;
     rk4seirs();
-    errorCheck(this.value);
+    errorMessage.innerHTML = errorCheck(this.value);
 }
 betaSlider.oninput = function() {
     localStorage.setItem("betaValue", this.value);         
@@ -158,7 +162,7 @@ gammaForm.oninput = function() {
     gammaSlider.value = this.value;
     gamma = this.value;
     rk4seirs();
-    errorCheck(this.value);
+    errorMessage.innerHTML = errorCheck(this.value);
 }
 gammaSlider.oninput = function() {
     localStorage.setItem("gammaValue", this.value);           
@@ -177,7 +181,7 @@ epsilonForm.oninput = function() {
     epsilonSlider.value = this.value;
     epsilon = parseFloat(this.value);          
     rk4seirs();
-    errorCheck(this.value);
+    errorMessage.innerHTML = errorCheck(this.value);
 }
 epsilonSlider.oninput = function() {
     localStorage.setItem("epsilonValue", this.value);           
@@ -196,7 +200,7 @@ sigmaForm.oninput = function() {
     sigmaSlider.value = this.value;
     sigma = parseFloat(this.value);          
     rk4seirs();
-    errorCheck(this.value);
+    errorMessage.innerHTML = errorCheck(this.value);
 }
 sigmaSlider.oninput = function() {
     localStorage.setItem("sigmaValue", this.value);           
@@ -216,7 +220,6 @@ totalStepForm.oninput = function() {
     totalStepSlider.value = this.value;
     days = parseFloat(this.value);          
     rk4seirs();
-    errorCheck(this.value);
     removeTransGraphs();
 }
 totalStepSlider.oninput = function() {

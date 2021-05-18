@@ -1,3 +1,4 @@
+
 /* Checks if the user has visited the site before setting varibles */
 checkVisit();
 
@@ -74,9 +75,9 @@ function rk4seirs() {
 
     /* Updates the total steps description, when the days slider/form is changed */
     totalStepsDes.innerText = "Total steps = " + totalSteps;
-    totalN.innerHTML = N;
-    
+
     /* Sets N as the total population in the info table */
+    totalN.innerHTML = N;
     
     /* Finds the max value in an array */
     function findMax(arr){
@@ -111,7 +112,7 @@ function rk4seirs() {
 }
 
 function resizeArr() {
-    let newtArr = [];
+    newtArr = [];
     newdataS = [];
     newdataE = [];
     newdataI = [];
@@ -120,21 +121,24 @@ function resizeArr() {
     let stepsToSkip;
     
     /* Always 100 points from the data array is added to the new array */
-    if (dataS.length > 100) 
-        stepsToSkip = (dataS.length/100).toFixed(0);
-    else
-        stepsToSkip = 1;
+    if (dataS.length > 100) {
+        stepsToSkip = (dataS.length/100);
 
-    for(i = 0; i < dataS.length; i++) {
-        if (i % stepsToSkip == 0) {
-            newtArr.push(tArr[i].toFixed(0));
-            newdataS.push(dataS[i]);
-            newdataE.push(dataE[i]);
-            newdataI.push(dataI[i]);
-            newdataR.push(dataR[i]);
+        for(i = 0; i < 100; i++) {
+            newtArr.push(tArr[(i*stepsToSkip).toFixed(0)].toFixed(0));
+            newdataS.push(dataS[(i*stepsToSkip).toFixed(0)]);
+            newdataE.push(dataE[(i*stepsToSkip).toFixed(0)]);
+            newdataI.push(dataI[(i*stepsToSkip).toFixed(0)]);
+            newdataR.push(dataR[(i*stepsToSkip).toFixed(0)]);
         }
+    } else { 
+        newtArr = tArr;
+        newdataS = dataS;
+        newdataE = dataE;
+        newdataI = dataI;
+        newdataR = dataR;
     }
-    
+
     seirsChart.data.labels = newtArr;
     seirsChart.data.datasets[0].data = newdataS;
     seirsChart.data.datasets[1].data = newdataE;
@@ -168,7 +172,6 @@ function removeTransGraphs() {
     for (i = 4; i < 8; i++) { seirsChart.data.datasets[i].data = []; }
         seirsChart.update();
 }
-
 
 /* Initializes graph */
 var ctx = document.getElementById("seirsChart").getContext('2d');
