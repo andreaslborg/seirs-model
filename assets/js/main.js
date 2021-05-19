@@ -40,8 +40,6 @@ function rk4seirs() {
     let startMin = startTime.getMinutes();  
     let startSec = startTime.getSeconds();
     let startMiliSec = startTime.getMilliseconds();
-    
-    console.log(startMin + " " + startSec + " " + startMiliSec);
 
     /* SEIRS functions */
     function fS(S, I, R){ return -(beta*S*I)/N + epsilon*R; }
@@ -90,15 +88,13 @@ function rk4seirs() {
     let endSec = endTime.getSeconds();
     let endMiliSec = endTime.getMilliseconds();
     
-    console.log(endMin + " " + endSec + " " + endMiliSec);
-
     /* Compare start and end time */
     const mintomilisec = 60000;
     const sectomilisec = 1000;
 
     let responeTimeMilisec = (endMin*mintomilisec+endSec*sectomilisec+endMiliSec) - (startMin*mintomilisec+startSec*sectomilisec+startMiliSec);
 
-    console.log(responeTimeMilisec);
+    console.log("Response time: " + responeTimeMilisec);
 
     /* Updates the total steps description, when the days slider/form is changed */
     totalStepsDes.innerText = "Total steps = " + totalSteps;
