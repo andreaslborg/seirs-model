@@ -1,4 +1,3 @@
-
 /* Checks if the user has visited the site before setting varibles */
 checkVisit();
 
@@ -36,7 +35,14 @@ function rk4seirs() {
     tArr = [0];
     
     let totalSteps = daysToSteps(days);
+
+    let startTime = new Date();
+    let startMin = startTime.getMinutes();  
+    let startSec = startTime.getSeconds();
+    let startMiliSec = startTime.getMilliseconds();
     
+    console.log(startMin + " " + startSec + " " + startMiliSec);
+
     /* SEIRS functions */
     function fS(S, I, R){ return -(beta*S*I)/N + epsilon*R; }
     function fE(S, E, I){ return (beta*S*I)/N - sigma*E; }
@@ -45,7 +51,9 @@ function rk4seirs() {
 
     /* Input validation so the website doesn't crash '*/
     if (totalSteps > 5000000) {
-        errorMessage.innerHTML = "Max total steps is 5000000 (5000 days).";
+        errorMessage.innerHTML = "Due to reliability, the max days is 50000.";
+    } else if (totalSteps < 0) {
+        errorMessage.innerHTML = "Days can not be a negative number.";
     } else {
         /* Runge-kutta 4 */
         for (i = 1; i <= totalSteps; i++){
@@ -77,6 +85,20 @@ function rk4seirs() {
             dataR.push(dataR[i-1] + (Rk1 + 2*(Rk2 + Rk3) + Rk4)*h/6);
         }
     }
+    let endTime = new Date();
+    let endMin = endTime.getMinutes();  
+    let endSec = endTime.getSeconds();
+    let endMiliSec = endTime.getMilliseconds();
+    
+    console.log(endMin + " " + endSec + " " + endMiliSec);
+
+    /* Compare start and end time */
+    const mintomilisec = 60000;
+    const sectomilisec = 1000;
+
+    let responeTimeMilisec = (endMin*mintomilisec+endSec*sectomilisec+endMiliSec) - (startMin*mintomilisec+startSec*sectomilisec+startMiliSec);
+
+    console.log(responeTimeMilisec);
 
     /* Updates the total steps description, when the days slider/form is changed */
     totalStepsDes.innerText = "Total steps = " + totalSteps;

@@ -170,7 +170,6 @@ function redefineRow() {
 
 /* Loading the saved parameters when the website is opened */
 function runSavedParameters() {
-
     for (i = 1; i < peakExpArr.length; i++) {
         let newRow = table.insertRow();
 

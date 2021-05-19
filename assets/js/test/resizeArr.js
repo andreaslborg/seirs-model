@@ -1,7 +1,6 @@
 function resizeArr(array) {
-    let newdata = [];
-     
-    let stepsToSkip;
+    let newdata = [],
+        stepsToSkip;
     
     /* Always 100 points from the data array is added to the new array */
     if (array.length > 100) 
@@ -12,7 +11,6 @@ function resizeArr(array) {
     for(i = 0; i < 100; i++) {
         newdata.push(array[(i*stepsToSkip).toFixed(0)]);
     }
-    
     return newdata;
 }
 
