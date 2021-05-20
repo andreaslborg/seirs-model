@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Epidemiological Modelling</title>
+        <meta charset="utf-8">
+        <!-- Icon in browser tab -->
+        <link rel="icon" href="images/aau_icon.png">
+        <!-- CSS stylesheet -->
+        <link rel="stylesheet" href="css/style.css">
+        <!-- Google font API-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text|Work+Sans:400,700">
+        <!-- Chart.js API -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3"></script>
+        <!-- Math typography API -->
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </head>
+    <body>
+        <!-- Heading -->
+        <div>
+            <h1 id="title1">Epidemiological Modelling</h1>
+            <h2 id="title2">SEIRS Compartmental Model</h2>
+        </div>
+        <div id="leftContainer">
+            <div class="chart">
+                <!-- Tooltip for chart -->
+                <h2>
+                    <div class="tooltip" id="graphHelp">?
+                        <span class="tooltiptext">
+                            Click on the boxes to remove/show the corresponding graphs on the plot.
+                        </span>
+                    </div>
+                </h2>
+                <!-- Inserting the chart -->
+                <canvas id="seirsChart"></canvas>
+            </div>
+
+            <h2 class="titles" id="parametersTitle">Parameters
+                <div class="tooltip">?
+                    <span class="tooltiptext">
+                        Change the parameters of the model by dragging the sliders or entering numbers in the fields.
+                    </span>
+                </div>
+            </h2>
+            <!-- Inserting error message -->
+            <text id="error"></text>
+            <!-- Comparison graph -->
+            <h2>
+                <p class="mathText" id="comparisonGraph">Comparison Graph
+                    <input type="checkbox" class="checkbox" id="comparisonBox" onchange="comparisonGraph()">
+                    <div class="tooltip" id="comparisonHelp">?
+                        <span class="tooltiptext"> 
+                            Create a temporary graph with the current data points and compare it with a new graph. The temporary graph will disappear if the number of days is changed.
+                        </span>
+                    </div>
+                </p>
+            </h2>
+            <!-- Slider and input boxes -->
+            <div class="sliderDiv">
+                <div class="sliderBox">
+                    <h3 id="S0Title"></h3>
+                    <p class="sliderDes" id="S0Des"></p>
+                    <p class="sliderDes" id="S0Checkbox"> 
+                        <input type="checkbox" id="fixedPopulation" class="checkbox" value="" onchange="fixedPopulation()">Fixed Population
+                    </p>
+                    <input id="S0Form1" class="inputForm" type="number" min="0" max="10000000" maxlength="3" value="99000">
+                    <input id="S0Slider1" class="slider" type="range" min="0" max="10000000" maxlength="3" value="99000" step="1">
+                </div>
+                <div class="sliderBox">
+                    <h3>Initial Exposed (E<span class="sub">0</span>)</h3>
+                    <p class="sliderDes">Amount of people who are exposed to the disease but not yet infectious.</p>
+                    <input id="E0Form1" class="inputForm" type="number" min="0" max="100000" maxlength="3" value="0">
+                    <input id="E0Slider1" class="slider" type="range" min="0" max="100000" maxlength="3" value="0">
+                </div>
+                <div class="sliderBox">
+                    <h3>Initial Infected (I<span class="sub">0</span>)</h3>
+                    <p class="sliderDes">Amount of people that are infectious.</p>
+                    <input id="I0Form1" class="inputForm" type="number" min="0" max="100000" maxlength="3" value="1000">
+                    <input id="I0Slider1" class="slider" type="range" min="0" max="100000" maxlength="3" value="1000">
+                </div>
+                <div class="sliderBox">
+                    <h3>Initial Removed (R<span class="sub">0</span>)</h3>
+                    <p class="sliderDes">Amount of people who has either recovered from the disease or who are deceased.</p>
+                    <input id="R0Form1" class="inputForm" type="number" min="0" max="100000" maxlength="3" value="0">
+                    <input id="R0Slider1" class="slider" type="range" min="0" max="100000" maxlength="3" value="0">
+                </div>
+                <div class="sliderBox">
+                    <h3>\(\beta\)</h3>
+                    <p class="sliderDes">The rate at which the disease spreads.</p>
+                    <input id="betaForm1" class="inputForm" type="number" min="0" max="5" value="0.02">
+                    <input id="betaSlider1" class="slider" type="range" min="0" max="5" value="0.02" step="0.00001">
+                </div>
+                <div class="sliderBox">
+                    <h3>\(\sigma\)</h3>
+                    <p class="sliderDes">The rate at which individuals who are exposed become infectious.</p>
+                    <input id="sigForm1" class="inputForm" type="number" min="0" max="2" maxlength="10000000" value="0.0006">
+                    <input id="sigSlider1" class="slider" type="range" min="0" max="2" maxlength="10000000" value="0.0006" step="0.00001">
+                </div>
+                <div class="sliderBox">
+                    <h3>\(\gamma\)</h3>
+                    <p class="sliderDes">The rate at which individuals recover.</p>
+                    <input id="gammaForm1" class="inputForm" type="number" min="0" max="2" maxlength="10000000" value="0.0006">
+                    <input id="gammaSlider1" class="slider" type="range" min="0" max="2" maxlength="10000000" value="0.0006" step="0.00001">
+                </div>
+                <div class="sliderBox">
+                    <h3>\(\epsilon\)</h3>
+                    <p class="sliderDes">The rate at which recovered individuals regain susceptibility.</p>
+                    <input id="epsForm1" class="inputForm" type="number" min="0" max="2" value="0.02">
+                    <input id="epsSlider1" class="slider" type="range" min="0" max="2" value="0.02" step="0.00001">
+                </div>
+            </div>
+            <div class="sliderDivTall">
+                <div class="sliderBox" id="daysBox">
+                    <h3>Days</h3>
+                    <p class="sliderDes" id="daysDes">
+                        Total number of days.<br><br> 
+                        The Runge-kutta 4th order method is applied to approximate the graphs.<br><br> 
+                        Step size = 0.01<br>
+                        <text id="totalSteps"></text><br><br> 
+                        Change the total number of days by dragging the slider or entering a number in the field.
+                    </p>
+                    <input id="daysForm1" class="inputForm"  type="number" min="50" max="1000" value="100">
+                    <input id="daysSlider1" class="slider" type="range" min="50" max="1000" value="100" step="1">
+                </div>
+            </div>
+                
+            <!-- SEIRS model explanation -->
+            <h2 class="titles">The SEIRS Compartmental Model</h2>
+            <p class="mathText">
+                The underlying system of the SEIRS model is a system of coupled ordinary differential equations that describe the rate of change in the amount of individuals in each of the compartments. The system is expressed as
+            </p>
+            <p class="mathFunc">
+                \({dS \over dt} = -{\beta SI \over N} + \epsilon R\)<br>
+                \({dE \over dt} = {\beta IS \over N} - \sigma E\)<br>
+                \({dI \over dt} = \sigma E - \gamma I\)<br>
+                \({dR \over dt} = \gamma I - \epsilon R\),
+            </p>
+            <p class="mathText">
+                where \(N=S+E+I+R\) is the total population. The functions \(S,E,I,R\) respectively represent
+            </p>
+            <ul class="mathText">
+                <li>susceptible individuals,</li>
+                <li>exposed individuals,</li>
+                <li>infected individuals,</li>
+                <li>and removed individuals.</li>
+            </ul>
+            <p class="mathText">
+                The constants \(\beta,\sigma,\gamma,\epsilon\) respectively represent
+            </p>
+            <ul class="mathText">
+                <li>the infectious rate,</li>            
+                <li>the incubation rate,</li>
+                <li>the recovery rate,</li>
+                <li>and the rate at which recovered individuals regain susceptibility.</li>
+            </ul>
+            <p class="mathText">
+                Based on the SEIRS system and the expression for the total population, the initial conditions are
+            </p>
+            <p class="mathFunc">
+                \((S_0,E_0,I_0,R_0)\in\{(S,E,I,R)\in[0,N]^4\,|\,S\leq0,\,E\leq0,\,I\leq0,\,R\leq0,\,N=S+E+I+R\}\).
+            </p>
+            <p class="mathText">
+                In order to perform simulations using the SEIRS model, the system of coupled ordinary differential equations is solved using a numerical method. The system is solved using the Runge-Kutta 4th order method.
+            </p>
+
+            <h2 class="titles">The Runge-Kutta 4th Order Method</h2>
+            <p class="mathText">
+                The Runge-Kutta 4th order method is also referred to as RK4. The method is a fourth order method since the global truncation error of the method is \(O(h^4)\).<br>
+                The incrementing function \(\Phi(t_n,\hat{x}_n,h)\) for RK4 consists of a weighted average of four functions. The functions are
+            </p>
+            <p class="mathFunc">
+                \(k_1=f(t_n,\hat{x}_n)\)<br>
+                \(k_2=f\Bigl(t_n+\frac{h}{2},\hat{x}_n+\frac{h}{2}k_1\Bigr)\)<br>
+                \(k_3=f\Bigl(t_n\frac{h}{2},\hat{x}_n+\frac{h}{2}k_2\Bigr)\)<br>
+                \(k_4=f(t_n+h,\hat{x}_n+hk_3)\).
+            </p>
+            <p class="mathText">
+                The incrementing function is
+            </p>
+            <p class="mathFunc">
+                \(\Phi(t_n,\hat{x}_n,h)=\frac{1}{6}(k_1+2(k_2+k_3)+k_4)\).
+            </p>
+            <p class="mathText">
+                By applying the incrementing function, the iterative approximation with step size \(h\) is given by
+            </p>
+            <p class="mathFunc">
+                \(\hat{x}_{n+1}=\hat{x}_n+\frac{h}{6}(k_1+2(k_2+k_3)+k_4)\).
+            </p>
+            <p class="mathText">
+                Through the application of the iterative approximation above, the simulations of the SEIRS model are performed.
+            </p>
+            <br>
+            <hr>
+            <h2 class="titles">Help</h2>
+            <!-- Clear Cookies button -->
+            <p class="mathText">
+                If you have any problems or just want to reset everything, press this button \(\rightarrow\)
+                <button id="clearCookiesButton" onclick="clearCookies()">Clear Cookies</button>
+            </p>
+            
+            <!-- Trigger/Open The Modal -->
+            <p class="mathText">
+                To show the popup message again, press this button \(\rightarrow\)
+                <button id="guideBtn" onclick="showPopup()">Start Guide</button>
+            </p>
+            
+        </div>
+        <div id="rightContainer">
+            <h2 id="infoTitle">Information
+                <div class="tooltip">?
+                    <span class="tooltiptext">
+                        Essential information about the current simulation.
+                    </span>
+                </div>
+            </h2>
+
+            <!-- Infomation table -->
+            <table class="infoTable">
+                <tr>
+                    <th>Total Population (N)</th>
+                    <td id="totalPopulation"></td>
+                </tr>
+                <tr>
+                    <th>Peak Infected </th>
+                    <td id="maxInfected"></td>
+                </tr>
+                <tr>
+                    <th>Peak Infected in Percentage</th>
+                    <td id="maxInfectedPercent"></td>
+                </tr>
+                <tr>
+                    <th>Peak Exposed </th>
+                    <td id="maxExposed"></td>
+                </tr>
+                <tr>
+                    <th>Peak Exposed in Percentage</th>
+                    <td id="maxExposedPercent"></td>
+                </tr>
+            </table>
+
+            <!-- Reset button -->
+            <button id="resetButton" onclick="resetGraph()">Reset graph</button>
+            <text id="confirmReset"></text>
+
+            <h2 class="titles">Download Data
+                <div class="tooltip">?
+                    <span class="tooltiptext">
+                        Click on the button to download the data of the current simulation to a CSV file.
+                    </span>
+                </div>
+            </h2>
+            
+            <!-- Save to CSV file button -->
+            <button onclick="saveCSV()">Download CSV file</button>
+            
+            <!-- Saved parameters table -->
+            <h2 class="titles">Save Parameters
+                <div class="tooltip">?
+                    <span class="tooltiptext">
+                        Click the button to save the current parameters of the simulation. These are only available on this device.<br><br>Click on one of the arrows below to sort the list.
+                    </span>
+                </div>
+            </h2>
+            <input id="savedName" type="text" placeholder="File name" name="savedName" maxlength="30" value="">
+            <button id="savedBtn" onclick="saveParameters()">Save Parameters</button>
+            <table class="savedTable" id="savedParametersTable">
+                <tr>
+                    <th id="fileName">File Name <text class="arrow" id="nameArrow">▼</text></th>
+                    <th class="tablealign">Saved Date <text class="arrow" id="dateArrow">▼</text></th>
+                    <th class="tablealign">Peak Inf. <text class="arrow" id="infArrow">▼</text></th>
+                    <th class="tablealign">Peak Exp. <text class="arrow" id="expArrow">▼</text></th>
+                    <th id="loadColumn" >Load</th>
+                    <th id="deleteColumn" width="10%">Delete</th>
+                </tr>
+            </table>
+        </div>
+        
+        <!-- The Modal / Popup welcome message -->
+        <div class="modal" id="guideBox">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close" id="guideClose">&times;</span>
+                <h1>Welcome</h1>
+                <p class="modalText">
+                    This website has been developed by a group of 2nd semester software engineering students from Aalborg University, 
+                    for the purpose of creating a tool that can aid experts in controlling the spread of ongoing epidemics.
+                </p>
+                <h1>About the Website</h1>
+                <p class="modalText">
+                    The modelling of infectious diseases is a tool that can be used to study the mechanisms by which diseases spread, 
+                    to predict the future course of an outbreak, and to evaluate strategies to control an epidemic.
+                    The world is currently in the midst of the COVID-19 pandemic, which makes it even more crucial to have access to a tool like this.
+                </p>
+                <h1>Help</h1>
+                <p class="modalText">
+                    At most titles you will see a <a class="tooltip">?<span class="tooltiptext">Hover me, to be shown a short explanation.</span></a>, 
+                    which you can hover over to get a short explanation for the section. And at the bottom of the webpage, the model and the numerical method, that are used to perform the simulations, are described.<br><br>
+                    The website works best on a computer with a 1920x1080 resolution or higher.
+                </p>
+                <h1>Created by</h1>
+                <p class="modalText">
+                    Andreas Løvig Borg<br>Elias Davidsen<br>Lasse Ryge Andersen<br>Marius Ihlen Gardshodn<br>Mikkel Hagerup Dolmer
+                </p>
+                <em class="modalText">Last updated on May 20, 2021</em>
+            </div>
+        </div>
+
+        <script src="js/inputs.js"></script>
+        <script src="js/oninput.js"></script>
+        <script src="js/cookies.js"></script>
+        <script src="js/rk4.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/modal.js"></script>
+        <script src="js/set_values.js"></script>
+        <script src="js/save.js"></script>
+    </body>
+</html>
