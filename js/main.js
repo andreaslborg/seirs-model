@@ -13,6 +13,7 @@ let beta,
     N,
     days,
     totalSteps,
+    checkboxFixPopValue,
     dataS = [],
     dataE = [],
     dataI = [],
@@ -26,7 +27,7 @@ let beta,
 
 checkVisit();
 
-updateCookies();
+updateParameters();
 
 // Initialisation of graph 
 let chart = document.getElementById("seirsChart").getContext('2d'),

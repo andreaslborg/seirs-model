@@ -10,6 +10,15 @@ h1, h2 {
     font-family: "Crimson Text", serif;
 }
 
+h3 {
+    font-size: 1vw;
+    font-weight: normal;
+    text-align: left;
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
 #title1 {
     font-size: 2.5vw;
     text-align: left;
@@ -134,6 +143,10 @@ h2, .infoTable {
     margin-bottom: 3%;
 }
 
+#leftInfo {
+    display: inline-block;
+}
+
 #rightContainer {
     float: left;
     margin-left: 1%;
@@ -168,21 +181,13 @@ h2, .infoTable {
     height: 8vw;
     background: lightgrey;
     border-radius: 2%; /* Gives the box rounded corners */
-    margin-top: 0.2vw;
+    margin-top: 0vw;
+    overflow: hidden;
 }
 
 #daysBox {
     width: 100%;
     height: 16.25vw;
-}
-
-h3 {
-    font-size: 1vw;
-    font-weight: normal;
-    text-align: left;
-    margin-top: 5%;
-    margin-left: 5%;
-    margin-right: 5%;
 }
 
 .sliderDes {
@@ -381,12 +386,12 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 
 #comparisonGraph {
     margin-left: 54vw;
-    margin-top: -1vw;
+    margin-top: -1.2vw;
     position: absolute;
 }
 
 #comparisonHelp {
     margin-left: 61.3vw;
-    margin-top: -1vw;
+    margin-top: -1.1vw;
     position: absolute;
 }

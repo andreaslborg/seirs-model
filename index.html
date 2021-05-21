@@ -123,87 +123,88 @@
                     <input id="daysSlider1" class="slider" type="range" min="50" max="1000" value="100" step="1">
                 </div>
             </div>
-                
-            <!-- SEIRS model explanation -->
-            <h2 class="titles">The SEIRS Compartmental Model</h2>
-            <p class="mathText">
-                The underlying system of the SEIRS model is a system of coupled ordinary differential equations that describe the rate of change in the amount of individuals in each of the compartments. The system is expressed as
-            </p>
-            <p class="mathFunc">
-                \({dS \over dt} = -{\beta SI \over N} + \epsilon R\)<br>
-                \({dE \over dt} = {\beta IS \over N} - \sigma E\)<br>
-                \({dI \over dt} = \sigma E - \gamma I\)<br>
-                \({dR \over dt} = \gamma I - \epsilon R\),
-            </p>
-            <p class="mathText">
-                where \(N=S+E+I+R\) is the total population. The functions \(S,E,I,R\) respectively represent
-            </p>
-            <ul class="mathText">
-                <li>susceptible individuals,</li>
-                <li>exposed individuals,</li>
-                <li>infected individuals,</li>
-                <li>and removed individuals.</li>
-            </ul>
-            <p class="mathText">
-                The constants \(\beta,\sigma,\gamma,\epsilon\) respectively represent
-            </p>
-            <ul class="mathText">
-                <li>the infectious rate,</li>            
-                <li>the incubation rate,</li>
-                <li>the recovery rate,</li>
-                <li>and the rate at which recovered individuals regain susceptibility.</li>
-            </ul>
-            <p class="mathText">
-                Based on the SEIRS system and the expression for the total population, the initial conditions are
-            </p>
-            <p class="mathFunc">
-                \((S_0,E_0,I_0,R_0)\in\{(S,E,I,R)\in[0,N]^4\,|\,S\leq0,\,E\leq0,\,I\leq0,\,R\leq0,\,N=S+E+I+R\}\).
-            </p>
-            <p class="mathText">
-                In order to perform simulations using the SEIRS model, the system of coupled ordinary differential equations is solved using a numerical method. The system is solved using the Runge-Kutta 4th order method.
-            </p>
+            <div id="leftInfo">    
+                <!-- SEIRS model explanation -->
+                <h2 class="titles">The SEIRS Compartmental Model</h2>
+                <p class="mathText">
+                    The underlying system of the SEIRS model is a system of coupled ordinary differential equations that describe the rate of change in the amount of individuals in each of the compartments. The system is expressed as
+                </p>
+                <p class="mathFunc">
+                    \({dS \over dt} = -{\beta SI \over N} + \epsilon R\)<br>
+                    \({dE \over dt} = {\beta IS \over N} - \sigma E\)<br>
+                    \({dI \over dt} = \sigma E - \gamma I\)<br>
+                    \({dR \over dt} = \gamma I - \epsilon R\),
+                </p>
+                <p class="mathText">
+                    where \(N=S+E+I+R\) is the total population. The functions \(S,E,I,R\) respectively represent
+                </p>
+                <ul class="mathText">
+                    <li>susceptible individuals,</li>
+                    <li>exposed individuals,</li>
+                    <li>infected individuals,</li>
+                    <li>and removed individuals.</li>
+                </ul>
+                <p class="mathText">
+                    The constants \(\beta,\sigma,\gamma,\epsilon\) respectively represent
+                </p>
+                <ul class="mathText">
+                    <li>the infectious rate,</li>            
+                    <li>the incubation rate,</li>
+                    <li>the recovery rate,</li>
+                    <li>and the rate at which recovered individuals regain susceptibility.</li>
+                </ul>
+                <p class="mathText">
+                    Based on the SEIRS system and the expression for the total population, the initial conditions are
+                </p>
+                <p class="mathFunc">
+                    \((S_0,E_0,I_0,R_0)\in\{(S,E,I,R)\in[0,N]^4\,|\,S\leq0,\,E\leq0,\,I\leq0,\,R\leq0,\,N=S+E+I+R\}\).
+                </p>
+                <p class="mathText">
+                    In order to perform simulations using the SEIRS model, the system of coupled ordinary differential equations is solved using a numerical method. The system is solved using the Runge-Kutta 4th order method.
+                </p>
 
-            <h2 class="titles">The Runge-Kutta 4th Order Method</h2>
-            <p class="mathText">
-                The Runge-Kutta 4th order method is also referred to as RK4. The method is a fourth order method since the global truncation error of the method is \(O(h^4)\).<br>
-                The incrementing function \(\Phi(t_n,\hat{x}_n,h)\) for RK4 consists of a weighted average of four functions. The functions are
-            </p>
-            <p class="mathFunc">
-                \(k_1=f(t_n,\hat{x}_n)\)<br>
-                \(k_2=f\Bigl(t_n+\frac{h}{2},\hat{x}_n+\frac{h}{2}k_1\Bigr)\)<br>
-                \(k_3=f\Bigl(t_n\frac{h}{2},\hat{x}_n+\frac{h}{2}k_2\Bigr)\)<br>
-                \(k_4=f(t_n+h,\hat{x}_n+hk_3)\).
-            </p>
-            <p class="mathText">
-                The incrementing function is
-            </p>
-            <p class="mathFunc">
-                \(\Phi(t_n,\hat{x}_n,h)=\frac{1}{6}(k_1+2(k_2+k_3)+k_4)\).
-            </p>
-            <p class="mathText">
-                By applying the incrementing function, the iterative approximation with step size \(h\) is given by
-            </p>
-            <p class="mathFunc">
-                \(\hat{x}_{n+1}=\hat{x}_n+\frac{h}{6}(k_1+2(k_2+k_3)+k_4)\).
-            </p>
-            <p class="mathText">
-                Through the application of the iterative approximation above, the simulations of the SEIRS model are performed.
-            </p>
-            <br>
-            <hr>
-            <h2 class="titles">Help</h2>
-            <!-- Clear Cookies button -->
-            <p class="mathText">
-                If you have any problems or just want to reset everything, press this button \(\rightarrow\)
-                <button id="clearCookiesButton" onclick="clearCookies()">Clear Cookies</button>
-            </p>
-            
-            <!-- Trigger/Open The Modal -->
-            <p class="mathText">
-                To show the popup message again, press this button \(\rightarrow\)
-                <button id="guideBtn" onclick="showPopup()">Start Guide</button>
-            </p>
-            
+                <h2 class="titles">The Runge-Kutta 4th Order Method</h2>
+                <p class="mathText">
+                    The Runge-Kutta 4th order method is also referred to as RK4. The method is a fourth order method since the global truncation error of the method is \(O(h^4)\).<br>
+                    The incrementing function \(\Phi(t_n,\hat{x}_n,h)\) for RK4 consists of a weighted average of four functions. The functions are
+                </p>
+                <p class="mathFunc">
+                    \(k_1=f(t_n,\hat{x}_n)\)<br>
+                    \(k_2=f\Bigl(t_n+\frac{h}{2},\hat{x}_n+\frac{h}{2}k_1\Bigr)\)<br>
+                    \(k_3=f\Bigl(t_n\frac{h}{2},\hat{x}_n+\frac{h}{2}k_2\Bigr)\)<br>
+                    \(k_4=f(t_n+h,\hat{x}_n+hk_3)\).
+                </p>
+                <p class="mathText">
+                    The incrementing function is
+                </p>
+                <p class="mathFunc">
+                    \(\Phi(t_n,\hat{x}_n,h)=\frac{1}{6}(k_1+2(k_2+k_3)+k_4)\).
+                </p>
+                <p class="mathText">
+                    By applying the incrementing function, the iterative approximation with step size \(h\) is given by
+                </p>
+                <p class="mathFunc">
+                    \(\hat{x}_{n+1}=\hat{x}_n+\frac{h}{6}(k_1+2(k_2+k_3)+k_4)\).
+                </p>
+                <p class="mathText">
+                    Through the application of the iterative approximation above, the simulations of the SEIRS model are performed.
+                </p>
+                <br>
+                <hr>
+                <h2 class="titles">Help</h2>
+                <!-- Clear Cookies button -->
+                <p class="mathText">
+                    To reset everything, press this button \(\rightarrow\)
+                    <button id="clearCookiesButton" onclick="clearCookies()">Clear Cookies</button>
+                    <text id="confirmResetCookies"></text> 
+                </p>
+                
+                <!-- Trigger/Open The Modal -->
+                <p class="mathText">
+                    To show the popup message again, press this button \(\rightarrow\)
+                    <button id="guideBtn" onclick="showPopup()">Start Guide</button>
+                </p>
+            </div>
         </div>
         <div id="rightContainer">
             <h2 id="infoTitle">Information
@@ -304,14 +305,13 @@
                 <em class="modalText">Last updated on May 20, 2021</em>
             </div>
         </div>
-
+        <script src="js/save.js"></script>
+        <script src="js/modal.js"></script>
         <script src="js/inputs.js"></script>
         <script src="js/oninput.js"></script>
+        <script src="js/sorting.js"></script>
         <script src="js/cookies.js"></script>
-        <script src="js/rk4.js"></script>
+        <script src="js/run_graph.js"></script>
         <script src="js/main.js"></script>
-        <script src="js/modal.js"></script>
-        <script src="js/set_values.js"></script>
-        <script src="js/save.js"></script>
     </body>
 </html>

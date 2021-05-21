@@ -1,30 +1,36 @@
-// Function to write an error if there is now value in the form 
-let errorMessage = document.getElementById("error");
+let errorMessage = document.getElementById("error"),
+    confirmButtonsGraph = document.getElementById("confirmReset"),
+    confirmResetCookies = document.getElementById("confirmResetCookies");
 
-// Reset button functions
-let confirmButtons = document.getElementById("confirmReset");
-
-// Error function
-function errorCheck(value) {
-    let errMess;
-
-    if (value == "") { errMess = "Your initial value must be atleast 0."; }
-    else if (value > N) { errMess = `Error. The sum of E<span class="sub">0</span>, I<span class="sub">0</span> and R<span class="sub">0</span> can't be more than the total population (N).`; }
-    else if (value < 0) { errMess = `Value can't be less than zero`; }
-    else { errMess = ""; }
-
-    return errMess;
+// Checks if the 
+function errorCheck() {
+    let errorArr = [N, S0, E0, I0, R0, beta, sigma, gamma, epsilon, days];
+    
+    if (checkboxFixPop.checked == 0) {
+        if (N < S0 + E0 + I0 + R0) {
+            errorMessage.innerHTML = `The sum of S<span class="sub">0</span>, E<span class="sub">0</span>, I<span class="sub">0</span>, and R<span class="sub">0</span> cannot be more than the total population (N).`;
+            return;
+        }
+    }
+    for (i = 0; i < errorArr.length; i++) {
+        if (errorArr[i] < 0) {
+            errorMessage.innerHTML = "The value of the parameter(s) must be at least 0."; 
+            return;
+        } else
+            errorMessage.innerHTML = "";
+    }
 }
 
+// Resets graph to default parameters
 function resetGraph() {
-    confirmButtons.innerHTML = `<em class="modalText">Are you sure?</em><button onclick="confirmYes()">Yes</button><button onclick="confirmNo()">No</button>`; 
+    confirmButtonsGraph.innerHTML = `<em class="modalText">Are you sure?</em><button onclick="resetGraphYes()">Yes</button><button onclick="resetGraphNo()">No</button>`; 
 }
 
 // Yes button
-function confirmYes() {
+function resetGraphYes() {
     console.log("Resetting parameters.");
     
-    checkboxFixPop.checked = 0;
+    checkboxFixPopValue = 0;
     beta = 1;
     gamma = 0.1;
     epsilon = 0.001;    
@@ -36,15 +42,31 @@ function confirmYes() {
     h = 0.01;
     days = 100; 
     
+    errorCheck()
     setCookieValues();
-    setFormSliders();
+    updateParameters()
     removeComparisonGraph();
     runGraph();
 
     // Removes the buttons
-    confirmButtons.innerHTML = "";
+    confirmButtonsGraph.innerHTML = "";
 }
+
 // No button
-function confirmNo() {
-    confirmButtons.innerHTML = "";
+function resetGraphNo() {
+    confirmButtonsGraph.innerHTML = "";
+}
+
+// Clears the cookies
+function clearCookies() {
+    confirmResetCookies.innerHTML = `<em class="modalText">This will delete all saved parameters. Are you sure?</em><button onclick="clearCookiesYes()">Yes</button><button onclick="clearCookiesNo()">No</button>`;
+}
+
+function clearCookiesYes() {
+    localStorage.clear();
+    confirmResetCookies.innerHTML = "";
+}
+
+function clearCookiesNo() {
+    confirmResetCookies.innerHTML = "";
 }

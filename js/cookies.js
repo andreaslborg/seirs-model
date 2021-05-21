@@ -1,9 +1,3 @@
-// Clears the cookies
-function clearCookies() {
-    localStorage.clear();
-    console.log("Cookies cleared.");
-}
-
 // Checks if it is the first visit
 function checkVisit() {
     if (localStorage.getItem("firstVisit") === null) {
@@ -27,15 +21,35 @@ function checkVisit() {
         localStorage.setItem("peakInfArrCookie", data);
         localStorage.setItem("peakExpArrCookie", data);
         localStorage.setItem("parametersArrCookie", data);
+
+        // Show popup guide
+        popupGuide.style.display = "block"; 
     } else {
         visitCounter = parseFloat(localStorage.getItem("firstVisit")) + 1;
         localStorage.setItem("firstVisit", visitCounter);
         console.log("Welcome back, this is your " + visitCounter + ". visit");
+
+        arrowsColorCookies();        
+        runSavedParameters();
     }
 }
 
-// Updates the cookies
-function updateCookies(){
+// Set the new values to the cookies
+function setCookieValues() {
+    localStorage.setItem("checkboxFixPopValue", checkboxFixPopValue)
+    localStorage.setItem("betaValue", beta);
+    localStorage.setItem("gammaValue", gamma);
+    localStorage.setItem("sigmaValue", sigma);
+    localStorage.setItem("epsilonValue", epsilon);
+    localStorage.setItem("S0Value", S0);
+    localStorage.setItem("E0Value", E0);
+    localStorage.setItem("I0Value", I0);
+    localStorage.setItem("R0Value", R0);
+    localStorage.setItem("daysValue", days); 
+}
+
+// Updates the parameters
+function updateParameters(){
     beta = parseFloat(localStorage.getItem("betaValue"));
     betaForm.value = beta;
     betaSlider.value = beta;
@@ -71,6 +85,6 @@ function updateCookies(){
     days = parseFloat(localStorage.getItem("daysValue"));
     daysForm.value = days;
     daysSlider.value = days;
-
+    
     checkboxFixPop.checked = parseInt(localStorage.getItem("checkboxFixPopValue"));
 }
