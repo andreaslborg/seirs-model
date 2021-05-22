@@ -1,17 +1,17 @@
-const YEAR = 31557600;
-const MONTH = 2628288;
-const DAY = 86400;
-const HOUR = 3600;
-const MINUTE = 60;
+const YEAR = 31557600,
+      MONTH = 2628288,
+      DAY = 86400,
+      HOUR = 3600,
+      MINUTE = 60;
 
 // Arrows for sorting
-let nameArrow = document.getElementById("nameArrow");
-let dateArrow = document.getElementById("dateArrow");
-let infArrow = document.getElementById("infArrow");
-let expArrow = document.getElementById("expArrow");
+let nameArrow = document.getElementById("nameArrow"),
+    dateArrow = document.getElementById("dateArrow"),
+    infArrow = document.getElementById("infArrow"),
+    expArrow = document.getElementById("expArrow");
 
 // Colors the arrows in the table black
-function allBlackArrows() {
+function colorArrowsBlack() {
     nameArrow.style.color = "black";
     dateArrow.style.color = "black";
     infArrow.style.color = "black";
@@ -22,7 +22,7 @@ function allBlackArrows() {
     localStorage.setItem("expArrow", "black");
 }
 
-// Set the correct arrows when website is loaded
+// Sets the correct arrows when website is loaded
 function arrowsColorCookies() {
     nameArrow.style.color = localStorage.getItem("nameArrow");
     dateArrow.style.color = localStorage.getItem("dateArrow");
@@ -30,13 +30,15 @@ function arrowsColorCookies() {
     expArrow.style.color = localStorage.getItem("expArrow");
 }
 
+// Sets the color of an arrow to blue
 function changeArrow(arrowName) {
-    allBlackArrows();
+    colorArrowsBlack();
 
     arrowName.style.color = "blue";
     localStorage.setItem(`${arrowName.id}`, "blue");
 }
 
+// Deletes the table rows and prints the new, sorted table rows
 function resetRows(arrLength) {
     for (i = 1; i < arrLength; i++) {
         table.deleteRow(1);
@@ -44,6 +46,7 @@ function resetRows(arrLength) {
     runSavedParameters();
 }
 
+// Sorts the arrays of the table in the order of indexArr
 function sortingOrder(indexArr) {
     let filenameArrNew = [0],
         dateArrNew = [0],
@@ -59,14 +62,12 @@ function sortingOrder(indexArr) {
         parametersArrNew[i] = parametersArr[indexArr[i]];
     }
 
-    // Update arrays
     filenameArr = filenameArrNew;
     dateArr = dateArrNew;
     peakInfArr = peakInfArrNew;
     peakExpArr = peakExpArrNew;
     parametersArr = parametersArrNew;
 
-    // Update cookies
     localStorage.setItem("filenameArrCookie", JSON.stringify(filenameArrNew));
     localStorage.setItem("dateArrCookie", JSON.stringify(dateArrNew));
     localStorage.setItem("peakInfArrCookie", JSON.stringify(peakInfArrNew));
@@ -74,6 +75,7 @@ function sortingOrder(indexArr) {
     localStorage.setItem("parametersArrCookie", JSON.stringify(parametersArrNew));
 }
 
+// Creates an array with the indexes of the sorting order of the input from lowest to highest value
 function insertionSort(inputArr) {
     let indexArr = [];
     for(i = 0; i < inputArr.length; i++)
@@ -85,11 +87,9 @@ function insertionSort(inputArr) {
 
     // Does not sort first index
     for (i = 2; i < inputArrCopy.length; i++) {
-        // Choosing the first element in the unsorted subarray
-        let current = inputArrCopy[i];
-        let currentIndex = indexArr[i];
-        // The last element of the sorted subarray
-        let j = i-1;
+        let current = inputArrCopy[i],
+            currentIndex = indexArr[i],
+            j = i-1;
         while ((j > 0) && (current < inputArrCopy[j])) {
             inputArrCopy[j+1] = inputArrCopy[j];
             indexArr[j+1] = indexArr[j];
@@ -101,6 +101,7 @@ function insertionSort(inputArr) {
     return indexArr;
 }
 
+// Creates an array with the indexes of the lexicographical sorting order of the input
 function insertionSortStrings(inputArr) {
     let indexArr = [];
     for(i = 0; i < inputArr.length; i++)
@@ -112,11 +113,9 @@ function insertionSortStrings(inputArr) {
 
     // Does not sort first index
     for (i = 2; i < inputArrCopy.length; i++) {
-        // Choosing the first element in the unsorted subarray
-        let current = inputArrCopy[i];
-        let currentIndex = indexArr[i];
-        // The last element of the sorted subarray
-        let j = i-1;
+        let current = inputArrCopy[i],
+            currentIndex = indexArr[i],
+            j = i-1;
         while ((j > 0) && (0 < inputArrCopy[j].localeCompare(current, "en", {caseFirst: "upper", ignorePunctuation: "true", numeric: "true"},))) {
             inputArrCopy[j+1] = inputArrCopy[j];
             indexArr[j+1] = indexArr[j];
@@ -128,6 +127,7 @@ function insertionSortStrings(inputArr) {
     return indexArr;
 }
 
+// Converts an array of dates into seconds
 function dateToInt(inputArr) {
     let floatArr = [];
 

@@ -79,16 +79,21 @@ button:hover, button:focus {
     text-align: center;
 }
 
-.loadColumn {
+#loadColumn {
     text-align: center;
     margin-left: 5%;
     width: 5%;
 }
 
-.deleteColumn {
+#deleteColumn {
     text-align: center;
     margin-left: 5%;
     
+}
+
+.loadButton, .deleteButton {
+    margin: auto;
+    display: grid;
 }
 
 #resetButton {

@@ -2,30 +2,41 @@ const stepSize = 0.01;
 const stepsToDays = function(steps) { return steps / 100; } 
 const daysToSteps = function(days) { return days * 100; }
 
-let beta,
-    gamma,
-    epsilon,
-    sigma,
-    S0,
-    E0,
-    I0,
-    R0,
-    N,
-    days,
-    totalSteps,
-    checkboxFixPopValue,
-    dataS = [],
-    dataE = [],
-    dataI = [],
-    dataR = [],
-    tArr = [],
-    newtArr = [],
-    newdataS = [],
-    newdataE = [],
-    newdataI = [],
-    newdataR = [];
+let parameterObj = {
+    N: 0,
+    S0: 0,
+    E0: 0,
+    I0: 0,
+    R0: 0,
+    beta: 0,
+    sigma: 0,
+    gamma: 0,
+    epsilon: 0,
+    days: 0,
+    checkboxFixPopValue: 0
+};
+
+let dataObj = {
+    totalSteps: 0,
+    dataS: [],
+    dataE: [],
+    dataI: [],
+    dataR: [],
+    tArr: [],
+    newtArr: [],
+    newdataS: [],
+    newdataE: [],
+    newdataI: [],
+    newdataR: []
+};
 
 checkVisit();
+
+let filenameArr = JSON.parse(localStorage.getItem("filenameArrCookie")),
+    dateArr = JSON.parse(localStorage.getItem("dateArrCookie")),
+    peakInfArr = JSON.parse(localStorage.getItem("peakInfArrCookie")),
+    peakExpArr = JSON.parse(localStorage.getItem("peakExpArrCookie")),
+    parametersArr = JSON.parse(localStorage.getItem("parametersArrCookie"));
 
 updateParameters();
 
@@ -34,7 +45,7 @@ let chart = document.getElementById("seirsChart").getContext('2d'),
     seirsChart = new Chart(chart, {
         type: "line",
         data: {
-            labels: tArr,
+            labels: dataObj.tArr,
             datasets: [
             {
                 label: "Susceptible individuals",

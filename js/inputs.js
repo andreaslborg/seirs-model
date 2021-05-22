@@ -4,10 +4,10 @@ let errorMessage = document.getElementById("error"),
 
 // Checks if the 
 function errorCheck() {
-    let errorArr = [N, S0, E0, I0, R0, beta, sigma, gamma, epsilon, days];
+    let errorArr = [parameterObj.N, parameterObj.S0, parameterObj.E0, parameterObj.I0, parameterObj.R0, parameterObj.beta, parameterObj.sigma, parameterObj.gamma, parameterObj.epsilon, parameterObj.days];
     
     if (checkboxFixPop.checked == 0) {
-        if (N < S0 + E0 + I0 + R0) {
+        if (parameterObj.N < parameterObj.S0 + parameterObj.E0 + parameterObj.I0 + parameterObj.R0) {
             errorMessage.innerHTML = `The sum of S<span class="sub">0</span>, E<span class="sub">0</span>, I<span class="sub">0</span>, and R<span class="sub">0</span> cannot be more than the total population (N).`;
             return;
         }
@@ -30,17 +30,17 @@ function resetGraph() {
 function resetGraphYes() {
     console.log("Resetting parameters.");
     
-    checkboxFixPopValue = 0;
-    beta = 1;
-    gamma = 0.1;
-    epsilon = 0.001;    
-    sigma = 0.1;
-    S0 = 199;
-    E0 = 0;
-    I0 = 1;
-    R0 = 0;
+    parameterObj.checkboxFixPopValue = 0;
+    parameterObj.beta = 1;
+    parameterObj.gamma = 0.1;
+    parameterObj.epsilon = 0.001;    
+    parameterObj.sigma = 0.1;
+    parameterObj.S0 = 199;
+    parameterObj.E0 = 0;
+    parameterObj.I0 = 1;
+    parameterObj.R0 = 0;
     h = 0.01;
-    days = 100; 
+    parameterObj.days = 100; 
     
     errorCheck()
     setCookieValues();

@@ -2,16 +2,11 @@ let table = document.getElementById("savedParametersTable"),
     fileForm = document.getElementById("savedName"),
     fileName,
     date,
-    parameters = [],
-    filenameArr = JSON.parse(localStorage.getItem("filenameArrCookie")),
-    dateArr = JSON.parse(localStorage.getItem("dateArrCookie")),
-    peakInfArr = JSON.parse(localStorage.getItem("peakInfArrCookie")),
-    peakExpArr = JSON.parse(localStorage.getItem("peakExpArrCookie")),
-    parametersArr = JSON.parse(localStorage.getItem("parametersArrCookie"));
-
-// Saves current parameters into arrays    
+    parameters = [];
+    
+// Saves current parameters into arrays  
 function saveParameters() {
-    allBlackArrows();
+    colorArrowsBlack();
 
     fileName = fileFormName();
     date = currentDate();
@@ -119,9 +114,9 @@ function deleteRow(rowNum) {
 
 // When deleting a row, the index changes accordingly
 function redefineRow() {
-    for (i = 1; i < dateArr.length; i++) { 
-        table.rows[i].cells[4].innerHTML = `<button onclick="loadParameters(${i})">Load</button>`;
-        table.rows[i].cells[5].innerHTML = `<button onclick="deleteRow(${i})">Delete</button>`;
+    for (i = 1; i < JSON.parse(localStorage.getItem("filenameArrCookie")).length; i++) { 
+        table.rows[i].cells[4].innerHTML = `<button onclick="loadParameters(${i})" class="loadButton">Load</button>`;
+        table.rows[i].cells[5].innerHTML = `<button onclick="deleteRow(${i})" class="deleteButton">Delete</button>`;
     }
 }
 
@@ -133,26 +128,25 @@ function loadParameters(rowNum) {
         savedTableload[rowNum][i] = parseFloat(savedTableload[rowNum][i])
     }
 
-    checkboxFixPopValue = savedTableload[rowNum][0];
-    S0 = savedTableload[rowNum][1];
-    E0 = savedTableload[rowNum][2];
-    I0 = savedTableload[rowNum][3];
-    R0 = savedTableload[rowNum][4];
-    beta = savedTableload[rowNum][5];
-    gamma = savedTableload[rowNum][6];
-    epsilon = savedTableload[rowNum][7];
-    sigma = savedTableload[rowNum][8];
-    days = savedTableload[rowNum][9];
+    parameterObj.checkboxFixPopValue = savedTableload[rowNum][0];
+    parameterObj.S0 = savedTableload[rowNum][1];
+    parameterObj.E0 = savedTableload[rowNum][2];
+    parameterObj.I0 = savedTableload[rowNum][3];
+    parameterObj.R0 = savedTableload[rowNum][4];
+    parameterObj.beta = savedTableload[rowNum][5];
+    parameterObj.gamma = savedTableload[rowNum][6];
+    parameterObj.epsilon = savedTableload[rowNum][7];
+    parameterObj.sigma = savedTableload[rowNum][8];
+    parameterObj.days = savedTableload[rowNum][9];
     
     setCookieValues();
-
     updateParameters();
     runGraph();
 }
 
 // Loads the saved parameters when the website is opened
 function runSavedParameters() {
-    for (i = 1; i < peakExpArr.length; i++) {
+    for (i = 1; i < JSON.parse(localStorage.getItem("filenameArrCookie")).length; i++) {
         let newRow = table.insertRow();
 
         newRow.insertCell(0).innerHTML = JSON.parse(localStorage.getItem("filenameArrCookie"))[i];
@@ -167,27 +161,26 @@ function runSavedParameters() {
 
 // Creates a CSV file when the button is pressed 
 function saveCSV() {
-    let csvContent = [tArr, dataS, dataE, dataI, dataR], 
-        csvRows = ["Time,Susceptible,Exposed,Infected,Removed\r"],
-        csvString = csvRows.join(""), 
-        csvFile = document.createElement("a");
-
-    for (let i = 0; i < tArr.length; i++) {
-        for (let j = 0; j < csvContent.length; j++) {
-            if (j == csvContent.length - 1) {
+    let csvContent = [dataObj.tArr, dataObj.dataS, dataObj.dataE, dataObj.dataI, dataObj.dataR], 
+        csvRows = ["Time,Susceptible,Exposed,Infected,Removed\r"];
+        
+    for (i = 0; i < dataObj.tArr.length; i++) {
+        for (j = 0; j < csvContent.length; j++) {
+            if (j == csvContent.length - 1)
                 csvRows.push(csvContent[j][i]);
-            }
-            else {
+            else
                 csvRows.push(csvContent[j][i] + ",");
-            }
         }
         csvRows.push("\r");
     }
 
-    csvFile.href = "data:attachment/csv," +  encodeURIComponent(csvString);
-    csvFile.target = "_blank";
-    csvFile.download = "seirs_data_"+ currentDate() + ".csv";
+    let csvString = csvRows.join(""), 
+        a = document.createElement("a");
+    
+    a.href = "data:attachment/csv," +  encodeURIComponent(csvString);
+    a.target = "_blank";
+    a.download = "seirs_data " + currentDate() + ".csv";
 
-    document.body.appendChild(csvFile);
-    csvFile.click();
+    document.body.appendChild(a);
+    a.click();
 }

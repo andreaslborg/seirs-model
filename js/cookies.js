@@ -36,55 +36,55 @@ function checkVisit() {
 
 // Set the new values to the cookies
 function setCookieValues() {
-    localStorage.setItem("checkboxFixPopValue", checkboxFixPopValue)
-    localStorage.setItem("betaValue", beta);
-    localStorage.setItem("gammaValue", gamma);
-    localStorage.setItem("sigmaValue", sigma);
-    localStorage.setItem("epsilonValue", epsilon);
-    localStorage.setItem("S0Value", S0);
-    localStorage.setItem("E0Value", E0);
-    localStorage.setItem("I0Value", I0);
-    localStorage.setItem("R0Value", R0);
-    localStorage.setItem("daysValue", days); 
+    localStorage.setItem("checkboxFixPopValue", parameterObj.checkboxFixPopValue)
+    localStorage.setItem("betaValue", parameterObj.beta);
+    localStorage.setItem("gammaValue", parameterObj.gamma);
+    localStorage.setItem("sigmaValue", parameterObj.sigma);
+    localStorage.setItem("epsilonValue", parameterObj.epsilon);
+    localStorage.setItem("S0Value", parameterObj.S0);
+    localStorage.setItem("E0Value", parameterObj.E0);
+    localStorage.setItem("I0Value", parameterObj.I0);
+    localStorage.setItem("R0Value", parameterObj.R0);
+    localStorage.setItem("daysValue", parameterObj.days); 
 }
 
 // Updates the parameters
 function updateParameters(){
-    beta = parseFloat(localStorage.getItem("betaValue"));
-    betaForm.value = beta;
-    betaSlider.value = beta;
+    parameterObj.beta = parseFloat(localStorage.getItem("betaValue"));
+    betaForm.value = parameterObj.beta;
+    betaSlider.value = parameterObj.beta;
 
-    gamma = parseFloat(localStorage.getItem("gammaValue"));
-    gammaForm.value = gamma;
-    gammaSlider.value = gamma;
+    parameterObj.gamma = parseFloat(localStorage.getItem("gammaValue"));
+    gammaForm.value = parameterObj.gamma;
+    gammaSlider.value = parameterObj.gamma;
 
-    epsilon = parseFloat(localStorage.getItem("epsilonValue"));
-    epsilonForm.value = epsilon;
-    epsilonSlider.value = epsilon;
+    parameterObj.epsilon = parseFloat(localStorage.getItem("epsilonValue"));
+    epsilonForm.value = parameterObj.epsilon;
+    epsilonSlider.value = parameterObj.epsilon;
     
-    sigma = parseFloat(localStorage.getItem("sigmaValue"));
-    sigmaForm.value = sigma;
-    sigmaSlider.value = sigma;
+    parameterObj.sigma = parseFloat(localStorage.getItem("sigmaValue"));
+    sigmaForm.value = parameterObj.sigma;
+    sigmaSlider.value = parameterObj.sigma;
 
-    S0 = parseFloat(localStorage.getItem("S0Value"));
-    S0Form.value = S0;
-    S0Slider.value = S0;
+    parameterObj.S0 = parseFloat(localStorage.getItem("S0Value"));
+    S0Form.value = parameterObj.S0;
+    S0Slider.value = parameterObj.S0;
 
-    I0 = parseFloat(localStorage.getItem("I0Value"));;
-    I0Form.value = I0;
-    I0Slider.value = I0;
+    parameterObj.I0 = parseFloat(localStorage.getItem("I0Value"));;
+    I0Form.value = parameterObj.I0;
+    I0Slider.value = parameterObj.I0;
     
-    E0 = parseFloat(localStorage.getItem("E0Value"));;
-    E0Form.value = E0;
-    E0Slider.value = E0;
+    parameterObj.E0 = parseFloat(localStorage.getItem("E0Value"));;
+    E0Form.value = parameterObj.E0;
+    E0Slider.value = parameterObj.E0;
   
-    R0 = parseFloat(localStorage.getItem("R0Value"));;
-    R0Form.value = R0;
-    R0Slider.value = R0;
+    parameterObj.R0 = parseFloat(localStorage.getItem("R0Value"));;
+    R0Form.value = parameterObj.R0;
+    R0Slider.value = parameterObj.R0;
     
-    days = parseFloat(localStorage.getItem("daysValue"));
-    daysForm.value = days;
-    daysSlider.value = days;
+    parameterObj.days = parseFloat(localStorage.getItem("daysValue"));
+    daysForm.value = parameterObj.days;
+    daysSlider.value = parameterObj.days;
     
     checkboxFixPop.checked = parseInt(localStorage.getItem("checkboxFixPopValue"));
 }

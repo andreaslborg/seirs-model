@@ -243,7 +243,7 @@
             <button id="resetButton" onclick="resetGraph()">Reset graph</button>
             <text id="confirmReset"></text>
 
-            <h2 class="titles">Download Data
+            <h2 class="titles">Download Current Data
                 <div class="tooltip">?
                     <span class="tooltiptext">
                         Click on the button to download the data of the current simulation to a CSV file.
@@ -266,12 +266,12 @@
             <button id="savedBtn" onclick="saveParameters()">Save Parameters</button>
             <table class="savedTable" id="savedParametersTable">
                 <tr>
-                    <th id="fileName">File Name <text class="arrow" id="nameArrow">▼</text></th>
-                    <th class="tablealign">Saved Date <text class="arrow" id="dateArrow">▼</text></th>
-                    <th class="tablealign">Peak Inf. <text class="arrow" id="infArrow">▼</text></th>
-                    <th class="tablealign">Peak Exp. <text class="arrow" id="expArrow">▼</text></th>
-                    <th id="loadColumn" >Load</th>
-                    <th id="deleteColumn" width="10%">Delete</th>
+                    <th id="fileName">File Name<br><text class="arrow" id="nameArrow">▼</text></th>
+                    <th class="tablealign">Date<br><text class="arrow" id="dateArrow">▼</text></th>
+                    <th class="tablealign">Peak Inf.<br><text class="arrow" id="infArrow">▼</text></th>
+                    <th class="tablealign">Peak Exp.<br><text class="arrow" id="expArrow">▼</text></th>
+                    <th id="loadColumn">Load</th>
+                    <th id="deleteColumn">Delete</th>
                 </tr>
             </table>
         </div>
@@ -305,12 +305,12 @@
                 <em class="modalText">Last updated on May 20, 2021</em>
             </div>
         </div>
+        <script src="js/cookies.js"></script>
         <script src="js/save.js"></script>
+        <script src="js/oninput.js"></script>
         <script src="js/modal.js"></script>
         <script src="js/inputs.js"></script>
-        <script src="js/oninput.js"></script>
         <script src="js/sorting.js"></script>
-        <script src="js/cookies.js"></script>
         <script src="js/run_graph.js"></script>
         <script src="js/main.js"></script>
     </body>

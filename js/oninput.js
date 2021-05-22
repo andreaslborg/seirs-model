@@ -39,118 +39,118 @@ let S0Form = document.getElementById("S0Form1"),
 S0Form.oninput = function() {
     localStorage.setItem("S0Value", this.value);   
     S0Slider.value = this.value;
-    S0 = parseFloat(this.value);
+    parameterObj.S0 = parseFloat(this.value);
     runGraph();
 }
 S0Slider.oninput = function() {
     localStorage.setItem("S0Value", this.value); 
     S0Form.value = this.value;
-    S0 = parseFloat(this.value);
+    parameterObj.S0 = parseFloat(this.value);
     runGraph();
 }
 
 E0Form.oninput = function() {
     localStorage.setItem("E0Value", this.value);           
     E0Slider.value = this.value;
-    E0 = parseFloat(this.value);          
+    parameterObj.E0 = parseFloat(this.value);          
     runGraph();
 } 
 E0Slider.oninput = function() {
     localStorage.setItem("E0Value", this.value);           
     E0Form.value = this.value;
-    E0 = parseFloat(this.value);
+    parameterObj.E0 = parseFloat(this.value);
     runGraph();
 }
 
 I0Form.oninput = function() {
     localStorage.setItem("I0Value", this.value); 
     I0Slider.value = this.value;
-    I0 = parseFloat(this.value);          
+    parameterObj.I0 = parseFloat(this.value);          
     runGraph();
 }
 I0Slider.oninput = function() {
     localStorage.setItem("I0Value", this.value); 
     I0Form.value = this.value;
-    I0 = parseFloat(this.value);
+    parameterObj.I0 = parseFloat(this.value);
     runGraph();
 }
 
 R0Form.oninput = function() {
     localStorage.setItem("R0Value", this.value);           
     R0Slider.value = this.value;
-    R0 = parseFloat(this.value);          
+    parameterObj.R0 = parseFloat(this.value);          
     runGraph();
 }
 R0Slider.oninput = function() {
     localStorage.setItem("R0Value", this.value);           
     R0Form.value = this.value;
-    R0 = parseFloat(this.value);
+    parameterObj.R0 = parseFloat(this.value);
     runGraph();
 }
 
 betaForm.oninput = function() {
     localStorage.setItem("betaValue", this.value);         
     betaSlider.value = this.value;
-    beta = this.value;
+    parameterObj.beta = this.value;
     runGraph();
 }
 betaSlider.oninput = function() {
     localStorage.setItem("betaValue", this.value);         
     betaForm.value = this.value;
-    beta = this.value;
+    parameterObj.beta = this.value;
     runGraph();
 }
 
 sigmaForm.oninput = function() {
     localStorage.setItem("sigmaValue", this.value);           
     sigmaSlider.value = this.value;
-    sigma = parseFloat(this.value);          
+    parameterObj.sigma = parseFloat(this.value);          
     runGraph();
 }
 sigmaSlider.oninput = function() {
     localStorage.setItem("sigmaValue", this.value);           
     sigmaForm.value = this.value;
-    sigma = parseFloat(this.value);
+    parameterObj.sigma = parseFloat(this.value);
     runGraph();
 }
 
 gammaForm.oninput = function() {
     localStorage.setItem("gammaValue", this.value);           
     gammaSlider.value = this.value;
-    gamma = this.value;
+    parameterObj.gamma = this.value;
     runGraph();
 }
 gammaSlider.oninput = function() {
     localStorage.setItem("gammaValue", this.value);           
     gammaForm.value = this.value;
-    gamma = this.value;
+    parameterObj.gamma = this.value;
     runGraph();
 }
 
 epsilonForm.oninput = function() {
     localStorage.setItem("epsilonValue", this.value);           
     epsilonSlider.value = this.value;
-    epsilon = parseFloat(this.value);          
+    parameterObj.epsilon = parseFloat(this.value);          
     runGraph();
 }
 epsilonSlider.oninput = function() {
     localStorage.setItem("epsilonValue", this.value);           
     epsilonForm.value = this.value;
-    epsilon = parseFloat(this.value);
+    parameterObj.epsilon = parseFloat(this.value);
     runGraph();
 }
 
 daysForm.oninput = function() {
     localStorage.setItem("daysValue", this.value);           
     daysSlider.value = this.value;
-    days = parseFloat(this.value);          
+    parameterObj.days = parseFloat(this.value);          
     runGraph();
     removeComparisonGraph();
 }
 daysSlider.oninput = function() {
     localStorage.setItem("daysValue", this.value);           
     daysForm.value = this.value;
-    days = parseFloat(this.value);
+    parameterObj.days = parseFloat(this.value);
     runGraph();
     removeComparisonGraph();
 }
