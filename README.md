@@ -6,7 +6,7 @@ The website can be viewed here: https://andreasborgaau.github.io/p2web/
 
 
 ## Unit Testing
-Type in the following steps into the terminal in VS Code.
+Type in the following steps into a terminal. (E.g. VS Code or Ubuntu).
 * cd P2/product/jest
 * npm init -y
 * npm i --save-dev jest
