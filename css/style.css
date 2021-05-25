@@ -6,7 +6,8 @@ h1, h2 {
     color: black;
     margin-left: 1%;
     margin-right: 1%;
-    margin-bottom: 0.2%;
+    margin-top: 0%;
+    margin-bottom: 0%;
     font-family: "Crimson Text", serif;
 }
 
@@ -112,8 +113,7 @@ th, td {
     width: 5%;
 }
 
-/* Kan nok slettes */
-h2, .infoTable {
+.infoTable {
     margin-top: 0%;
     margin-bottom: 0%;
 }
@@ -275,7 +275,6 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     background-color: rgba(0,0,0,0.4); 
 }
   
-/* Modal Content */
 .modal-content {
     background-color: #fefefe;
     margin: auto;
@@ -284,7 +283,6 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     width: 80%;
 }
 
-/* Modal Text */
 .modalText {
     margin-left: 1%;
     margin-right: 1%;

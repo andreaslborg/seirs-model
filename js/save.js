@@ -12,13 +12,13 @@ function saveParameters() {
     date = currentDate();
     parameters = currentParameters();
 
-    filenameArr.push(fileName);
-    dateArr.push(date);
-    parametersArr.push(parameters);
-    peakInfArr.push(peakInfPercent);
-    peakExpArr.push(peakExpPercent);
+    saveObj.filenameArr.push(fileName);
+    saveObj.dateArr.push(date);
+    saveObj.parametersArr.push(parameters);
+    saveObj.peakInfArr.push(peakInfPercent);
+    saveObj.peakExpArr.push(peakExpPercent);
 
-    updateArrCookies(filenameArr, dateArr, parametersArr, peakInfArr, peakExpArr);
+    updateArrCookies(saveObj.filenameArr, saveObj.dateArr, saveObj.parametersArr, saveObj.peakInfArr, saveObj.peakExpArr);
     addRow();    
     redefineRow();
 }
@@ -102,13 +102,13 @@ function addRow() {
 function deleteRow(rowNum) {
     table.deleteRow(rowNum);
 
-    filenameArr.splice(rowNum, 1);
-    dateArr.splice(rowNum, 1);
-    peakInfArr.splice(rowNum, 1);
-    peakExpArr.splice(rowNum, 1);
-    parametersArr.splice(rowNum, 1);
+    saveObj.filenameArr.splice(rowNum, 1);
+    saveObj.dateArr.splice(rowNum, 1);
+    saveObj.peakInfArr.splice(rowNum, 1);
+    saveObj.peakExpArr.splice(rowNum, 1);
+    saveObj.parametersArr.splice(rowNum, 1);
 
-    updateArrCookies(filenameArr, dateArr, parametersArr, peakInfArr, peakExpArr);
+    updateArrCookies(saveObj.filenameArr, saveObj.dateArr, saveObj.parametersArr, saveObj.peakInfArr, saveObj.peakExpArr);
     redefineRow();
 }
 

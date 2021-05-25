@@ -12,6 +12,10 @@ function errorCheck() {
             return;
         }
     }
+    if (dataObj.totalSteps > 1000000) {
+        errorMessage.innerHTML = "Due to reliability, the max days is 10000.";
+        return;
+    }
     for (i = 0; i < errorArr.length; i++) {
         if (errorArr[i] < 0) {
             errorMessage.innerHTML = "The value of the parameter(s) must be at least 0."; 
@@ -30,21 +34,20 @@ function resetGraph() {
 function resetGraphYes() {
     console.log("Resetting parameters.");
     
-    parameterObj.checkboxFixPopValue = 0;
-    parameterObj.beta = 1;
+    parameterObj.beta = 2;
     parameterObj.gamma = 0.1;
     parameterObj.epsilon = 0.001;    
-    parameterObj.sigma = 0.1;
-    parameterObj.S0 = 199;
+    parameterObj.sigma = 0.08;
+    parameterObj.S0 = 5806000;
     parameterObj.E0 = 0;
-    parameterObj.I0 = 1;
+    parameterObj.I0 = 100;
     parameterObj.R0 = 0;
-    h = 0.01;
-    parameterObj.days = 100; 
+    parameterObj.days = 100;  
+    parameterObj.checkboxFixPopValue = 0;
     
-    errorCheck()
+    errorCheck();
     setCookieValues();
-    updateParameters()
+    updateParameters();
     removeComparisonGraph();
     runGraph();
 

@@ -2,6 +2,8 @@ const stepSize = 0.01;
 const stepsToDays = function(steps) { return steps / 100; } 
 const daysToSteps = function(days) { return days * 100; }
 
+checkVisit();
+
 let parameterObj = {
     N: 0,
     S0: 0,
@@ -30,13 +32,13 @@ let dataObj = {
     newdataR: []
 };
 
-checkVisit();
-
-let filenameArr = JSON.parse(localStorage.getItem("filenameArrCookie")),
-    dateArr = JSON.parse(localStorage.getItem("dateArrCookie")),
-    peakInfArr = JSON.parse(localStorage.getItem("peakInfArrCookie")),
-    peakExpArr = JSON.parse(localStorage.getItem("peakExpArrCookie")),
-    parametersArr = JSON.parse(localStorage.getItem("parametersArrCookie"));
+let saveObj = {
+    filenameArr: JSON.parse(localStorage.getItem("filenameArrCookie")),
+    dateArr: JSON.parse(localStorage.getItem("dateArrCookie")),
+    peakInfArr: JSON.parse(localStorage.getItem("peakInfArrCookie")),
+    peakExpArr: JSON.parse(localStorage.getItem("peakExpArrCookie")),
+    parametersArr: JSON.parse(localStorage.getItem("parametersArrCookie"))
+}
 
 updateParameters();
 
@@ -103,7 +105,6 @@ let chart = document.getElementById("seirsChart").getContext('2d'),
                     ticks: {
                         beginAtZero: true,
                         maxRotation: 0,
-                        stepSize: 10,
                     },
                     scaleLabel: {
                         display: true,

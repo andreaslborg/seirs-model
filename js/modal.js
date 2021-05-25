@@ -3,7 +3,7 @@ let popupGuide = document.getElementById("guideBox"),
     guideClose = document.getElementById("guideClose");
 
 // When the user clicks the button, open the modal
-function showPopup() { 
+guideBtn.onclick = function() {
     popupGuide.style.display = "block";
 }
 

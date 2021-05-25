@@ -84,19 +84,25 @@ function rk4seirs() {
     dataObj.totalSteps = daysToSteps(parameterObj.days);
     
     // SEIRS functions 
-    function fS(S, I, R){ return -(parameterObj.beta*S*I)/parameterObj.N + parameterObj.epsilon*R; }
-    function fE(S, E, I){ return (parameterObj.beta*S*I)/parameterObj.N - parameterObj.sigma*E; }
-    function fI(E, I)   { return parameterObj.sigma*E - parameterObj.gamma*I; }
-    function fR(I, R)   { return parameterObj.gamma*I - parameterObj.epsilon*R; }
+    function fS(S, I, R) { 
+        return -(parameterObj.beta*S*I)/parameterObj.N + parameterObj.epsilon*R; 
+    }
+    function fE(S, E, I) { 
+        return (parameterObj.beta*S*I)/parameterObj.N - parameterObj.sigma*E; 
+    }
+    function fI(E, I) { 
+        return parameterObj.sigma*E - parameterObj.gamma*I; 
+    }
+    function fR(I, R) { 
+        return parameterObj.gamma*I - parameterObj.epsilon*R; 
+    }
 
     // Input validation so the website doesn't crash 
     if (dataObj.totalSteps > 1000000) {
-        errorMessage.innerHTML = "Due to reliability, the max days is 10000.";
-    } else if (dataObj.totalSteps < 0) {
-        errorMessage.innerHTML = "Days can not be a negative number.";
+        return;
     } else {
         // RK4
-        for (i = 1; i <= dataObj.totalSteps; i++){
+        for (i = 1; i <= dataObj.totalSteps; i++) {
             Sk1 = fS(dataObj.dataS[i-1], dataObj.dataI[i-1], dataObj.dataR[i-1]);
             Sk2 = fS(dataObj.dataS[i-1] + stepSize/2*Sk1, dataObj.dataI[i-1] + stepSize/2*Sk1, dataObj.dataR[i-1] + stepSize/2*Sk1);
             Sk3 = fS(dataObj.dataS[i-1] + stepSize/2*Sk2, dataObj.dataI[i-1] + stepSize/2*Sk2, dataObj.dataR[i-1] + stepSize/2*Sk2);
@@ -226,26 +232,4 @@ function findMax(arr) {
             max = arr[i];
     }
     return max;
-}
-
-function responseTime(){
-    /*
-    let startTime = new Date();
-    let startMin = startTime.getMinutes();  
-    let startSec = startTime.getSeconds();
-    let startMiliSec = startTime.getMilliseconds();
-
-    let endTime = new Date();
-    let endMin = endTime.getMinutes();  
-    let endSec = endTime.getSeconds();
-    let endMiliSec = endTime.getMilliseconds();
-    
-    //Compare start and end time 
-    const mintomilisec = 60000;
-    const sectomilisec = 1000;
-
-    let responeTimeMilisec = (endMin*mintomilisec+endSec*sectomilisec+endMiliSec) - (startMin*mintomilisec+startSec*sectomilisec+startMiliSec);
-
-    console.log("Response time: " + responeTimeMilisec);
-    */
 }

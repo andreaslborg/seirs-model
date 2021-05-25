@@ -55,18 +55,18 @@ function sortingOrder(indexArr) {
         parametersArrNew = [0];
 
     for(i = 1; i < indexArr.length; i++) {
-        filenameArrNew[i] = filenameArr[indexArr[i]];
-        dateArrNew[i] = dateArr[indexArr[i]];
-        peakInfArrNew[i] = peakInfArr[indexArr[i]];
-        peakExpArrNew[i] = peakExpArr[indexArr[i]];
-        parametersArrNew[i] = parametersArr[indexArr[i]];
+        filenameArrNew[i] = saveObj.filenameArr[indexArr[i]];
+        dateArrNew[i] = saveObj.dateArr[indexArr[i]];
+        peakInfArrNew[i] = saveObj.peakInfArr[indexArr[i]];
+        peakExpArrNew[i] = saveObj.peakExpArr[indexArr[i]];
+        parametersArrNew[i] = saveObj.parametersArr[indexArr[i]];
     }
 
-    filenameArr = filenameArrNew;
-    dateArr = dateArrNew;
-    peakInfArr = peakInfArrNew;
-    peakExpArr = peakExpArrNew;
-    parametersArr = parametersArrNew;
+    saveObj.filenameArr = filenameArrNew;
+    saveObj.dateArr = dateArrNew;
+    saveObj.peakInfArr = peakInfArrNew;
+    saveObj.peakExpArr = peakExpArrNew;
+    saveObj.parametersArr = parametersArrNew;
 
     localStorage.setItem("filenameArrCookie", JSON.stringify(filenameArrNew));
     localStorage.setItem("dateArrCookie", JSON.stringify(dateArrNew));
@@ -144,24 +144,24 @@ function dateToInt(inputArr) {
 
 nameArrow.onclick = function() {
     changeArrow(nameArrow);
-    sortingOrder(insertionSortStrings(filenameArr));
-    resetRows(filenameArr.length);
+    sortingOrder(insertionSortStrings(saveObj.filenameArr));
+    resetRows(saveObj.filenameArr.length);
 }
 
 dateArrow.onclick = function() {
     changeArrow(dateArrow);
-    sortingOrder(insertionSort(dateToInt(dateArr)));
-    resetRows(dateArr.length);
+    sortingOrder(insertionSort(dateToInt(saveObj.dateArr)));
+    resetRows(saveObj.dateArr.length);
 }
 
 infArrow.onclick = function() {
     changeArrow(infArrow);
-    sortingOrder(insertionSort(peakInfArr));
-    resetRows(peakInfArr.length);
+    sortingOrder(insertionSort(saveObj.peakInfArr));
+    resetRows(saveObj.peakInfArr.length);
 }
 
 expArrow.onclick = function() {    
     changeArrow(expArrow);
-    sortingOrder(insertionSort(peakExpArr));
-    resetRows(peakExpArr.length);
+    sortingOrder(insertionSort(saveObj.peakExpArr));
+    resetRows(saveObj.peakExpArr.length);
 }
