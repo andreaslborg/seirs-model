@@ -91,13 +91,13 @@ R0Slider.oninput = function() {
 betaForm.oninput = function() {
     localStorage.setItem("betaValue", this.value);         
     betaSlider.value = this.value;
-    parameterObj.beta = this.value;
+    parameterObj.beta = parseFloat(this.value);
     runGraph();
 }
 betaSlider.oninput = function() {
     localStorage.setItem("betaValue", this.value);         
     betaForm.value = this.value;
-    parameterObj.beta = this.value;
+    parameterObj.beta = parseFloat(this.value);
     runGraph();
 }
 
@@ -117,13 +117,13 @@ sigmaSlider.oninput = function() {
 gammaForm.oninput = function() {
     localStorage.setItem("gammaValue", this.value);           
     gammaSlider.value = this.value;
-    parameterObj.gamma = this.value;
+    parameterObj.gamma = parseFloat(this.value);
     runGraph();
 }
 gammaSlider.oninput = function() {
     localStorage.setItem("gammaValue", this.value);           
     gammaForm.value = this.value;
-    parameterObj.gamma = this.value;
+    parameterObj.gamma = parseFloat(this.value);
     runGraph();
 }
 
